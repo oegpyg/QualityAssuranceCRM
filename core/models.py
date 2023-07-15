@@ -3,11 +3,15 @@ from django.contrib import admin
 from django.urls import reverse
 from django.utils.http import urlencode
 from django.utils.html import format_html
+from django.contrib.auth.models import User
 
+
+_title_max_length = 100
 class Status(models.Model):
     id = models.AutoField(primary_key=True)
     label = models.CharField(max_length=50, blank=False, null=False)
     target_flow = models.CharField(max_length=50, blank=False, null=False)
+    status = models.BooleanField(default=False)
 
     def __str__(self) -> str:
         return f"{self.id} | {self.label}"
@@ -17,38 +21,50 @@ class Status(models.Model):
         list_filter = ['target_flow']
         list_display = ['id', 'label', 'target_flow']
 
-class HistoricStatus(models.Model):
+class StatusHistory(models.Model):
+    """To manage changes history of any records"""
     id = models.AutoField(primary_key=True)
-    status = models.ForeignKey(Status)
-    
+    status = models.ForeignKey(Status, on_delete=models.CASCADE)
+    record = models.CharField(max_length=20)
+    record_id =  models.IntegerField(null=False, blank=False)
+    transDate = models.DateTimeField(auto_now=True, auto_now_add=True)
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
+
+
+class Platform(models.Model):
+    id = models.AutoField(primary_key=True)
+    title = models.CharField(max_length=100)
+    link = models.CharField(max_length=300)
 
 class Project(models.Model):
     id = models.AutoField(primary_key=True)
-    title = models.CharField(max_length=100)
-    description = models.TextField()
+    title = models.CharField(max_length=_title_max_length)
+    description = models.TextField(null=False, blank=False)
     """se puede poner como un campo obligatorio de historia de usuario?"""
-    startDate = models.DateField()
-    creator = models.models.TextField()
+    startDate = models.DateField(auto_created=True, auto_now_add=False, auto_now=False)
+    creator = models.ForeignKey(User, on_delete=models.PROTECT)
     """ tendria que ser el id de quien crea la incidencia """
-    status = models.ForeignKey(Status)
-    priority = models.TextField()  
+    status = models.ForeignKey(Status, on_delete=models.PROTECT)
+    priority_choices = (('BAJ', 'BAJA'),
+                        ('MED', 'MEDIA'),
+                        ('ALT', 'ALTA'))
+    priority = models.TextField(choices=priority_choices) #debe ser una tabla coloco como ejemplo choices
     """ se podria setear especificos?, ejemplo: alta, media, baja """
-    productOwner = models.TextField()
-    developer = models.TextField()
-    qa = models.TextField()
-    stakeholder = models.TextField() 
-    assignedTo = models.TextField()
-    """como hacer que cuando escriba el inicio del nombre le estire las opciones de users ya creados?"""
-    version = models.enums ()
-    businessUnit = models.CharField()
-    TypeOfTests = models.TextField()  
+    productOwner = models.ForeignKey(User, on_delete=models.PROTECT)
+    developer = models.ForeignKey(User, on_delete=models.PROTECT)
+    qa = models.ForeignKey(User, on_delete=models.PROTECT)
+    stakeholder = models.ForeignKey(User, on_delete=models.PROTECT)
+    assignedTo = models.ForeignKey(User, on_delete=models.PROTECT)
+    version = models.IntegerField()
+    businessUnit = models.CharField() #deberia ser una tabla
+    TypeOfTests = models.TextField() #deberia ser una tabla? 
     """ se podria setear especificos?, ejemplo: end2end, unitarias, UAT, rendimiento, integración, monitoreo, seguridad, migracion de datos """
 
     def __str__(self):
         return f'{self.id} - {self.title}'
     
     class Admin(admin.ModelAdmin):
-        list_display = ['id', 'title', 'description', 'view_releases_link']
+        list_display = ['id', 'title', 'description', 'priority', 'view_releases_link']
 
         def view_releases_link(self, obj):
           count = obj.release_set.count()
@@ -57,86 +73,74 @@ class Project(models.Model):
                   + "?"
                   + urlencode({"project__id": f"{obj.id}"})
                  )
-    
+
 
 class Release(models.Model):
     id = models.AutoField(primary_key=True)
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=_title_max_length)
     description = models.TextField()
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    status = models.ForeignKey(Status)
-    creator = models.models.TextField()
+    project = models.ForeignKey(Project, on_delete=models.PROTECT)
+    status = models.ForeignKey(Status, on_delete=models.PROTECT)
+    creator = models.ForeignKey(User, on_delete=models.PROTECT)
     """ tendria que ser el id de quien crea la incidencia """
-    assignedTo = models.TextField()
+    assignedTo = models.ForeignKey(User, on_delete=models.PROTECT)
     """como hacer que cuando escriba el inicio del nombre le estire las opciones de users ya creados?"""
-    priority = models.TextField()  
+    priority = models.TextField() #debe ser una tabla  
     """ se podria setear especificos?, ejemplo: alta, media, baja """
-    version = models.enums ()
-    businessUnit = models.CharField()
-    LinkPlatform = models.FileField()
-    PlatformAffected = models.CharField()
-    TypeOfTests = models.TextField()  
+    version = models.IntegerField()
+    TypeOfTests = models.TextField() #debe ser una tabla  
     """ se podria setear especificos?, ejemplo: end2end, unitarias, UAT, rendimiento, integración, monitoreo, seguridad, migracion de datos """
-    BusinessAreaAffected = models.CharField()
-    """contabilidad, ventas, etc"""
-    CommercialApproval = models.CharField(max_length=2)
-    """si o no"""
-    QaDeploymentPlanningDate = models.DateField()
-    TestPlanCreationDate= models.DateField()
-    TestStartDate = models.DateField()
-    TestEndDate = models.DateField()
-    PlannedImplementationDate= models.DateField()
-    FinalImplementationDate= models.DateField()
-    productOwner = models.TextField()
-    """solo usuarios creados, no deberia de poder escribirse cualquier nombre"""
-    developer = models.TextField()
-    """solo usuarios creados, no deberia de poder escribirse cualquier nombre"""
-    qa = models.TextField()
-    """solo usuarios creados, no deberia de poder escribirse cualquier nombre"""
+    QaDeploymentPlanningDate = models.DateField(auto_now=False, auto_now_add=False)
+    TestPlanCreationDate= models.DateField(auto_now=False, auto_now_add=False)
+    TestStartDate = models.DateField(auto_now=False, auto_now_add=False)
+    TestEndDate = models.DateField(auto_now=False, auto_now_add=False)
+    plannedImplementationDate= models.DateField(auto_now=False, auto_now_add=False)
+    finalImplementationDate= models.DateField(auto_now=False, auto_now_add=False)
+    productOwner = models.ForeignKey(User, on_delete=models.PROTECT)
+    developer = models.ForeignKey(User, on_delete=models.PROTECT)
+    qa = models.ForeignKey(User, on_delete=models.PROTECT)
 
     def __str__(self):
         return f'{self.id} - {self.title}'
     
     class Admin(admin.ModelAdmin):
-        list_display = ['id', 'title', 'description']
+        list_display = ['id', 'title', 'description', 'plannedImplementationDate', 'finalImplementationDate']
 
-class Users(models.Model):
+class ReleasePlatformAffected(models.Model):
     id = models.AutoField(primary_key=True)
-    username = models.CharField(max_length=30)
-    password = models.CharField(max_length=8)
-    email = models.EmailField()
-    phonenumber = models.models.PhoneNumberField()
-    profile = models.ForeignKey(perfilUsuarios)
+    release = models.ForeignKey(Release, on_delete=models.PROTECT)
+    platform   = models.ForeignKey(Platform, on_delete=models.PROTECT) #debes tener una tabla de plataformas y este debe ser tipo detalle
 
-class perfilUsuarios (models.Model):
-    id = models.AutoField(primary_key=True)
-    description = models.TextField()
+class ReleaseCommercialApproval(models.Model):
+    BusinessAreaAffected = models.CharField(max_length=100) #considerar tabla
+    Approved = models.BooleanField(default=False)
 
-class input (models.Model):
+
+class Task(models.Model):
     id = models.AutoField(primary_key=True)
-    caption = models.CharField(max_length=50)
-    TypeInput = models.CharField()
+    title = models.CharField(max_length=_title_max_length)
+    typeTask = models.CharField(max_length=50) #debe ser tabla
     """En alguna parte se tendria que poder crear y elegir el tipo por ejemplo tarea, historia de usuario"""
-    AssociatedRealease = models.ForeignKey(Release)
-    status = models.ForeignKey(Status)
-    assignedTo = models.TextField()
-    """como hacer que cuando escriba el inicio del nombre le estire las opciones de users ya creados?"""
+    AssociatedRealease = models.ForeignKey(Release, on_delete=models.PROTECT)
+    status = models.ForeignKey(Status, on_delete=models.PROTECT)
+    assignedTo = models.ForeignKey(User, on_delete=models.PROTECT)
     description = models.TextField()
-    comments = models.models.TextField()
+    comments = models.TextField()
 
 class QaDocumentation(models.Model):
     id = models.AutoField(primary_key=True)
     TestPlans = models.TextField()
-    ProductOwnerApproval = models.TextField()
+    ProductOwnerApproval = models.BooleanField(default=False)
+    status = models.ForeignKey(Status, on_delete=models.PROTECT)
     """esto podria ser por ejemplo un check que solo tenga permiso de modificar ese perfil? para ahorrar tiempo en no enviar correos?"""
-    DeveloperApproval = models.TextField()
+    DeveloperApproval = models.BooleanField(default=False)
     ImportanceOfTestCases = models.TextField()
     ChecklistTestTypes = models.TextField()
     EvidenceOfTheTestPlans = models.TextField()
     
 class ReportedBugs(models.Model):
     id = models.AutoField(primary_key=True)
-    caption = models.CharField(max_length=50)
+    title = models.CharField(max_length=_title_max_length)
     TypeInput = models.CharField()
     ReportedBy = models.CharField()
     """deberia aceptar solo usuarios creados"""
