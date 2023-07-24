@@ -5,3 +5,6 @@ Para generar cambios en las tablas:
 
 Para aplicar los cambios en la base de datos
 > python manage.py migrate
+
+Para ejecutar en ambiente local
+> python manage.py runserver
