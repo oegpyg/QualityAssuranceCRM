@@ -8,3 +8,5 @@ Para aplicar los cambios en la base de datos
 
 Para ejecutar en ambiente local
 > python manage.py runserver
+
+
