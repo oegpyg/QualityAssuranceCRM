@@ -38,6 +38,11 @@ class BusinessUnit(models.Model):
     id = models.CharField(max_length=10,primary_key=True)
     title = models.CharField(max_length=_title_max_length)
 
+    def __str__(self):
+        return f'{self.id} - {self.title}'
+    
+
+
     class Admin(admin.ModelAdmin):
         list_display = ['id', 'title']
     
@@ -171,7 +176,11 @@ class QaDocumentation(models.Model):
     status = models.ForeignKey(Status, on_delete=models.PROTECT)
     """esto podria ser por ejemplo un check que solo tenga permiso de modificar ese perfil? para ahorrar tiempo en no enviar correos?"""
     developerApproval = models.BooleanField(default=False)
-    importanceOfTestCases = models.TextField()
+    impTC = (('BAJA', 'Baja'),
+             ('MED', 'Media'),
+             ('ALTA', 'Alta')
+             )
+    importanceOfTestCases = models.CharField(max_length=10, choices=impTC)
     #ChecklistTestTypes = models.ForeignKey(ChecklistDocumentation, on_delete=models.PROTECT)
     evidenceOfTheTestPlans = models.TextField()
 
