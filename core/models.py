@@ -17,6 +17,9 @@ class Status(models.Model):
     target_flow = models.CharField(max_length=50, blank=False, null=False)
     status = models.BooleanField(default=False)
 
+    class Meta:
+        verbose_name_plural = 'Status' 
+
     def __str__(self) -> str:
         return f"{self.id} | {self.label}"
     
@@ -39,10 +42,8 @@ class BusinessUnit(models.Model):
     title = models.CharField(max_length=_title_max_length)
 
     def __str__(self):
-        return f'{self.id} - {self.title}'
+        return f'{self.title}'
     
-
-
     class Admin(admin.ModelAdmin):
         list_display = ['id', 'title']
     
@@ -107,11 +108,11 @@ class Release(models.Model):
     priority = models.CharField(max_length=10, choices=_priorityChoices)
     version = models.IntegerField()
     typeOfTests = models.ForeignKey(TypeOfTests, on_delete=models.PROTECT)
-    qaDeploymentPlanningDate = models.DateField(auto_now=False, auto_now_add=False)
-    testPlanCreationDate= models.DateField(auto_now=False, auto_now_add=False)
-    testStartDate = models.DateField(auto_now=False, auto_now_add=False)
-    testEndDate = models.DateField(auto_now=False, auto_now_add=False)
-    plannedImplementationDate= models.DateField(auto_now=False, auto_now_add=False)
+    qaDeploymentPlanningDate = models.DateField(auto_now=False, auto_now_add=False, blank=True)
+    testPlanCreationDate= models.DateField(auto_now=False, auto_now_add=False, blank=True)
+    testStartDate = models.DateField(auto_now=False, auto_now_add=False, blank=True)
+    testEndDate = models.DateField(auto_now=False, auto_now_add=False, blank=True)
+    plannedImplementationDate= models.DateField(auto_now=False, auto_now_add=False, blank=True)
     finalImplementationDate= models.DateField(auto_now=False, auto_now_add=False, blank=True)
     productOwner = models.ForeignKey(User, on_delete=models.PROTECT, related_name='productOwner_user')
     developer = models.ForeignKey(User, on_delete=models.PROTECT, related_name='dev_user')
@@ -130,15 +131,23 @@ class Platform(models.Model):
     title = models.CharField(max_length=_title_max_length)
     link = models.CharField(max_length=300)
 
+    def __str__(self):
+        return f'{self.id} - {self.title}'
+
 class ReleasePlatformAffected(models.Model):
     id = models.AutoField(primary_key=True)
     release = models.ForeignKey(Release, on_delete=models.PROTECT)
     platform = models.ForeignKey(Platform, on_delete=models.PROTECT) 
 
+    def __str__(self):
+        return f'{self.release}'
 
 class BusinessAreaAffected (models.Model):
     id = models.AutoField(primary_key=True)
     areaAffected = models.CharField(max_length=_title_max_length)
+
+    def __str__(self):
+        return f'{self.id} - {self.areaAffected}'
 
 class ReleaseCommercialApproval(models.Model):
     id = models.AutoField(primary_key=True)
@@ -153,6 +162,9 @@ class ReleaseCommercialApproval(models.Model):
 class TypeTask(models.Model):
     id = models.CharField(max_length=10,primary_key=True)
     title = models.CharField(max_length=_title_max_length)
+
+    def __str__(self) -> str:
+        return f"{self.id} | {self.title}"
 
     class Meta:
         verbose_name_plural = "Type Task"
@@ -185,6 +197,7 @@ class QaDocumentation(models.Model):
     evidenceOfTheTestPlans = models.TextField()
 
     no_admin = True
+
 
 class ChecklistDocumentation (models.Model):
     id = models.AutoField(primary_key=True)
@@ -269,6 +282,9 @@ class ImplementationRelease(models.Model):
                   + urlencode({"implementationrelease__id": f"{obj.id}"})
                  )
 
+    def __str__(self) -> str:
+        return f"{self.id} | {self.description}"
+
 class TestEjecution(models.Model):
     id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=100)
@@ -285,10 +301,13 @@ class CaseTest(models.Model):
     title = models.CharField(max_length=40)
     caseTestDescription = models.TextField()
     caseTestPreconditions = models.TextField()
-    caseOrder = models.IntegerField()
-    caseSteps = models.PositiveIntegerField()
+    caseOrder = models.PositiveIntegerField()
+    caseSteps = models.TextField()
     caseExpectedOutcome = models.TextField()
     testEjecution = models.ForeignKey(TestEjecution, on_delete=models.PROTECT)
+
+    def __str__(self):
+        return f'{self.id} - {self.title}'
 
     #no_admin = True
 
