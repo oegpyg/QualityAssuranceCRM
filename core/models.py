@@ -112,7 +112,7 @@ class Release(models.Model):
     testStartDate = models.DateField(auto_now=False, auto_now_add=False)
     testEndDate = models.DateField(auto_now=False, auto_now_add=False)
     plannedImplementationDate= models.DateField(auto_now=False, auto_now_add=False)
-    finalImplementationDate= models.DateField(auto_now=False, auto_now_add=False)
+    finalImplementationDate= models.DateField(auto_now=False, auto_now_add=False, blank=True)
     productOwner = models.ForeignKey(User, on_delete=models.PROTECT, related_name='productOwner_user')
     developer = models.ForeignKey(User, on_delete=models.PROTECT, related_name='dev_user')
     qa = models.ForeignKey(User, on_delete=models.PROTECT, related_name='qa_user')
@@ -239,6 +239,9 @@ class ReportedBugs(models.Model):
     description = models.TextField()
     stepsToReproduce = models.TextField()
 
+    class Meta:
+        verbose_name_plural = 'Reported Bugs' 
+
     """subir archivos se podria? por ejemplo print de pantalla, videos"""
 
 class ImplementationRelease(models.Model):
@@ -282,12 +285,12 @@ class CaseTest(models.Model):
     title = models.CharField(max_length=40)
     caseTestDescription = models.TextField()
     caseTestPreconditions = models.TextField()
-    caseOrderSteps = models.IntegerField()
-    caseSteps = models.TextField()
+    caseOrder = models.IntegerField()
+    caseSteps = models.PositiveIntegerField()
     caseExpectedOutcome = models.TextField()
     testEjecution = models.ForeignKey(TestEjecution, on_delete=models.PROTECT)
 
-    no_admin = True
+    #no_admin = True
 
     class Meta:
         verbose_name_plural = "Case Test"
