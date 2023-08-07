@@ -1,0 +1,4 @@
+1- Los Approval se puede poner que solo pueda dar check el perfil de product Owner o Developer?
+2- Filtrar usuarios por su grupo o tipo
+3- En "Reported Bugs" si "Reportado por" si puede ser automatico con el perfil que esta creando? o igual si puede desplegar los usuarios... asignado puede desplegar los usuarios creados tambien?
+ También en "Test Execution", el campo case order steps creo que no deberia de poder ser negativo4-
