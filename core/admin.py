@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.apps import apps
-from .models import ReleaseCommercialApproval, Release, QaDocumentation, ChecklistDocumentation, TestEjecution, CaseTest
+from .models import ReleaseCommercialApproval, Release, QaDocumentation, ChecklistDocumentation, TestEjecution, CaseTest, QaDocumentationCaseTestImp
 
 nombre_aplicacion = 'core'
 
@@ -29,9 +29,12 @@ class ChecklistDocumentationAdminTabular(admin.TabularInline):
      model = ChecklistDocumentation
      extra = 1
 
+class QaDocumentationCaseTestImpAdminTabular(admin.TabularInline):
+     model = QaDocumentationCaseTestImp
+     extra = 1 
 class QaDocumentationAdmin(admin.ModelAdmin):
      list_display = ['id', 'TestPlans', 'productOwnerApproval', 'developerApproval', 'status']
-     inlines = [ChecklistDocumentationAdminTabular, ]
+     inlines = [ChecklistDocumentationAdminTabular, QaDocumentationCaseTestImpAdminTabular]
 
 admin.site.register(QaDocumentation, QaDocumentationAdmin)
 

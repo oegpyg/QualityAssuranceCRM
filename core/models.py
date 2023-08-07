@@ -291,6 +291,18 @@ class CaseTest(models.Model):
 
     class Meta:
         verbose_name_plural = "Case Test"
+
+class QaDocumentationCaseTestImp(models.Model):
+    id = models.AutoField(primary_key=True)
+    caseTest = models.ForeignKey(CaseTest, on_delete=models.PROTECT)
+    qaDocumentatio = models.ForeignKey(QaDocumentation, on_delete=models.PROTECT)
+    impTC = (('BAJA', 'Baja'),
+             ('MED', 'Media'),
+             ('ALTA', 'Alta')
+             )
+    importanceOfTestCases = models.CharField(max_length=10, choices=impTC)
+
+
 """
 Preguntas
 1- para enviar notificaciones a las personas cuando cambia de estado un error?
