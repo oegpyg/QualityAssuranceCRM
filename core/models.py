@@ -138,6 +138,20 @@ class Release(models.Model):
     
     no_admin = True
 
+    class Admin(admin.ModelAdmin):
+        def get_form(self, request, obj=None, **kwargs):
+            form = super().get_form(request, obj, **kwargs)
+            # Si se está editando un registro existente y 'usuario_asignado' ya está establecido, no lo cambies
+            if obj:
+                form.base_fields['reporter'].widget.attrs['readonly'] = 'true'
+                form.base_fields['reporter'].disabled = True
+            else:
+                # Si se está creando un nuevo registro, asigna el usuario actual automáticamente
+                form.base_fields['reporter'].initial = request.user
+                form.base_fields['reporter'].widget.attrs['readonly'] = True
+                form.base_fields['reporter'].disabled = True
+            return form
+
 class Platform(models.Model):
     id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=_title_max_length)
