@@ -1,5 +1,45 @@
-1- Los Approval se puede poner que solo pueda dar check el perfil de product Owner o Developer?
-2- Filtrar usuarios por su grupo o tipo
-3- En "Reported Bugs" si "Reportado por" si puede ser automatico con el perfil que esta creando?
-4- Dentro de "ImplementationRelease" se puede poner que developer y qa tengan opcion de desplegar y elegir el usuario de acuerdo al perfil de grupo que tengan? por ejemplo, que si yo soy QA no pueda ser elegido como developer y viceversa.
+1- Los Approval se puede poner que solo pueda dar check el perfil de product Owner o Developer? DONE
+2- Filtrar usuarios por su grupo o tipo DONE
+3- En "Reported Bugs" si "Reportado por" si puede ser automatico con el perfil que esta creando? OK para todos hay que hacer la configuracion
+4- Dentro de "ImplementationRelease" se puede poner que developer y qa tengan opcion de desplegar y
+ elegir el usuario de acuerdo al perfil de grupo que tengan? 
+ por ejemplo, que si yo soy QA no pueda ser elegido como developer y viceversa.
 
+
+
+
+
+ """
+ Utils
+#group_users = User.objects.filter(groups__name=group_name)
+#self.fields['productOwnerApproval'].queryset = group_users
+#self.fields['productOwnerApproval'].widget = FilteredSelectMultiple('Usuarios', False)
+"""
+
+"""
+
+from django.contrib.auth.models import User
+
+
+class RecordAdminForm(forms.ModelForm):
+    class Meta:
+        model = Record
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        group_name = 'nombre_del_grupo'  # Reemplaza 'nombre_del_grupo' con el nombre de tu grupo
+        group_users = User.objects.filter(groups__name=group_name)
+        self.fields['assigned_user'].queryset = group_users
+        self.fields['assigned_user'].widget = FilteredSelectMultiple('Usuarios', False)
+
+
+from .models import Record
+from .forms import RecordAdminForm
+
+class RecordAdmin(admin.ModelAdmin):
+    form = RecordAdminForm
+
+admin.site.register(Record, RecordAdmin)
+
+"""

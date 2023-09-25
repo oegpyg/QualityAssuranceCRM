@@ -5,20 +5,20 @@ from django.urls import reverse
 from django.utils.http import urlencode
 from django.utils.html import format_html
 from django.contrib.auth.models import User
-
-
+from django.core.exceptions import ValidationError
+from django import forms
 _title_max_length = 100
 _priorityChoices = (('BAJ', 'BAJA'),
                     ('MED', 'MEDIA'),
                     ('ALT', 'ALTA'))
 class Status(models.Model):
     id = models.AutoField(primary_key=True)
-    label = models.CharField(max_length=50, blank=False, null=False)
-    target_flow = models.CharField(max_length=50, blank=False, null=False)
-    status = models.BooleanField(default=False)
+    label = models.CharField(max_length=50, blank=False, null=False, verbose_name='Descripcion')
+    target_flow = models.CharField(max_length=50, blank=False, null=False, verbose_name="Objetivo Flujo")
+    status = models.BooleanField(default=False, verbose_name="Activo")
 
     class Meta:
-        verbose_name_plural = 'Status' 
+        verbose_name_plural = 'Estados' 
 
     def __str__(self) -> str:
         return f"{self.id} | {self.label}"
@@ -26,7 +26,7 @@ class Status(models.Model):
     class Admin(admin.ModelAdmin):
         search_fields = ['label', 'target_flow']
         list_filter = ['target_flow']
-        list_display = ['id', 'label', 'target_flow']
+        list_display = ['id', 'label', 'target_flow', 'status']
 
 class StatusHistory(models.Model):
     """To manage changes history of any records"""
@@ -48,7 +48,7 @@ class BusinessUnit(models.Model):
         list_display = ['id', 'title']
     
     class Meta:
-        verbose_name_plural = 'Business Unit'
+        verbose_name_plural = 'Unidad de Negocio'
     
 class TypeOfTests(models.Model):
     id = models.CharField(max_length=10,primary_key=True)
@@ -58,7 +58,7 @@ class TypeOfTests(models.Model):
         list_display = ['id', 'title']
     
     class Meta:
-        verbose_name_plural = "Type of Tests"
+        verbose_name_plural = "Tipo de pruebas"
 
     def __str__(self):
         return self.title
@@ -83,16 +83,28 @@ class Project(models.Model):
 
     def __str__(self):
         return f'{self.id} - {self.title}'
-    
     class Admin(admin.ModelAdmin):
         list_display = ['id', 'title', 'description', 'priority', 'view_releases_link']
-        
+        def get_form(self, request, obj=None, **kwargs):
+            form = super().get_form(request, obj, **kwargs)
+            # Si se está editando un registro existente y 'usuario_asignado' ya está establecido, no lo cambies
+            if obj:
+                form.base_fields['reporter'].widget.attrs['readonly'] = 'true'
+                form.base_fields['reporter'].disabled = True
+            else:
+                # Si se está creando un nuevo registro, asigna el usuario actual automáticamente
+                form.base_fields['reporter'].initial = request.user
+                form.base_fields['reporter'].widget.attrs['readonly'] = True
+                form.base_fields['reporter'].disabled = True
+            return form
+
         def view_releases_link(self, obj):
           count = obj.release_set.count()
           url = (reverse("admin:core_release_changelist")
                   + "?"
                   + urlencode({"project__id": f"{obj.id}"})
-                 )
+                 )    
+   
 
 
 class Release(models.Model):
@@ -199,6 +211,7 @@ class QaDocumentation(models.Model):
     no_admin = True
 
 
+
 class ChecklistDocumentation (models.Model):
     id = models.AutoField(primary_key=True)
     typeOfTests = models.ForeignKey(TypeOfTests, on_delete=models.PROTECT)
@@ -211,10 +224,8 @@ class ReportedBugs(models.Model):
     id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=_title_max_length)
     typeInput = models.CharField(max_length=100)
-    reportedBy = models.CharField(max_length=100)
-    """deberia aceptar solo usuarios creados"""
-    assignedTo = models.TextField()
-    """deberia aceptar solo usuarios creados"""
+    reporter = models.ForeignKey(User, on_delete=models.PROTECT, related_name='reporter_bug_user', null=True)
+    assignedTo = models.ForeignKey(User, on_delete=models.PROTECT, related_name='bug_assignedto_user', null=True)
     statusBugs_choices = (('New', 'New'),
                 ('MoreData', 'More data is needed'),
                 ('Assig', 'Assigned'),
@@ -255,6 +266,18 @@ class ReportedBugs(models.Model):
     class Meta:
         verbose_name_plural = 'Reported Bugs' 
 
+    class Admin(admin.ModelAdmin):
+        list_display = ['id', 'title', 'typeInput', 'reporter', 'assignedTo']
+        def get_form(self, request, obj=None, **kwargs):
+            form = super().get_form(request, obj, **kwargs)
+            # Si se está editando un registro existente y 'usuario_asignado' ya está establecido, no lo cambies
+            if obj:
+                form.base_fields['reporter'].widget.attrs['readonly'] = True
+                form.base_fields['reporter'].disabled = True
+            else:
+                # Si se está creando un nuevo registro, asigna el usuario actual automáticamente
+                form.base_fields['reporter'].initial = request.user
+            return form
     """subir archivos se podria? por ejemplo print de pantalla, videos"""
 
 class ImplementationRelease(models.Model):
