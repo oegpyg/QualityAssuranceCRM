@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.apps import apps
-from .models import ReleaseCommercialApproval, Release, QaDocumentation, ChecklistDocumentation, TestEjecution, CaseTest, QaDocumentationCaseTestImp
+from .models import ReleaseCommercialApproval, Release, QaDocumentation, ChecklistDocumentation, TestEjecution, CaseTest, QaDocumentationCaseTestImp, ReleasePlatformAffected
 from django.contrib.auth.models import User
 from django import forms
 from django.contrib.admin.widgets import FilteredSelectMultiple
@@ -22,10 +22,15 @@ for modelo in modelos:
 class ReleaseCommercialApprovalAdminTabular(admin.TabularInline):
     model = ReleaseCommercialApproval
     extra = 1
+
+class ReleasePlatformAffectedAdminTabular(admin.TabularInline):
+    model = ReleasePlatformAffected
+    extra = 1
+
 class ReleaseAdmin(admin.ModelAdmin):
      list_filter = ['project']
      list_display = ['id', 'title', 'description', 'plannedImplementationDate', 'finalImplementationDate']
-     inlines = [ReleaseCommercialApprovalAdminTabular, ]
+     inlines = [ReleaseCommercialApprovalAdminTabular, ReleasePlatformAffectedAdminTabular]
 
 admin.site.register(Release, ReleaseAdmin)
 
