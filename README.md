@@ -10,3 +10,5 @@ Para ejecutar en ambiente local
 > python manage.py runserver
 
 
+Para generar el DER
+> python3 manage.py graph_models -a -g -o DER.png
