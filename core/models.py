@@ -7,10 +7,13 @@ from django.utils.html import format_html
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django import forms
+#from .admin import pownerGroup, devGroup
 _title_max_length = 100
 _priorityChoices = (('BAJ', 'BAJA'),
                     ('MED', 'MEDIA'),
                     ('ALT', 'ALTA'))
+devGroup = 'Developer'
+pownerGroup = 'ProductOwner'
 class Status(models.Model):
     id = models.AutoField(primary_key=True)
     label = models.CharField(max_length=50, blank=False, null=False, verbose_name='Descripcion')
@@ -85,9 +88,10 @@ class Project(models.Model):
         return f'{self.id} - {self.title}'
     class Admin(admin.ModelAdmin):
         list_display = ['id', 'title', 'description', 'priority', 'view_releases_link']
+        
         def get_form(self, request, obj=None, **kwargs):
             form = super().get_form(request, obj, **kwargs)
-            # Si se está editando un registro existente y 'usuario_asignado' ya está establecido, no lo cambies
+            # Si se está editando un registro existente y 'reporter' ya está establecido, no lo cambies
             if obj:
                 form.base_fields['reporter'].widget.attrs['readonly'] = 'true'
                 form.base_fields['reporter'].disabled = True
@@ -96,6 +100,15 @@ class Project(models.Model):
                 form.base_fields['reporter'].initial = request.user
                 form.base_fields['reporter'].widget.attrs['readonly'] = True
                 form.base_fields['reporter'].disabled = True
+            #esto permite que en el campo po solo aparezcan los del grupo po   
+            group_users = User.objects.filter(groups__name=pownerGroup)
+            #print(group_users)
+            #self.fields['productOwner'].queryset = group_users
+            #self.fields['productOwner'].widget = FilteredSelectMultiple('Usuarios', False)
+
+            group_usersDev = User.objects.filter(groups__name=devGroup)
+            #self.fields['developer'].queryset = group_usersDev
+            #self.fields['developer'].widget = FilteredSelectMultiple('Usuarios', False)
             return form
 
         def view_releases_link(self, obj):
