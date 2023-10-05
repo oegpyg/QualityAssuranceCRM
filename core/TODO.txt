@@ -7,6 +7,11 @@
 
 
 
+PENDIENTE AL 01/10
+- Opción recuperar contraseña?
+- No deberia de poder ingresar fechas anteriores a la actual
+
+
 
 
  """

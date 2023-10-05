@@ -44,6 +44,10 @@ class BusinessUnit(models.Model):
     id = models.CharField(max_length=10,primary_key=True)
     title = models.CharField(max_length=_title_max_length)
 
+    class Meta:
+        verbose_name_plural = 'Unidad de negocio' 
+
+
     def __str__(self):
         return f'{self.title}'
     
