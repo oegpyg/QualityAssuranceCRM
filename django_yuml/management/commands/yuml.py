@@ -194,6 +194,7 @@ class Command(BaseCommand):
         filename     = options['outputfile']
         extension    = os.path.splitext(filename)[1]
         escaped_stat = urllib.parse.quote(",".join(statments))
+        print(statments)
 
         diagram_option = []
         if options['scale']:
