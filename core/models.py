@@ -384,7 +384,7 @@ class TestEjecution(models.Model):
     generalDescription = models.TextField(verbose_name="Descripción general")
     #CaseTest = models.ForeignKey(CaseTest, on_delete=models.PROTECT)
     implementationRelease = models.ForeignKey(ImplementationRelease, on_delete=models.PROTECT, verbose_name="Entrega relacionada")
-
+ 
     no_admin = True
     class Meta:
         verbose_name_plural = "Ejecución de Pruebas"
