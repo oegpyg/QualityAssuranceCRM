@@ -16,7 +16,7 @@ devGroup = 'Developer'
 pownerGroup = 'ProductOwner'
 class Status(models.Model):
     id = models.AutoField(primary_key=True)
-    label = models.CharField(max_length=50, blank=False, null=False, verbose_name='Descripcion')
+    label = models.CharField(max_length=50, blank=False, null=False, verbose_name='Descripción')
     target_flow = models.CharField(max_length=50, blank=False, null=False, verbose_name="Objetivo Flujo")
     status = models.BooleanField(default=False, verbose_name="Activo")
 
@@ -34,15 +34,21 @@ class Status(models.Model):
 class StatusHistory(models.Model):
     """To manage changes history of any records"""
     id = models.AutoField(primary_key=True)
-    status = models.ForeignKey(Status, on_delete=models.CASCADE)
-    record = models.CharField(max_length=20)
-    record_id =  models.IntegerField(null=False, blank=False)
+    status = models.ForeignKey(Status, on_delete=models.CASCADE, verbose_name="Estado")
+    record = models.CharField(max_length=20, verbose_name="Descripción")
+    record_id =  models.IntegerField(null=False, blank=False, verbose_name="Identificador de Descripción")
     transDate = models.DateTimeField(auto_now=False, auto_now_add=True)
-    user = models.ForeignKey(User, on_delete=models.PROTECT)
+    user = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name="Usuario")
+
+    def __str__(self):
+        return f'{self.id} - {self.title}'
+
+    class Meta:
+        verbose_name_plural = 'Historial de Estados'
 
 class BusinessUnit(models.Model):
-    id = models.CharField(max_length=10,primary_key=True)
-    title = models.CharField(max_length=_title_max_length)
+    id = models.CharField(max_length=10,primary_key=True, verbose_name="Identificador")
+    title = models.CharField(max_length=_title_max_length, verbose_name="Nombre")
 
     class Meta:
         verbose_name_plural = 'Unidad de negocio' 
@@ -58,8 +64,8 @@ class BusinessUnit(models.Model):
         verbose_name_plural = 'Unidad de Negocio'
     
 class TypeOfTests(models.Model):
-    id = models.CharField(max_length=10,primary_key=True)
-    title = models.CharField(max_length=_title_max_length)
+    id = models.CharField(max_length=10,primary_key=True, verbose_name="Identificador")
+    title = models.CharField(max_length=_title_max_length, verbose_name="Nombre")
     
     class Admin(admin.ModelAdmin):
         list_display = ['id', 'title']
@@ -73,20 +79,20 @@ class TypeOfTests(models.Model):
 
 class Project(models.Model):
     id = models.AutoField(primary_key=True)
-    title = models.CharField(max_length=_title_max_length)
-    description = models.TextField(null=False, blank=False)
-    startDate = models.DateField(auto_created=True, auto_now_add=False, auto_now=False)
-    reporter = models.ForeignKey(User, on_delete=models.PROTECT, related_name='reporter_user_p')
-    status = models.ForeignKey(Status, on_delete=models.PROTECT)
-    priority = models.CharField(choices=_priorityChoices, max_length=10)
-    productOwner = models.ForeignKey(User, on_delete=models.PROTECT, related_name='productOwner_user_p')
-    developer = models.ForeignKey(User, on_delete=models.PROTECT, related_name='dev_user_p')
-    qa = models.ForeignKey(User, on_delete=models.PROTECT, related_name='qa_user_p')
-    stakeHolder = models.ForeignKey(User, on_delete=models.PROTECT, related_name='stakeh_user_p')
-    assignedTo = models.ForeignKey(User, on_delete=models.PROTECT, related_name='assignedTo_user_p')
-    version = models.IntegerField()
-    businessUnit = models.ForeignKey(BusinessUnit, on_delete=models.PROTECT)
-    typeOfTests = models.ForeignKey(TypeOfTests, on_delete=models.PROTECT)
+    title = models.CharField(max_length=_title_max_length, verbose_name="Nombre Proyecto")
+    description = models.TextField(null=False, blank=False, verbose_name="Descripción")
+    startDate = models.DateField(auto_created=True, auto_now_add=False, auto_now=False, verbose_name="Fecha de Inicio")
+    reporter = models.ForeignKey(User, on_delete=models.PROTECT, related_name='reporter_user_p',verbose_name="Creado por")
+    status = models.ForeignKey(Status, on_delete=models.PROTECT, verbose_name="Estado")
+    priority = models.CharField(choices=_priorityChoices, max_length=10, verbose_name="Prioridad")
+    productOwner = models.ForeignKey(User, on_delete=models.PROTECT, related_name='productOwner_user_p', verbose_name="Dueño del producto")
+    developer = models.ForeignKey(User, on_delete=models.PROTECT, related_name='dev_user_p', verbose_name="Desarrollador")
+    qa = models.ForeignKey(User, on_delete=models.PROTECT, related_name='qa_user_p', verbose_name="Tester de Calidad")
+    stakeHolder = models.ForeignKey(User, on_delete=models.PROTECT, related_name='stakeh_user_p', verbose_name="StakeHolder")
+    assignedTo = models.ForeignKey(User, on_delete=models.PROTECT, related_name='assignedTo_user_p', verbose_name="Asignado a")
+    version = models.IntegerField(verbose_name="Versión")
+    businessUnit = models.ForeignKey(BusinessUnit, on_delete=models.PROTECT, verbose_name="Unidad de negocio")
+    typeOfTests = models.ForeignKey(TypeOfTests, on_delete=models.PROTECT, verbose_name="Tipo de Prueba")
 
     def __str__(self):
         return f'{self.id} - {self.title}'
@@ -121,31 +127,32 @@ class Project(models.Model):
                   + "?"
                   + urlencode({"project__id": f"{obj.id}"})
                  )    
-   
+    class Meta:
+        verbose_name_plural = "Proyectos"
 
 
 class Release(models.Model):
     id = models.AutoField(primary_key=True)
-    title = models.CharField(max_length=_title_max_length)
-    description = models.TextField()
-    project = models.ForeignKey(Project, on_delete=models.PROTECT)
-    status = models.ForeignKey(Status, on_delete=models.PROTECT)
-    reporter = models.ForeignKey(User, on_delete=models.PROTECT, related_name='reporter_user')
+    title = models.CharField(max_length=_title_max_length, verbose_name="Nombre de Entrega")
+    description = models.TextField(verbose_name="Descripción")
+    project = models.ForeignKey(Project, on_delete=models.PROTECT, verbose_name="Proyecto")
+    status = models.ForeignKey(Status, on_delete=models.PROTECT, verbose_name="Estado")
+    reporter = models.ForeignKey(User, on_delete=models.PROTECT, related_name='reporter_user', verbose_name="Creado por")
     """el id de quien crea la incidencia """
-    assignedTo = models.ForeignKey(User, on_delete=models.PROTECT, related_name='assignedTo')
+    assignedTo = models.ForeignKey(User, on_delete=models.PROTECT, related_name='assignedTo', verbose_name="Asignado a")
     """cuando escriba el inicio del nombre le estire las opciones de users ya creados"""
-    priority = models.CharField(max_length=10, choices=_priorityChoices)
-    version = models.IntegerField()
-    typeOfTests = models.ForeignKey(TypeOfTests, on_delete=models.PROTECT)
-    qaDeploymentPlanningDate = models.DateField(auto_now=False, auto_now_add=False, blank=True)
-    testPlanCreationDate= models.DateField(auto_now=False, auto_now_add=False, blank=True)
-    testStartDate = models.DateField(auto_now=False, auto_now_add=False, blank=True)
-    testEndDate = models.DateField(auto_now=False, auto_now_add=False, blank=True)
-    plannedImplementationDate= models.DateField(auto_now=False, auto_now_add=False, blank=True)
-    finalImplementationDate= models.DateField(auto_now=False, auto_now_add=False, blank=True)
-    productOwner = models.ForeignKey(User, on_delete=models.PROTECT, related_name='productOwner_user')
-    developer = models.ForeignKey(User, on_delete=models.PROTECT, related_name='dev_user')
-    qa = models.ForeignKey(User, on_delete=models.PROTECT, related_name='qa_user')
+    priority = models.CharField(max_length=10, choices=_priorityChoices, verbose_name="Prioridad")
+    version = models.IntegerField(verbose_name="Versión")
+    typeOfTests = models.ForeignKey(TypeOfTests, on_delete=models.PROTECT, verbose_name="Tipo de Prueba")
+    qaDeploymentPlanningDate = models.DateField(auto_now=False, auto_now_add=False, blank=True, verbose_name="Fecha planificada despliegue QA")
+    testPlanCreationDate= models.DateField(auto_now=False, auto_now_add=False, blank=True, verbose_name="Fecha de creación del plan de pruebas")
+    testStartDate = models.DateField(auto_now=False, auto_now_add=False, blank=True, verbose_name="Fecha de inicio de pruebas")
+    testEndDate = models.DateField(auto_now=False, auto_now_add=False, blank=True, verbose_name="Fecha de finalización de pruebas")
+    plannedImplementationDate= models.DateField(auto_now=False, auto_now_add=False, blank=True, verbose_name="Fecha planificada de Implementación")
+    finalImplementationDate= models.DateField(auto_now=False, auto_now_add=False, blank=True, verbose_name="Fecha de implementación")
+    productOwner = models.ForeignKey(User, on_delete=models.PROTECT, related_name='productOwner_user', verbose_name="Dueño del producto")
+    developer = models.ForeignKey(User, on_delete=models.PROTECT, related_name='dev_user', verbose_name="Desarrollador")
+    qa = models.ForeignKey(User, on_delete=models.PROTECT, related_name='qa_user', verbose_name="Tester")
     #releaseCommercialApproval = models.ForeignKey(ReleaseCommercialApproval, on_delete=models.PROTECT)
     #businessAreaAffected = models.ForeignKey(BusinessAreaAffected)
 
@@ -168,134 +175,164 @@ class Release(models.Model):
                 form.base_fields['reporter'].widget.attrs['readonly'] = True
                 form.base_fields['reporter'].disabled = True
             return form
+    class Meta:
+        verbose_name_plural = "Entregas"
+
 
 class Platform(models.Model):
-    id = models.AutoField(primary_key=True)
-    title = models.CharField(max_length=_title_max_length)
-    link = models.CharField(max_length=300)
+    id = models.AutoField(primary_key=True, verbose_name="Identificador")
+    title = models.CharField(max_length=_title_max_length, verbose_name="Nombre Plataforma")
+    link = models.CharField(max_length=300, verbose_name="Link de la plataforma")
 
     def __str__(self):
         return f'{self.id} - {self.title}'
 
+    class Meta:
+        verbose_name_plural = "Plataformas"
+
 class ReleasePlatformAffected(models.Model):
-    id = models.AutoField(primary_key=True)
-    release = models.ForeignKey(Release, on_delete=models.PROTECT)
-    platform = models.ForeignKey(Platform, on_delete=models.PROTECT) 
+    id = models.AutoField(primary_key=True, verbose_name="Identificador")
+    release = models.ForeignKey(Release, on_delete=models.PROTECT, verbose_name="Entrega relacionada")
+    platform = models.ForeignKey(Platform, on_delete=models.PROTECT, verbose_name="Plataforma Afectada") 
 
     def __str__(self):
         return f'{self.release}'
 
+    class Meta:
+        verbose_name_plural = "Plataforma afectada por la Entrega"
+
 class BusinessAreaAffected (models.Model):
-    id = models.AutoField(primary_key=True)
-    areaAffected = models.CharField(max_length=_title_max_length)
+    id = models.AutoField(primary_key=True, verbose_name="Identificador")
+    areaAffected = models.CharField(max_length=_title_max_length, verbose_name="Área afectada")
 
     def __str__(self):
         return f'{self.id} - {self.areaAffected}'
 
+    class Meta:
+        verbose_name_plural = "Área del negocio afectada"
+
 class ReleaseCommercialApproval(models.Model):
-    id = models.AutoField(primary_key=True)
-    businessAreaAffected = models.ForeignKey(BusinessAreaAffected, on_delete=models.PROTECT)
-    approved = models.BooleanField(default=False)
-    release = models.ForeignKey(Release, on_delete=models.PROTECT)
+    id = models.AutoField(primary_key=True, verbose_name="Identificador")
+    businessAreaAffected = models.ForeignKey(BusinessAreaAffected, on_delete=models.PROTECT, verbose_name="Área del negocio afectada")
+    approved = models.BooleanField(default=False, verbose_name="Aprobado")
+    release = models.ForeignKey(Release, on_delete=models.PROTECT, verbose_name="Entrega relacionada")
 
     no_admin = True
 
-
+    class Meta:
+        verbose_name_plural = "Aprobación comercial de la entrega"
 
 class TypeTask(models.Model):
-    id = models.CharField(max_length=10,primary_key=True)
-    title = models.CharField(max_length=_title_max_length)
+    id = models.CharField(max_length=10,primary_key=True, verbose_name="Identificador")
+    title = models.CharField(max_length=_title_max_length, verbose_name="Nombre tipo tarea")
 
     def __str__(self) -> str:
         return f"{self.id} | {self.title}"
 
     class Meta:
-        verbose_name_plural = "Type Task"
+        verbose_name_plural = "Tipo de Tarea"
+
 
 class Task(models.Model):
-    id = models.AutoField(primary_key=True)
-    title = models.CharField(max_length=_title_max_length)
-    typeTask = models.ForeignKey(TypeTask, on_delete=models.PROTECT)
-    associatedRealease = models.ForeignKey(Release, on_delete=models.PROTECT)
-    status = models.ForeignKey(Status, on_delete=models.PROTECT)
-    assignedTo = models.ForeignKey(User, on_delete=models.PROTECT)
-    description = models.TextField()
-    comments = models.TextField()
+    id = models.AutoField(primary_key=True, verbose_name="Identificador")
+    title = models.CharField(max_length=_title_max_length, verbose_name="Nombre Tarea")
+    typeTask = models.ForeignKey(TypeTask, on_delete=models.PROTECT, verbose_name="Tipo de Tarea")
+    associatedRealease = models.ForeignKey(Release, on_delete=models.PROTECT, verbose_name="Entrega relacionada")
+    status = models.ForeignKey(Status, on_delete=models.PROTECT, verbose_name="Estado")
+    assignedTo = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name="Asignado a")
+    description = models.TextField(verbose_name="Descripción")
+    comments = models.TextField(verbose_name="Comentarios")
 
+    def __str__(self):
+        return f'{self.id} - {self.title}'
 
+    class Meta:
+        verbose_name_plural = "Tareas"
 
 class QaDocumentation(models.Model):
-    id = models.AutoField(primary_key=True)
-    TestPlans = models.TextField()
-    productOwnerApproval = models.BooleanField(default=False)
-    status = models.ForeignKey(Status, on_delete=models.PROTECT)
+    id = models.AutoField(primary_key=True, verbose_name="Identificador")
+    TestPlans = models.TextField(verbose_name="Nombre del Plan de Pruebas")
+    productOwnerApproval = models.BooleanField(default=False, verbose_name="Aprobación del Dueño del producto")
+    status = models.ForeignKey(Status, on_delete=models.PROTECT, verbose_name="Estado")
     """esto podria ser por ejemplo un check que solo tenga permiso de modificar ese perfil? para ahorrar tiempo en no enviar correos?"""
-    developerApproval = models.BooleanField(default=False)
+    developerApproval = models.BooleanField(default=False, verbose_name="Aprobación del Desarrollador")
     impTC = (('BAJA', 'Baja'),
              ('MED', 'Media'),
              ('ALTA', 'Alta')
              )
-    importanceOfTestCases = models.CharField(max_length=10, choices=impTC)
+    importanceOfTestCases = models.CharField(max_length=10, choices=impTC, verbose_name="Importancia de los casos de PRueba")
+    evidenceOfTheTestPlans = models.TextField(verbose_name="Evidencias del plan de pruebas")
     #ChecklistTestTypes = models.ForeignKey(ChecklistDocumentation, on_delete=models.PROTECT)
-    evidenceOfTheTestPlans = models.TextField()
+    
 
     no_admin = True
 
-
-
-class ChecklistDocumentation (models.Model):
-    id = models.AutoField(primary_key=True)
-    typeOfTests = models.ForeignKey(TypeOfTests, on_delete=models.PROTECT)
-    releasePlatformAffected = models.ForeignKey(ReleasePlatformAffected, on_delete=models.PROTECT)
-    qaDocumentation = models.ForeignKey(QaDocumentation, on_delete=models.PROTECT)
-
-    no_admin = True
-
-class ReportedBugs(models.Model):
-    id = models.AutoField(primary_key=True)
-    title = models.CharField(max_length=_title_max_length)
-    typeInput = models.CharField(max_length=100)
-    reporter = models.ForeignKey(User, on_delete=models.PROTECT, related_name='reporter_bug_user', null=True)
-    assignedTo = models.ForeignKey(User, on_delete=models.PROTECT, related_name='bug_assignedto_user', null=True)
-    statusBugs_choices = (('New', 'New'),
-                ('MoreData', 'More data is needed'),
-                ('Assig', 'Assigned'),
-                ('Resolv', 'Resolved'),
-                ('Close', 'Close'))
-    status = models.CharField(max_length=10, choices=statusBugs_choices)
-    category_choices = (('NoDisp', 'Functionality Not Available'),
-                ('Handling', 'Error Handling'),
-                ('IncImp', 'Incorrect Implementation'),
-                ('improve', 'Improvement'),
-                ('Secure', 'Security'),
-                ('UserInt', 'User Interface'),
-                ('Usab', 'Usability'),
-                ('Navi', 'Navigability'))
-    category = models.CharField(max_length=10, choices=category_choices)
-    priority_choices = (('Block', 'Blocking'),
-                        ('Urg', 'Urgent'),
-                        ('High', 'High'),
-                        ('Ave', 'Average'),
-                        ('Low', 'Low'))
-    priority = models.CharField(max_length=10, choices=priority_choices)
-    severity_choices = (('Cri', 'Critical'),
-                ('Ma', 'Major'),
-                ('Mi', 'Minor'),
-                ('Sug', 'Suggestion'))
-    severity = models.CharField(max_length=10, choices=severity_choices)
-    frenquency_choices = (('Alw', 'Always'),
-                          ('Som', 'Sometimes'),
-                          ('Rand', 'Random'),
-                          ('NotTri', 'Not Tried'),
-                          ('NotRep', 'Not Reproducible'),
-                          ('Unknown', 'Unknown'))
-    frenquency = models.CharField(max_length=10, choices=frenquency_choices)
-    summary = models.CharField(max_length=50)
-    description = models.TextField()
-    stepsToReproduce = models.TextField()
+    def __str__(self):
+        return f'{self.id} - {self.title}'
 
     class Meta:
-        verbose_name_plural = 'Reported Bugs' 
+        verbose_name_plural = "Documentaciones QA"
+
+class ChecklistDocumentation (models.Model):
+    id = models.AutoField(primary_key=True, verbose_name="Identificador")
+    typeOfTests = models.ForeignKey(TypeOfTests, on_delete=models.PROTECT, verbose_name="Tipos de prueba")
+    releasePlatformAffected = models.ForeignKey(ReleasePlatformAffected, on_delete=models.PROTECT, verbose_name="Entrega relacionada")
+    qaDocumentation = models.ForeignKey(QaDocumentation, on_delete=models.PROTECT, verbose_name="Documentación QA")
+
+    no_admin = True
+
+    def __str__(self):
+        return f'{self.id} - {self.title}'
+
+    class Meta:
+        verbose_name_plural = "Lista de Verificación de Documentaciones"
+
+
+class ReportedBugs(models.Model):
+    id = models.AutoField(primary_key=True, verbose_name="Identificador")
+    title = models.CharField(max_length=_title_max_length, verbose_name="Título del error")
+    typeInput = models.CharField(max_length=300, verbose_name="Descripción del Error")
+    reporter = models.ForeignKey(User, on_delete=models.PROTECT, related_name='reporter_bug_user', null=True, verbose_name="Reportado por")
+    assignedTo = models.ForeignKey(User, on_delete=models.PROTECT, related_name='bug_assignedto_user', null=True, verbose_name="Asignado a")
+    statusBugs_choices = (('New', 'Nuevo'),
+                ('MoreData', 'Es necesaria más información'),
+                ('Assig', 'Asignado'),
+                ('Resolv', 'Resuelto'),
+                ('Close', 'Cerrado'))
+    status = models.CharField(max_length=10, choices=statusBugs_choices, verbose_name="Estado del Reporte")
+    category_choices = (('NoDisp', 'Funcionalidad no disponible'),
+                ('Handling', 'Manejo de errores definidos'),
+                ('IncImp', 'Implementación incorrecta'),
+                ('improve', 'Mejora'),
+                ('Secure', 'Error de Seguridad'),
+                ('UserInt', 'Interfaz de usuario'),
+                ('Usab', 'Usabilidad'),
+                ('Navi', 'Navigabilidad'))
+    category = models.CharField(max_length=10, choices=category_choices, verbose_name="Categoría")
+    priority_choices = (('Block', 'Bloqueado'),
+                        ('Urg', 'Urgente'),
+                        ('High', 'Alto'),
+                        ('Ave', 'Medio'),
+                        ('Low', 'Bajo'))
+    priority = models.CharField(max_length=10, choices=priority_choices,  verbose_name="Prioridad")
+    severity_choices = (('Cri', 'Crítico'),
+                ('Ma', 'Mayor'),
+                ('Mi', 'Menor'),
+                ('Sug', 'Sugerencia'))
+    severity = models.CharField(max_length=10, choices=severity_choices,  verbose_name="Severidad")
+    frenquency_choices = (('Alw', 'Siempre'),
+                          ('Som', 'A veces'),
+                          ('Rand', 'Aleatorio'),
+                          ('NotTri', 'No se ha intentado'),
+                          ('NotRep', 'No reproducible'),
+                          ('Unknown', 'Desconocido'))
+    frenquency = models.CharField(max_length=10, choices=frenquency_choices,  verbose_name="Frecuencia")
+    summary = models.CharField(max_length=50,  verbose_name="Resumen del error")
+    description = models.TextField( verbose_name="Descripción")
+    stepsToReproduce = models.TextField( verbose_name="Pasos para replicar")
+
+    class Meta:
+        verbose_name_plural = 'Reporte de Errores' 
 
     class Admin(admin.ModelAdmin):
         list_display = ['id', 'title', 'typeInput', 'reporter', 'assignedTo']
@@ -312,20 +349,22 @@ class ReportedBugs(models.Model):
     """subir archivos se podria? por ejemplo print de pantalla, videos"""
 
 class ImplementationRelease(models.Model):
-    id = models.AutoField(primary_key=True)
-    description = models.TextField()
-    idRelease = models.ForeignKey(Release, on_delete=models.PROTECT)
-    ImplementationDate= models.DateField()
-    Documentation = models.ForeignKey(QaDocumentation, on_delete=models.PROTECT)
-    developerInCharge = models.TextField()
-    qaInCharge = models.TextField()
+    id = models.AutoField(primary_key=True, verbose_name="Identificador")
+    description = models.TextField(verbose_name="Descripción")
+    idRelease = models.ForeignKey(Release, on_delete=models.PROTECT, verbose_name="Entrega relacionada")
+    ImplementationDate= models.DateField(verbose_name="Fecha de Implementación")
+    Documentation = models.ForeignKey(QaDocumentation, on_delete=models.PROTECT, verbose_name="Documentación")
+    developerInCharge = models.TextField(verbose_name="Desarrollador a cargo")
+    qaInCharge = models.TextField(verbose_name="Tester a cargo")
     results = models.TextChoices("Exitoso", "Fallido")
-    descriptionResults = models.TextField()
+    descriptionResults = models.TextField(verbose_name="Descripción de resultados")
     #Testejecution = models.ForeignKey(TestEjecution, on_delete=models.PROTECT)
-    testEvidence = models.CharField(max_length=50)
+    testEvidence = models.CharField(max_length=50, verbose_name="Evidencias de las pruebas")
     """poder adjuntar imagenes, videos"""
+
     class Meta:
-        verbose_name_plural = "Implementation Release"
+        verbose_name_plural = "Implementación de la Entrega"
+
     class Admin(admin.ModelAdmin):
         list_display = ['id', 'description', 'idRelease', 'ImplementationDate', 'view_testexe_link']
         
@@ -340,25 +379,28 @@ class ImplementationRelease(models.Model):
         return f"{self.id} | {self.description}"
 
 class TestEjecution(models.Model):
-    id = models.AutoField(primary_key=True)
-    title = models.CharField(max_length=100)
-    generalDescription = models.TextField()
+    id = models.AutoField(primary_key=True, verbose_name="Identificador")
+    title = models.CharField(max_length=100, verbose_name="Título")
+    generalDescription = models.TextField(verbose_name="Descripción general")
     #CaseTest = models.ForeignKey(CaseTest, on_delete=models.PROTECT)
-    implementationRelease = models.ForeignKey(ImplementationRelease, on_delete=models.PROTECT)
-
+    implementationRelease = models.ForeignKey(ImplementationRelease, on_delete=models.PROTECT, verbose_name="Entrega relacionada")
+ 
     no_admin = True
     class Meta:
-        verbose_name_plural = "Test Execution"
+        verbose_name_plural = "Ejecución de Pruebas"
+
+    def __str__(self):
+        return f'{self.id} - {self.title}'
 
 class CaseTest(models.Model):
-    id = models.AutoField(primary_key=True)
-    title = models.CharField(max_length=40)
-    caseTestDescription = models.TextField()
-    caseTestPreconditions = models.TextField()
-    caseOrder = models.PositiveIntegerField()
-    caseSteps = models.TextField()
-    caseExpectedOutcome = models.TextField()
-    testEjecution = models.ForeignKey(TestEjecution, on_delete=models.PROTECT)
+    id = models.AutoField(primary_key=True, verbose_name="Identificador")
+    title = models.CharField(max_length=40, verbose_name="Nombre del caso de prueba")
+    caseTestDescription = models.TextField(verbose_name="Descripción")
+    caseTestPreconditions = models.TextField(verbose_name="Precondiciones")
+    caseOrder = models.PositiveIntegerField(verbose_name="Orden del caso de prueba")
+    caseSteps = models.TextField(verbose_name="Pasos a seguir")
+    caseExpectedOutcome = models.TextField(verbose_name="Resultado Esperado")
+    testEjecution = models.ForeignKey(TestEjecution, on_delete=models.PROTECT, verbose_name="Plan de pruebas relacionado")
 
     def __str__(self):
         return f'{self.id} - {self.title}'
@@ -366,18 +408,20 @@ class CaseTest(models.Model):
     #no_admin = True
 
     class Meta:
-        verbose_name_plural = "Case Test"
+        verbose_name_plural = "Caso de Prueba"
 
 class QaDocumentationCaseTestImp(models.Model):
-    id = models.AutoField(primary_key=True)
-    caseTest = models.ForeignKey(CaseTest, on_delete=models.PROTECT)
-    qaDocumentatio = models.ForeignKey(QaDocumentation, on_delete=models.PROTECT)
+    id = models.AutoField(primary_key=True, verbose_name="Identificador")
+    caseTest = models.ForeignKey(CaseTest, on_delete=models.PROTECT, verbose_name="Caso de prueba")
+    qaDocumentation = models.ForeignKey(QaDocumentation, on_delete=models.PROTECT, verbose_name="Documentación QA")
     impTC = (('BAJA', 'Baja'),
              ('MED', 'Media'),
              ('ALTA', 'Alta')
              )
-    importanceOfTestCases = models.CharField(max_length=10, choices=impTC)
+    importanceOfTestCases = models.CharField(max_length=10, choices=impTC, verbose_name="Importancia de los casos de prueba")
 
+    class Meta:
+        verbose_name_plural = "Importancia de los casos de prueba en las Documentaciones QA"
 
 """
 Preguntas
