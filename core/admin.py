@@ -4,10 +4,11 @@ from .models import ReleaseCommercialApproval, Release, QaDocumentation, Checkli
 from django.contrib.auth.models import User
 from django import forms
 from django.contrib.admin.widgets import FilteredSelectMultiple
+from decouple import config
 
 nombre_aplicacion = 'core'
-devGroup = 'Developer'
-pownerGroup = 'ProductOwner'
+devGroup = config('DEVGROUP')
+pownerGroup = config('POWNERGROUP')
 # Obtiene todos los modelos registrados en la aplicación especificada
 modelos = apps.get_app_config(nombre_aplicacion).get_models()
 

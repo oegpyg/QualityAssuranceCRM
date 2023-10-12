@@ -7,13 +7,13 @@ from django.utils.html import format_html
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django import forms
-#from .admin import pownerGroup, devGroup
+from decouple import config
 _title_max_length = 100
 _priorityChoices = (('BAJ', 'BAJA'),
                     ('MED', 'MEDIA'),
                     ('ALT', 'ALTA'))
-devGroup = 'Developer'
-pownerGroup = 'ProductOwner'
+devGroup = config('DEVGROUP')
+pownerGroup = config('POWNERGROUP')
 class Status(models.Model):
     id = models.AutoField(primary_key=True)
     label = models.CharField(max_length=50, blank=False, null=False, verbose_name='Descripción')
