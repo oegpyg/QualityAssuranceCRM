@@ -1,1 +1,3 @@
 core/migrations/
+core/run/.env
+*.pyc
