@@ -18,7 +18,7 @@ class Status(models.Model):
     id = models.AutoField(primary_key=True)
     label = models.CharField(max_length=50, blank=False, null=False, verbose_name='Descripción')
     target_flow = models.CharField(max_length=50, blank=False, null=False, verbose_name="Objetivo Flujo")
-    status = models.BooleanField(default=False, verbose_name="Activo")
+    status = models.BooleanField(default=False, verbose_name="Estado")
 
     class Meta:
         verbose_name_plural = 'Estados' 
@@ -328,8 +328,8 @@ class ReportedBugs(models.Model):
                           ('Unknown', 'Desconocido'))
     frenquency = models.CharField(max_length=10, choices=frenquency_choices,  verbose_name="Frecuencia")
     summary = models.CharField(max_length=50,  verbose_name="Resumen del error")
-    description = models.TextField( verbose_name="Descripción")
-    stepsToReproduce = models.TextField( verbose_name="Pasos para replicar")
+    stepsToReproduce = models.TextField(verbose_name="Pasos para replicar")
+    associatedRealease = models.ForeignKey(Release, on_delete=models.PROTECT, verbose_name="Entrega relacionada")
 
     class Meta:
         verbose_name_plural = 'Reporte de Errores' 
