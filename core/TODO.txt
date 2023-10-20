@@ -48,3 +48,110 @@ class RecordAdmin(admin.ModelAdmin):
 admin.site.register(Record, RecordAdmin)
 
 """
+Nombre: Testly Manager
+Menú
+1 Gestión de Usuarios (solo para el Admin)
+2 Gestión de Proyectos
+2.1 Proyectos
+2.2 Unidad de negocio
+3 Gestión de Entregas
+3.1 Entregas
+3.2 Áreas de negocio afectadas
+4 Gestión de Tareas
+5 Gestión de Pruebas
+5.1 Casos de Prueba
+5.2 Ejecución de Pruebas
+5.3 Tipos de Pruebas
+6 Gestión de Documentos
+6.1 Documentaciones QA
+6.2 Plataformas
+7 Gestión de Errores
+7.1 Reportes de errores
+8 Gestión de Implementación
+
+Diseño
+- El primero de editor: usar para cargar descripción de proyectos, entregas, casos de prueba, comentarios, etc etc
+- Template dentro de table: data table project list: podria estar en el inicio?
+
+
+Gestión de Usuarios 
+- Users table (desde aca se puede marcar y desmarcar al cual se quiere activar desactivar) 
+- Listado sin columna de company
+- Estados: solo activo y no activo
+- Agregar usuarios el botón de arriba pero sacar de "Add user": en Personal info solo hasta numero de telefono. Sacar la pestaña de Work Info pero antes traer el estado del usuario que esta al final "Activo, No activo ". Sacar también Social
+
+ 
+Gestión de Proyectos
+- Proyectos: template project. Filtros de arriba por estados. Filtros de despliegue por prioridad. 
+- Cuadro cada proyecto: Nombre del proyecto, estado, descripción. Fecha de inicio, prioridad
+- Barra: entregas completadas
+- Asignado a
+- Agregar proyecto: Nombre, descripción (primera opción de template editor?). Estos campos con opciones de despliegue como esta ahora el 1 2: estado, prioridad, dueño del producto, desarrollador, tester de calidad, stakeholder, asignado a, unidad de negocio, tipos de pruebas. Versión campo normal y fecha inicio normal tambien.
+- Puede tener el export? que esta en Table-Dynamic table
+- la barra de entregas completadas.... puede tener un link o algo asi como para que al dar click se vea el listado de las hechas y faltantes? con el formato de task app?
+- Detalles de Proyectos: sin el agregar task y marcar como completo. Mantener el progreso. La lista del costado puede tener cantidad de entregas completadas y total de entregas. El de la derecha, puede tener asi tambien el titulo descripción y los demas campos abajo. Sin lo de users. Task podria ser las entregas? Sin files.
+- Unidad de negocio: como template eCommerce, Sellers: sin el exportar, sin el filtro de estados, columnas solo id, nombre, y las acciones 
+
+
+Gestión de Entregas
+- Igual que el de proyectos, con la diferencia de que la barra sean tareas completadas
+- Filtros de arriba por estados. Filtros de despliegue por prioridad. 
+- Cuadro cada proyecto: Nombre del proyecto, estado, descripción. Fecha de inicio (testStartDate) fecha fin si es que hay (TestEndDate)
+- Barra: tareas completadas
+- Asignado a 
+- Agregar entrega: Nombre, descripción (primera opción de template editor?). 
+Estos campos con opciones de despliegue como esta ahora el 1 2: proyecto, estado, asinado a, prioridad, tipo de pruebas, dueño del producto, desarrollador, tester de calidad
+- Versión: campo normal y fechas (inicio, fin, despliegue QA, creacion de plan de pruebas, fehca planificación implementación y fecha implementación) normal tambien.
+- Puede tener el export? que esta en Table-Dynamic table
+- Áreas de negocio afectadas: como template eCommerce, Sellers: sin el exportar, sin el filtro de estados, columnas solo id, nombre, y las acciones 
+
+
+Gestión de Tareas
+- Template eCommerce Orders: sin el exportar, filtros por estados y por asignados.
+- Columnas: ID, título, Estado, entrega relacionada, asignado a, acciones
+
+
+Gestión de Pruebas
+Casos de prueba
+- Como template eCommerce Sellers. Sin exportar, solo con el filtro por palabras.
+- Columnas: ID, Nombre, acciones. 
+- Al darle el "Nuevo Caso de Prueba" sería:  Titulo, descripción, precondiciones, pasos, resultados esperados y a que plan de pruebas se relaciona.
+
+
+Ejecución de pruebas
+- Template ecommerce orders: sin el exportar. Con filtro de estado. Columnas: ID, título, implementacion relacionada. Al entrar en cada uno o en darle editar, se podria completar el resto como por ejemplo los casos de prueba relacionados, etc?
+
+Tipos de Pruebas
+Como template eCommerce, Sellers: sin el exportar, sin el filtro de estados, columnas solo id, nombre, y las acciones 
+
+
+Gestión de Documentos
+Documentaciones QA
+- Como template eCommerce Orders: filtro de estados se mantiene. Columnas: ID, Nombre plan de pruebas... click en cada uno para ver los detalles? (aprobación del desarrollador, importancia, evidencias etc)
+- template import para las evidencias
+
+Plataformas
+- Como template eCommerce, Sellers: sin el exportar, sin el filtro de estados, columnas solo id, nombre, y las acciones 
+
+
+Gestión de Errores
+Reportes de errores
+- Template table, data table. En vez del botón de export que sea el de Agregar Reporte. Sin filtro de ID pero si el de estados y el buscador general.
+- Columnas: ID, título, asignado a, prioridad, categoria, estado.
+- Al agregar: título, descripción. Asignado a (con despliegue de opciones de usuarios)
+Estado, Categoría, prioridad, severidad, frecuencia (con el despliegue de opciones)
+Pasos para reproducir y resumen con el formato del primero de template editor
+
+
+Gestión de Implementación
+- Template eCommerce Sellers: con filtro de busqueda, con el export y con el Agregar.
+- Columnas: ID, Entrega relacionada, desarrolllador a cargo, QA a cargo, fecha implementación y acciones.
+- Al agregar: descripción, entrega relacionada (con despliegue de opciones de las entregas existentes), fecha implementacion, desarrollador a cargo, qa a cargo (ambos con opcion de seleccionar los usuarios existentes), documentación, resultados, evidencia de las pruebas (con el import del template)
+
+
+*************************************************************************************
+Estados
+- Como template eCommerce, Sellers: sin el exportar, sin el filtro de estados, columnas solo id, nombre, y las acciones 
+
+Tipos de Tareas
+- Como template eCommerce, Sellers: sin el exportar, sin el filtro de estados, columnas solo id, nombre, y las acciones 
