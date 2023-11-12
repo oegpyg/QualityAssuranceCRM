@@ -155,6 +155,7 @@ class Project(models.Model):
                    + "?"
                    + urlencode({"project__id": f"{obj.id}"})
                    )
+            return count
 
     class Meta:
         verbose_name_plural = "Proyectos"
