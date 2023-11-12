@@ -97,7 +97,7 @@ class Project(models.Model):
     startDate = models.DateField(
         auto_created=True, auto_now_add=False, auto_now=False, verbose_name="Fecha de Inicio")
     reporter = models.ForeignKey(User, on_delete=models.PROTECT,
-                                 related_name='reporter_user_p', verbose_name="Creado por")
+                                 related_name='reporter_user_p', verbose_name="Reportado por")
     status = models.ForeignKey(
         Status, on_delete=models.PROTECT, verbose_name="Estado")
     priority = models.CharField(
