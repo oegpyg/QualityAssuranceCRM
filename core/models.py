@@ -329,7 +329,7 @@ class QaDocumentation(models.Model):
              ('ALTA', 'Alta')
              )
     importanceOfTestCases = models.CharField(
-        max_length=10, choices=impTC, verbose_name="Importancia de los casos de PRueba")
+        max_length=10, choices=impTC, verbose_name="Importancia de los casos de Prueba")
     evidenceOfTheTestPlans = models.TextField(
         verbose_name="Evidencias del plan de pruebas")
     # ChecklistTestTypes = models.ForeignKey(ChecklistDocumentation, on_delete=models.PROTECT)
