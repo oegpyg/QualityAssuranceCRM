@@ -18,10 +18,8 @@ pownerGroup = config('POWNERGROUP')
 
 class Status(models.Model):
     id = models.AutoField(primary_key=True)
-    label = models.CharField(max_length=50, blank=False,
-                             null=False, verbose_name='Descripción')
-    target_flow = models.CharField(
-        max_length=50, blank=False, null=False, verbose_name="Objetivo Flujo")
+    label = models.CharField(max_length=50, blank=False, null=False, verbose_name='Descripción')
+    target_flow = models.CharField(max_length=50, blank=False, null=False, verbose_name="Objetivo Flujo")
     status = models.BooleanField(default=False, verbose_name="Activo")
 
     class Meta:
@@ -409,12 +407,10 @@ class ReportedBugs(models.Model):
                           ('NotTri', 'No se ha intentado'),
                           ('NotRep', 'No reproducible'),
                           ('Unknown', 'Desconocido'))
-    frenquency = models.CharField(
-        max_length=10, choices=frenquency_choices,  verbose_name="Frecuencia")
-    summary = models.CharField(
-        max_length=50,  verbose_name="Resumen del error")
-    description = models.TextField(verbose_name="Descripción")
-    stepsToReproduce = models.TextField(verbose_name="Pasos para replicar")
+    frenquency = models.CharField(max_length=10, choices=frenquency_choices,  verbose_name="Frecuencia")
+    summary = models.CharField(max_length=50,  verbose_name="Resumen del error")
+    description = models.TextField( verbose_name="Descripción")
+    stepsToReproduce = models.TextField( verbose_name="Pasos para replicar")
 
     class Meta:
         verbose_name_plural = 'Reporte de Errores'
