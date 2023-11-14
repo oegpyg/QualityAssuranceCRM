@@ -106,12 +106,45 @@ class ChecklistDocumentationForm(ModelForm):
 class ReportedBugsForm(ModelForm):
     class Meta:
         model = ReportedBugs
-        fields = ["title", "typeInput", "reporter", "assignedTo", ]
+        fields = ["title", "typeInput", "reporter", "assignedTo", "",]
         widgets = {
             'title': TextInput(attrs={'class': 'form-control', 'placeholder': "Título del error"}),
             'typeInput': TextInput(attrs={'class': 'form-control', 'placeholder': "Descripción del Error"}),
             'reporter': TextInput(attrs={'class': 'form-control', 'placeholder': "Reportado por"}),
             'assignedTo': TextInput(attrs={'class': 'form-control', 'placeholder': "Asignado a"}),
+            'statusBugs_choices': TextInput(attrs={'class': 'form-control', 'placeholder': "Estado del Reporte"
+                         (('New', 'Nuevo'),
+                          ('MoreData', 'Es necesaria más información'),
+                          ('Assig', 'Asignado'),
+                          ('Resolv', 'Resuelto'),
+                          ('Close', 'Cerrado'))}),
+            'category_choices': TextInput(attrs={'class': 'form-control', 'placeholder': "Categoría"
+                         (('NoDisp', 'Funcionalidad no disponible'),
+                        ('Handling', 'Manejo de errores definidos'),
+                        ('IncImp', 'Implementación incorrecta'),
+                        ('improve', 'Mejora'),
+                        ('Secure', 'Error de Seguridad'),
+                        ('UserInt', 'Interfaz de usuario'),
+                        ('Usab', 'Usabilidad'),
+                        ('Navi', 'Navigabilidad'))
+            'priority_choices': TextInput(attrs={'class': 'form-control', 'placeholder': "Prioridad"
+                        (('Block', 'Bloqueado'),
+                        ('Urg', 'Urgente'),
+                        ('High', 'Alto'),
+                        ('Ave', 'Medio'),
+                        ('Low', 'Bajo'))
+            'severity_choices': TextInput(attrs={'class': 'form-control', 'placeholder': "Severidad"
+                        (('Cri', 'Crítico'),
+                        ('Ma', 'Mayor'),
+                        ('Mi', 'Menor'),
+                        ('Sug', 'Sugerencia'))
+            'frenquency_choices': TextInput(attrs={'class': 'form-control', 'placeholder': "Frecuencia"
+                       (('Alw', 'Siempre'),
+                          ('Som', 'A veces'),
+                          ('Rand', 'Aleatorio'),
+                          ('NotTri', 'No se ha intentado'),
+                          ('NotRep', 'No reproducible'),
+                          ('Unknown', 'Desconocido'))
         }
 
 
@@ -166,9 +199,14 @@ class CaseTestForm(ModelForm):
 class QaDocumentationCaseTestImpForm(ModelForm):
     class Meta:
         model = QaDocumentationCaseTestImp
-        fields = ["id", "caseTest", "qaDocumentation"]
+        fields = ["id", "caseTest","qaDocumentation"]
         widgets = {
             'id': TextInput(attrs={'class': 'form-control', 'placeholder': "Identificador"}),
             'caseTest': TextInput(attrs={'class': 'form-control', 'placeholder': "Caso de prueba"}),
             'qaDocumentation': TextInput(attrs={'class': 'form-control', 'placeholder': "Documentación QA"}),
+            'impTC': TextInput(attrs={'class': 'form-control', 'placeholder': "Importancia casos de prueba"
+            (('BAJA', 'Baja'),
+             ('MED', 'Media'),
+             ('ALTA', 'Alta')
+             )}),
         }
