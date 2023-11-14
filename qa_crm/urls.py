@@ -15,5 +15,5 @@ urlpatterns += i18n_patterns(
     path('ui/', include('ui.urls', namespace='ui')),
     path('feature/', include('feature.urls', namespace='feature')),
     path('pages/', include('pages.urls', namespace='pages')),
-    path('customer/', include('customer.urls', namespace='customer')), 
+    path('customer/', include('customer.urls', namespace='customer')),
 )

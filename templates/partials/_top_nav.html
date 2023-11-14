@@ -277,14 +277,14 @@
                                                     "project-title" %}</a
                                                 >
                                             </li>
-                                            <li>
+                                            {% comment %} <li>
                                                 <a
                                                     href="{% url 'application:project_details' %}"
                                                     class="{% if path_name == 'project_details' %}active{% endif %}"
                                                     >{% translate
                                                     "project-detail" %}</a
                                                 >
-                                            </li>
+                                            </li> {% endcomment %}
                                         </ul>
                                     </li>
                                     <li>

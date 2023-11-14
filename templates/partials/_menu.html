@@ -167,8 +167,8 @@
                 </li>
             </ul>
         </li>
-        <li class="has-child {% if '/application/project/' in request.path %}open{% endif %}">
-            <a href="#" class="{% if '/application/project/' in request.path %}active{% endif %}">
+        <li class="has-child {% if '/application/project/' in request.path or '/application/release/' in request.path %}open{% endif %}">
+            <a href="#" class="{% if '/application/project/' in request.path or '/application/release/' in request.path %}active{% endif %}">
                 <span class="nav-icon uil uil-folder"></span>
                 <span class="menu-text">{% translate "project-menu-title" %}</span>
                 <span class="toggle-icon"></span>
@@ -178,8 +178,15 @@
                     <a href="{% url 'application:project_list' %}" class="{% if path_name == 'project_list' %}active{% endif %}">{% translate "project-title" %}</a>
                 </li>
                 <li>
-                    <a href="{% url 'application:project_details' %}" class="{% if path_name == 'project_details' %}active{% endif %}">{% translate "project-detail" %}</a>
+                    <a href="{% url 'application:release_list' %}" class="{% if path_name == 'release_list' %}active{% endif %}">Entregas</a>
                 </li>
+                <li>
+                    <a href="{% url 'application:task_list' %}" class="{% if path_name == 'task_list' %}active{% endif %}">Tareas</a>
+                </li>
+
+                {% comment %} <li>
+                    <a href="{% url 'application:project_details' %}" class="{% if path_name == 'project_details' %}active{% endif %}">{% translate "project-detail" %}</a>
+                </li> {% endcomment %}
             </ul>
         </li>
         <li>

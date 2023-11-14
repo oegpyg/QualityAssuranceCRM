@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+from django.utils.translation import gettext_lazy as _
 from pathlib import Path
 from decouple import config
 import sys
@@ -141,14 +142,13 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 
-LOGIN_URL=config('LOGIN_URL')
-LOGIN_REDIRECT_URL=config('LOGIN_REDIRECT_URL')
+LOGIN_URL = config('LOGIN_URL')
+LOGIN_REDIRECT_URL = config('LOGIN_REDIRECT_URL')
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-from django.utils.translation import gettext_lazy as _
 
 LANGUAGES = [
     ('en', _('English')),

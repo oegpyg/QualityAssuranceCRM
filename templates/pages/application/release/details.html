@@ -1,6 +1,6 @@
 {% extends 'layout/app.html' %}
 
-{% block title %} Project Details {% endblock %}
+{% block title %} Release Details {% endblock %}
 
 {% load i18n %}
 
@@ -15,7 +15,7 @@
             <div class="breadcrumb-main application-ui mb-30">
                 <div class="breadcrumb-action d-flex">
                     <div class="d-flex align-items-center user-member__title me-sm-25 me-0">
-                        <h4 class="text-capitalize fw-500 breadcrumb-title">{{project.title}}</h4>
+                        <h4 class="text-capitalize fw-500 breadcrumb-title">{{release.title}}</h4>
                     </div>
                     <div class="action-btn me-10 my-sm-0">
                         <a href="#" class="btn btn-primary bg-primary fs-12 fw-500"><img src="{% static 'img/svg/plus.svg' %}" alt="plus" class="svg"> Add
@@ -43,50 +43,72 @@
                     <div class="col-xxl-9 col-lg-9 mb-25">
                         <div class="card border-0 pb-md-50 pb-15">
                             <div class="card-header py-sm-20 py-3  px-sm-25 px-3 ">
-                                <h6>Acerca del Proyecto</h6>
+                                <h6>Acerca del Release</h6>
                             </div>
                             <div class="card-body">
                                 <div class="about-projects">
                                     <div class="about-projects__details">
-                                        <p class="fs-15 mb-25">{{project.description}}</p>
+                                        <p class="fs-15 mb-25">{{release.description}}</p>
                                         <p class="fs-15"> </p>
                                     </div>
-                                    
                                     <ul class="d-flex text-capitalize">
                                         <li>
-                                            <span class="color-light fs-13">Unidad de Negocio</span>
-                                            <p class="color-dark fs-14 mt-1 mb-0 fw-500">{{project.businessUnit}}</p>
+                                            <span class="color-light fs-13">Proyecto</span>
+                                            <a href="{% url 'application:project_details' release.project.id %}"><p class="color-dark fs-14 mt-1 mb-0 fw-500">{{release.project.title}}</p></a>
                                         </li>
                                         <li>
                                             <span class="color-light fs-13">Tipo de Prueba</span>
-                                            <p class="color-dark fs-14 mt-1 mb-0 fw-500">{{project.typeOfTests}}</p>
+                                            <p class="color-dark fs-14 mt-1 mb-0 fw-500">{{release.typeOfTests}}</p>
                                         </li>
                                         <li>
                                             <span class="color-light fs-13">Version</span>
-                                            <p class="color-dark fs-14 mt-1 mb-0 fw-500">{{project.version}}</p>
+                                            <p class="color-dark fs-14 mt-1 mb-0 fw-500">{{release.version}}</p>
                                         </li>
                                         <li>
                                             <span class="color-light fs-13">Prioridad</span>
-                                            <p class="color-dark fs-14 mt-1 mb-0 fw-500">{{project.priority}}</p>
+                                            <p class="color-dark fs-14 mt-1 mb-0 fw-500">{{release.priority}}</p>
                                         </li>
                                     </ul>
                                     <ul class="d-flex text-capitalize">
-                                        
                                         <li>
                                             <span class="color-light fs-13">Reportado por</span>
-                                            <p class="color-primary fs-14 mt-1 mb-0 fw-500">{{project.reporter.first_name}} {{project.reporter.last_name}}</p>
+                                            <p class="color-primary fs-14 mt-1 mb-0 fw-500">{{release.reporter.first_name}} {{release.reporter.last_name}}</p>
                                         </li>
-                                        {% comment %} <li>
-                                            <span class="color-light fs-13">Asigando a</span>
-                                            <p class="color-danger fs-14 mt-1 mb-0 fw-500">{{project.assignedTo.first_name}} {{project.assignedTo.last_name}}</p>
-                                        </li> {% endcomment %}
                                         <li>
-                                            <span class="color-light fs-13">Fecha Inicio</span>
-                                            <p class="color-primary fs-14 mt-1 mb-0 fw-500">{{project.startDate}}</p>
+                                            <span class="color-light fs-13">Estado</span>
+                                            <p class="color-dark fs-14 mt-1 mb-0 fw-500">{{release.status}} {{project.assignedTo.last_name}}</p>
                                         </li>
                                         <li>
                                             <span class="color-light fs-13">Asigando a</span>
-                                            <p class="color-danger fs-14 mt-1 mb-0 fw-500">{{project.assignedTo.first_name}} {{project.assignedTo.last_name}}</p>
+                                            <p class="color-danger fs-14 mt-1 mb-0 fw-500">{{release.assignedTo.first_name}} {{release.assignedTo.last_name}}</p>
+                                        </li>
+                                    </ul>
+                                    <ul class="d-flex text-capitalize">
+                                        <li>
+                                            <span class="color-light fs-13">Fecha planificada despliegue QA</span>
+                                            <p class="color-primary fs-14 mt-1 mb-0 fw-500">{{release.qaDeploymentPlanningDate}}</p>
+                                        </li>
+                                        <li>
+                                            <span class="color-light fs-13">Fecha de creación del plan de pruebas</span>
+                                            <p class="color-dark fs-14 mt-1 mb-0 fw-500">{{release.testPlanCreationDate}}</p>
+                                        </li>
+                                        <li>
+                                            <span class="color-light fs-13">Fecha de inicio de pruebas</span>
+                                            <p class="color-dark fs-14 mt-1 mb-0 fw-500">{{release.testStartDate}}</p>
+                                        </li>
+                                    </ul>
+                                    <ul class="d-flex text-capitalize">
+                                        <li>
+                                            <span class="color-light fs-13">Fecha de finalización de pruebas</span>
+                                            <p class="color-dark fs-14 mt-1 mb-0 fw-500">{{release.testEndDate}}</p>
+                                        </li>
+                                        <li>
+                                            <span class="color-light fs-13">Fecha planificada de Implementación</span>
+                                            <p class="color-dark fs-14 mt-1 mb-0 fw-500">{{release.plannedImplementationDate}}</p>
+                                        </li>
+                                        <li>
+                                            <span class="color-light fs-13">Fecha de implementación</span>
+                                            <p class="color-danger fs-14 mt-1 mb-0 fw-500">{{release.finalImplementationDate}}</p>
                                         </li>
                                     </ul>
                                 </div>
@@ -98,11 +120,11 @@
                         <div class="progress-box px-25 pt-25 pb-10 bg-success radius-xl">
                             <div class="d-flex justify-content-between mb-3">
                                 <h6 class="text-white fw-500 fs-16 text-capitalize">progreso</h6>
-                                <span class="progress-percentage text-white fw-500 fs-16 text-capitalize">{{project.release_set.all|count_by_status_perc:4|stringformat:'d'}}%</span>
+                                <span class="progress-percentage text-white fw-500 fs-16 text-capitalize">{{release.task_set.all|count_by_status_perc:4|stringformat:'d'}}%</span>
                             </div>
                             <div class="progress-wrap d-flex align-items-center mb-15">
                                 <div class="progress progress-height">
-                                    <div class="progress-bar bg-white" role="progressbar" style="width: {{project.release_set.all|count_by_status_perc:4|stringformat:'d'}}%;" aria-valuenow="{{project.release_set.all|count_by_status_perc:4|stringformat:'d'}}" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar bg-white" role="progressbar" style="width: {{release.task_set.all|count_by_status_perc:4|stringformat:'d'}}%;" aria-valuenow="{{release.task_set.all|count_by_status_perc:4|stringformat:'d'}}" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                             </div>
                         </div>
@@ -116,52 +138,29 @@
                                         <img class="svg wh-25 text-primary" src="{% static 'img/svg/at2.svg' %}" alt="img">
                                     </div> {% endcomment %}
                                     <div class="application-task-content">
-                                        <h4>{{project.release_set.all|count_by_status:4}}/{{project.release_set.count}}</h4>
-                                        <span class="text-light fs-14 mt-1 text-capitalize">release completados</span>
+                                        <h4>{{release.task_set.all|count_by_status:4}}/{{release.task_set.count}}</h4>
+                                        <span class="text-light fs-14 mt-1 text-capitalize">tareas completadas</span>
                                     </div>
                                 </div>
                                 <div class="application-task d-flex align-items-center mb-25">
                                     <div class="application-task-content">
-                                        <h4>{{project.productOwner.first_name}} {{project.productOwner.last_name}}</h4>
+                                        <h4>{{release.productOwner.first_name}} {{release.productOwner.last_name}}</h4>
                                         <span class="text-light fs-14 mt-1 text-capitalize">Product Owner</span>
                                     </div>
                                 </div>
                                 <div class="application-task d-flex align-items-center mb-25">
                                     <div class="application-task-content">
-                                        <h4>{{project.developer.first_name}} {{project.developer.last_name}}</h4>
+                                        <h4>{{release.developer.first_name}} {{release.developer.last_name}}</h4>
                                         <span class="text-light fs-14 mt-1 text-capitalize">Developer</span>
                                     </div>
                                 </div>
                                 <div class="application-task d-flex align-items-center mb-25">
                                     <div class="application-task-content">
-                                        <h4>{{project.qa.first_name}} {{project.qa.last_name}}</h4>
+                                        <h4>{{release.qa.first_name}} {{release.qa.last_name}}</h4>
                                         <span class="text-light fs-14 mt-1 text-capitalize">QA</span>
                                     </div>
                                 </div>
-                                <div class="application-task d-flex align-items-center mb-25">
-                                    <div class="application-task-content">
-                                        <h4>{{project.stakeHolder.first_name}} {{project.stakeHolder.last_name}}</h4>
-                                        <span class="text-light fs-14 mt-1 text-capitalize">Stake holder</span>
-                                    </div>
-                                </div>
-                                {% comment %} <div class="application-task d-flex align-items-center mb-25">
-                                    <div class="application-task-icon wh-60 bg-opacity-success content-center">
-                                        <img class="svg wh-25 text-success" src="{% static 'img/svg/at4.svg' %}" alt="img">
-                                    </div>
-                                    <div class="application-task-content">
-                                        <h4>$27,500</h4>
-                                        <span class="text-light fs-14 mt-1 text-capitalize">Spendings</span>
-                                    </div>
-                                </div>
-                                <div class="application-task d-flex align-items-center">
-                                    <div class="application-task-icon wh-60 bg-opacity-warning content-center">
-                                        <img class="svg wh-25 text-warning" src="{% static 'img/svg/at3.svg' %}" alt="img">
-                                    </div>
-                                    <div class="application-task-content">
-                                        <h4>250</h4>
-                                        <span class="text-light fs-14 mt-1 text-capitalize">hours spent</span>
-                                    </div>
-                                </div> {% endcomment %}
+                                
                             </div>
                         </div>  
                     </div>
@@ -169,94 +168,9 @@
                         
                     </div>
                     
-                {% comment %} <div class="card mt-25">
-                    <div class="card-body">
-                        <div class="application-task d-flex align-items-center mb-25">
-                            <div class="application-task-icon wh-60 bg-opacity-secondary content-center">
-                                <img class="svg wh-25 text-secondary" src="{% static 'img/svg/at.svg' %}" alt="img">
-                            </div>
-                            <div class="application-task-content">
-                                <h4>47</h4>
-                                <span class="text-light fs-14 mt-1 text-capitalize">total task</span>
-                            </div>
-                        </div>
-                        <div class="application-task d-flex align-items-center mb-25">
-                            <div class="application-task-icon wh-60 bg-opacity-primary content-center">
-                                <img class="svg wh-25 text-primary" src="{% static 'img/svg/at2.svg' %}" alt="img">
-                            </div>
-                            <div class="application-task-content">
-                                <h4>34</h4>
-                                <span class="text-light fs-14 mt-1 text-capitalize">task completed</span>
-                            </div>
-                        </div>
-                        <div class="application-task d-flex align-items-center mb-25">
-                            <div class="application-task-icon wh-60 bg-opacity-success content-center">
-                                <img class="svg wh-25 text-success" src="{% static 'img/svg/at4.svg' %}" alt="img">
-                            </div>
-                            <div class="application-task-content">
-                                <h4>$27,500</h4>
-                                <span class="text-light fs-14 mt-1 text-capitalize">Spendings</span>
-                            </div>
-                        </div>
-                        <div class="application-task d-flex align-items-center">
-                            <div class="application-task-icon wh-60 bg-opacity-warning content-center">
-                                <img class="svg wh-25 text-warning" src="{% static 'img/svg/at3.svg' %}" alt="img">
-                            </div>
-                            <div class="application-task-content">
-                                <h4>250</h4>
-                                <span class="text-light fs-14 mt-1 text-capitalize">hours spent</span>
-                            </div>
-                        </div>
-                    </div>
-                </div> {% endcomment %}
             </div>
                     
-                    {% comment %} <div class="col-xxl-4 col-lg-12 col-12 mb-25">
-                        <div class="card pb-35 border-0">
-                            <div class="card-header d-flex justify-content-between align-items-center py-10  px-sm-25 px-3">
-                                <h6 class="fw-500 ">users</h6>
-                                <button type="button" class="border radius-lg color-primary fw-500 fs-12 bg-transparent acButton">
-                                    <img class="svg" src="{% static 'img/svg/user-plus.svg' %}" alt=""> add user</button>
-                            </div>
-                            <div class="card-body">
-                                <div class="d-flex align-items-center mb-25">
-                                    <img src="{% static 'img/tm1.png' %}" class="wh-46 me-15" alt="img">
-                                    <div>
-                                        <p class="fs-14 fw-600 color-dark mb-0">Meyri Carles</p>
-                                        <span class=" mt-1 fs-14  color-light ">UI Designer</span>
-                                    </div>
-                                </div>
-                                <div class="d-flex align-items-center mb-25">
-                                    <img src="{% static 'img/tm2.png' %}" class="wh-46 me-15" alt="img">
-                                    <div>
-                                        <p class="fs-14 fw-600 color-dark mb-0">Shreyu Neu</p>
-                                        <span class=" mt-1 fs-14  color-light ">Web Developer</span>
-                                    </div>
-                                </div>
-                                <div class="d-flex align-items-center mb-25">
-                                    <img src="{% static 'img/tm3.png' %}" class="wh-46 me-15" alt="img">
-                                    <div>
-                                        <p class="fs-14 fw-600 color-dark mb-0">Tuhin Molla</p>
-                                        <span class=" mt-1 fs-14  color-light ">Project Manager</span>
-                                    </div>
-                                </div>
-                                <div class="d-flex align-items-center mb-25">
-                                    <img src="{% static 'img/tm4.png' %}" class="wh-46 me-15" alt="img">
-                                    <div>
-                                        <p class="fs-14 fw-600 color-dark mb-0">Billal Hossain</p>
-                                        <span class=" mt-1 fs-14  color-light ">App Developer</span>
-                                    </div>
-                                </div>
-                                <div class="d-flex align-items-center">
-                                    <img src="{% static 'img/tm5.png' %}" class="wh-46 me-15" alt="img">
-                                    <div>
-                                        <p class="fs-14 fw-600 color-dark mb-0">Khalid Hasan</p>
-                                        <span class=" mt-1 fs-14  color-light ">App Developer</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> {% endcomment %}
+                    
                 </div>
             </div>
 
@@ -265,11 +179,14 @@
                     <div class="card-header p-0">
                         <ul class="nav px-25 ap-tab-main app-ui-tab" id="project-ap-tab" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link active" id="project-overview-tab" data-bs-toggle="pill" href="#project-overview" role="tab" aria-controls="project-overview" aria-selected="true">releases</a>
+                                <a class="nav-link active" id="project-overview-tab" data-bs-toggle="pill" href="#project-overview" role="tab" aria-controls="project-overview" aria-selected="true">Tareas</a>
                             </li>
-                            {% comment %} <li class="nav-item">
-                                <a class="nav-link" id="project-timeline-tab" data-bs-toggle="pill" href="#project-timeline" role="tab" aria-controls="project-timeline" aria-selected="false">Activities</a>
-                            </li> {% endcomment %}
+                            <li class="nav-item">
+                                <a class="nav-link" id="project-timeline-tab" data-bs-toggle="pill" href="#project-timeline" role="tab" aria-controls="project-timeline" aria-selected="false">Aprobación comercial</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="project-platform-tab" data-bs-toggle="pill" href="#project-platform" role="tab" aria-controls="project-platform" aria-selected="false">Plataforma afectada</a>
+                            </li>
                         </ul>
                     </div>
                     <div class="tab-content w-100" id="projectContent">
@@ -278,19 +195,11 @@
                                 <div class="project-task table-responsive">
                                     <table class="table table-borderless">
                                         <tbody>
-                                            {% for release in project.release_set.all%}
+                                            {% for task in release.task_set.all%}
                                             <tr class="project-task-list ptl--hover draggable " draggable="true">
                                                 <td>
-                                                    {% comment %} <div class="checkbox-group d-flex">
-                                                        <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
-                                                            <input class="checkbox" type="checkbox" id="check-grp-1" {% if release.status == 4%}checked{%endif%}>
-                                                            <label for="check-grp-1" class="fs-14 color-light {% if release.status == 4%}strikethrough{%endif%}">
-                                                                {{release.title}}
-                                                            </label>
-                                                        </div>
-                                                    </div> {% endcomment %}
-                                                    <a href="{% url 'application:release_details' release.id %}">
-                                                        <span class="fs-14 text-light">{{release.title}}</span>
+                                                    <a href="{% url 'application:task_details' task.id %}" class="{% if task.status == 4%}strikethrough{%endif%}">
+                                                        <span class="fs-14 text-light">{{task.title}}</span>
                                                     </a>
                                                 </td>
                                                 
@@ -305,7 +214,7 @@
                                                                     <i class="uil uil-times"></i>
                                                                 </a> {% endcomment %}
                                                                 <span class="fs-12 text-light">
-                                                                {{release.typeOfTests}}
+                                                                {{task.status}}
                                                                 </span>
                                                             </li>
                                                             {% comment %} <li>
@@ -336,20 +245,22 @@
                                     </table>
                                     <div class="task-list-btn px-25 my-10">
                                         <button class="text-primary">
-                                            <img class="svg" src="img/svg/plus.svg" alt="">Agregar Nuevo
-                                            Release</button>
+                                            <img class="svg" src="img/svg/plus.svg" alt="">Agregar Nueva
+                                            Tarea</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <!--start aprob comercial-->
                         <div class="tab-pane fade" id="project-timeline" role="tabpanel" aria-labelledby="project-timeline-tab">
+                            {%for com_aprob in release.releasecommercialapproval_set.all%}
                             <div class="card-body px-0 mx-25 border-bottom">
                                 <div class="task-activities d-flex align-items-center">
                                     <div class="task-activities__left d-flex">
                                         <div class="content-center border bg-normal radius-xl me-sm-20 me-0 task-activities__month">
                                             <div class=" px-20 text-center">
                                                 <h5>22</h5>
-                                                <span class="fs-13 color-gray">December</span>
+                                                <span class="fs-13 color-gray">Octubre</span>
                                             </div>
                                         </div>
                                         <div class="task-activities__right">
@@ -364,19 +275,27 @@
                                                             </div>
                                                             <div>
                                                                 <a href="#">
-                                                                    <p class="fw-500 fs-14 text-dark mb-0">Mumtahin
-                                                                        <span class="color-light mx-1 fw-400">added new
-                                                                            task</span>Mumtahin Dashboard Project
+                                                                    <p class="fw-500 fs-14 text-dark mb-0">{{com_aprob.businessAreaAffected}}
+                                                                        {% comment %} <span class="color-light mx-1 fw-400">added new
+                                                                            task</span> {% endcomment %}
                                                                     </p>
                                                                 </a>
                                                                 <span class="pt-1 d-block color-extra-light fs-12">
-                                                                    3:30 PM
+                                                                    {% comment %} 3:30 PM {% endcomment %}
+                                                                    <div class="checkbox-group d-flex">
+                                                                        <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
+                                                                            <input class="checkbox" type="checkbox" id="check-grp-1" {% if com_aprob.approved%}checked{%endif%} disabled readonly>
+                                                                            <label for="check-grp-1" class="fs-14 color-light">
+                                                                                
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
                                                                 </span>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </li>
-                                                <li class="">
+                                                {% comment %} <li class="">
                                                     <div class="ffp d-flex justify-content-between align-items-center w-100">
                                                         <div class="d-flex">
                                                             <div class="me-3 ffp__imgWrapper d-flex align-items-center ">
@@ -417,52 +336,61 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </li>
+                                                </li> {% endcomment %}
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-body px-0 mx-25">
+                            {%endfor%}
+                            
+                        </div>
+                        <!--end aprob comercial-->
+
+                        <!--start plat afe-->
+                        <div class="tab-pane fade" id="project-platform" role="tabpanel" aria-labelledby="project-platform-tab">
+                            {%for rel_plat_afe in release.releaseplatformaffected_set.all%}
+                            <div class="card-body px-0 mx-25 border-bottom">
                                 <div class="task-activities d-flex align-items-center">
                                     <div class="task-activities__left d-flex">
-                                        <div class="content-center border bg-normal radius-xl me-sm-20 me-0 task-activities__month">
+                                        {% comment %} <div class="content-center border bg-normal radius-xl me-sm-20 me-0 task-activities__month">
                                             <div class=" px-20 text-center">
-                                                <h5>21</h5>
-                                                <span class="fs-13 color-gray">December</span>
+                                                <h5>22</h5>
+                                                <span class="fs-13 color-gray">Octubre</span>
                                             </div>
-                                        </div>
+                                        </div> {% endcomment %}
                                         <div class="task-activities__right">
                                             <ul>
                                                 <li class="">
                                                     <div class="ffp d-flex justify-content-between align-items-center w-100">
                                                         <div class="d-flex">
                                                             <div class="me-3 ffp__imgWrapper d-flex align-items-center ">
-                                                                <span class=" wh-24 me-15 rounded-circle content-center color-info bg-opacity-info">
-                                                                    <img src="{% static 'img/svg/user-plus.svg' %}" alt="user-plus" class="svg"></span>
-                                                                <span class="profile-image rounded-circle d-block wh-34 m-0 " style="background-image:url('img/tm2.png'); background-size: cover;"></span>
+                                                                <span class=" wh-24 me-15 rounded-circle content-center color-primary bg-opacity-primary">
+                                                                    <img src="{% static 'img/svg/code.svg' %}" alt="code" class="svg"></span>
+                                                                <span class="profile-image rounded-circle d-block wh-34 m-0 " style="background-image:url('img/tm6.png'); background-size: cover;"></span>
                                                             </div>
                                                             <div>
                                                                 <a href="#">
-                                                                    <p class="fw-500 fs-14 text-dark mb-0">Mumtahin
-                                                                        <span class="color-light mx-1 fw-400">added new
-                                                                            task</span>Mumtahin Dashboard Project
+                                                                    <p class="fw-500 fs-14 text-dark mb-0">{{rel_plat_afe.platform}}
+                                                                        {% comment %} <span class="color-light mx-1 fw-400">added new
+                                                                            task</span> {% endcomment %}
                                                                     </p>
                                                                 </a>
                                                                 <span class="pt-1 d-block color-extra-light fs-12">
-                                                                    3:30 PM
+                                                                    {% comment %} 3:30 PM {% endcomment %}
+                                                                    
                                                                 </span>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </li>
-                                                <li class="">
+                                                {% comment %} <li class="">
                                                     <div class="ffp d-flex justify-content-between align-items-center w-100">
                                                         <div class="d-flex">
                                                             <div class="me-3 ffp__imgWrapper d-flex align-items-center ">
                                                                 <span class=" wh-24 me-15 rounded-circle content-center color-primary bg-opacity-primary">
                                                                     <img src="{% static 'img/svg/code.svg' %}" alt="code" class="svg"></span>
-                                                                <span class="profile-image rounded-circle d-block wh-34 m-0 " style="background-image:url('img/tm3.png'); background-size: cover;"></span>
+                                                                <span class="profile-image rounded-circle d-block wh-34 m-0 " style="background-image:url('img/tm6.png'); background-size: cover;"></span>
                                                             </div>
                                                             <div>
                                                                 <a href="#">
@@ -481,9 +409,9 @@
                                                     <div class="ffp d-flex justify-content-between align-items-center w-100">
                                                         <div class="d-flex">
                                                             <div class="me-3 ffp__imgWrapper d-flex align-items-center ">
-                                                                <span class=" wh-24 me-15 rounded-circle content-center color-warning bg-opacity-warning">
-                                                                    <img src="{% static 'img/svg/upload.svg' %}" alt="upload" class="svg"></span>
-                                                                <span class="profile-image rounded-circle d-block wh-34 m-0 " style="background-image:url('img/tm4.png'); background-size: cover;"></span>
+                                                                <span class=" wh-24 me-15 rounded-circle content-center color-success bg-opacity-success">
+                                                                    <img src="{% static 'img/svg/check.svg' %}" alt="check" class="svg"></span>
+                                                                <span class="profile-image rounded-circle d-block wh-34 m-0 " style="background-image:url('img/tm2.png'); background-size: cover;"></span>
                                                             </div>
                                                             <div>
                                                                 <a href="#">
@@ -497,13 +425,17 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </li>
+                                                </li> {% endcomment %}
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            {%endfor%}
+                            
                         </div>
+                        <!--end plat afe-->
+                        
                     </div>
                 </div>
             </div>

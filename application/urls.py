@@ -16,8 +16,17 @@ urlpatterns = [
     path('ecommerce/sellers', views.sellers, name='sellers'),
     path('ecommerce/invoices', views.invoices, name='invoices'),
     path('project/list', views.projectList, name='project_list'),
-    path('project/details', views.projectDetails, name='project_details'),
+    path('project/details/<int:pk>/',
+         views.projectDetails, name='project_details'),
     path('project/add', views.projectAdd, name='project_add'),
+    path('release/list', views.releaseList, name='release_list'),
+    path('release/details/<int:pk>/',
+         views.releaseDetails, name='release_details'),
+
+    path('task/list', views.taskList, name='task_list'),
+    path('task/details/<int:pk>/',
+         views.taskDetails, name='task_details'),
+
     path('calendar', views.calendar, name='calendar'),
     path('user/team', views.team, name='team'),
     path('user/card', views.card, name='card'),

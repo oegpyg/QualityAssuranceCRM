@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from core import models as core_models
-from core.forms import ProjectForm
+from core.forms import ProjectForm, ReleaseForm, TaskForm
 from django.contrib.auth.models import User
 # email inbox page
 
@@ -104,9 +104,37 @@ def projectAdd(request):
 
 
 @login_required
-def projectDetails(request):
-    ctx = {}
+def projectDetails(request, pk):
+    ctx = {'project': core_models.Project.objects.get(pk=pk)}
     return render(request, 'pages/application/project/details.html', context=ctx)
+
+
+@login_required
+def releaseList(request):
+    releases = core_models.Release.objects.all()
+    form = ReleaseForm()
+    ctx = {'releases': releases, 'frm': form}
+    return render(request, 'pages/application/release/list.html', context=ctx)
+
+
+@login_required
+def releaseDetails(request, pk):
+    ctx = {'release': core_models.Release.objects.get(pk=pk)}
+    return render(request, 'pages/application/release/details.html', context=ctx)
+
+
+@login_required
+def taskList(request):
+    tasks = core_models.Task.objects.all()
+    form = TaskForm()
+    ctx = {'releases': tasks, 'frm': form}
+    return render(request, 'pages/application/release/list.html', context=ctx)
+
+
+@login_required
+def taskDetails(request, pk):
+    ctx = {'task': core_models.Task.objects.get(pk=pk)}
+    return render(request, 'pages/application/task/details.html', context=ctx)
 
 # calendar page
 

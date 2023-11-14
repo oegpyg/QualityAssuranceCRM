@@ -28,7 +28,7 @@ class Status(models.Model):
         verbose_name_plural = 'Estados'
 
     def __str__(self) -> str:
-        return f"{self.id} | {self.label}"
+        return f"{self.label}"
 
     class Admin(admin.ModelAdmin):
         search_fields = ['label', 'target_flow']
@@ -205,7 +205,7 @@ class Release(models.Model):
     # businessAreaAffected = models.ForeignKey(BusinessAreaAffected)
 
     def __str__(self):
-        return f'{self.id} - {self.title}'
+        return f'{self.title}'
 
     no_admin = True
 
@@ -235,7 +235,7 @@ class Platform(models.Model):
         max_length=300, verbose_name="Link de la plataforma")
 
     def __str__(self):
-        return f'{self.id} - {self.title}'
+        return f'{self.title}'
 
     class Meta:
         verbose_name_plural = "Plataformas"
@@ -261,7 +261,7 @@ class BusinessAreaAffected (models.Model):
         max_length=_title_max_length, verbose_name="Área afectada")
 
     def __str__(self):
-        return f'{self.id} - {self.areaAffected}'
+        return f'{self.areaAffected}'
 
     class Meta:
         verbose_name_plural = "Área del negocio afectada"
@@ -288,7 +288,7 @@ class TypeTask(models.Model):
                              verbose_name="Nombre tipo tarea")
 
     def __str__(self) -> str:
-        return f"{self.id} | {self.title}"
+        return f"{self.title}"
 
     class Meta:
         verbose_name_plural = "Tipo de Tarea"
@@ -310,7 +310,7 @@ class Task(models.Model):
     comments = models.TextField(verbose_name="Comentarios")
 
     def __str__(self):
-        return f'{self.id} - {self.title}'
+        return f'{self.title}'
 
     class Meta:
         verbose_name_plural = "Tareas"
@@ -339,7 +339,7 @@ class QaDocumentation(models.Model):
     no_admin = True
 
     def __str__(self):
-        return f'{self.id} - {self.title}'
+        return f'{self.title}'
 
     class Meta:
         verbose_name_plural = "Documentaciones QA"
