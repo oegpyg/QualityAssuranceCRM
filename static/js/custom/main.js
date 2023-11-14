@@ -31,12 +31,12 @@
     }
   })
   /* DatePicker  */
-  $("#datepicker,#datepicker2,#datepicker3,#datepicker4,#datepicker5,#datepicker6,#datepicker7").datepicker({
-    dateFormat: "d MM yy",
+  $("#datepicker,#datepicker2,#datepicker3,#datepicker4,#datepicker5,#datepicker6,#datepicker7,#id_startDate").datepicker({
+    dateFormat: "yyyy-mm-dd",
     duration: "medium",
     changeMonth: true,
     changeYear: true,
-    yearRange: "2022:2010",
+    yearRange: "2030:2023",
   });
   $("#datepicker9").datepicker({
     dateFormat: 'yy-mm-dd',
@@ -47,22 +47,42 @@
     minDate: -20,
     maxDate: "+1M +10D"
   });
-  $('#datepicker').on('clcik', function () {
+  $('#datepicker,#id_startDate').on('click', function () {
     if (this.id == "add") {
       $('.ui-datepicker').addClass("myClass", "fast")
     } else {
       $('.ui-datepicker').removeClass("myClass", "fast")
     }
   })
-  $("body").on("click", "#datepicker,#datepicker2", function () {
+
+  $("body").on("click", "#datepicker,#datepicker2,#id_startDate", function () {
     $(this).closest("body").addClass("datePicker-active");
   });
 
   $('body').on('click', function (e) {
-    if (!$(e.target).closest('#datepicker,#datepicker2').length) {
+    if (!$(e.target).closest('#datepicker,#datepicker2,#id_startDate').length) {
       $("body").removeClass("datePicker-active");
     }
   });
+
+  /* $("#id_startDate").datepicker({
+    dateFormat: "d MM yy",
+    duration: "medium",
+    changeMonth: true,
+    changeYear: true,
+    yearRange: "2022:2010",
+  });
+
+  $("body").on("click", "#id_startDate", function () {
+    $(this).closest("body").addClass("datePicker-active");
+  });
+
+  $('body').on('click', function (e) {
+    if (!$(e.target).closest('#id_startDate').length) {
+      $("body").removeClass("datePicker-active");
+    }
+  }); */
+
 
   // Preloader
   window.addEventListener('load', function () {
@@ -81,15 +101,15 @@
     .on("change", function () {
       to.datepicker("option", "minDate", getDate(this));
     })),
-  (to = $('input[name="date-range-to"]')
-    .datepicker({
-      defaultDate: "+1w",
-      changeMonth: true,
-      numberOfMonths: 2,
-    })
-    .on("change", function () {
-      from.datepicker("option", "maxDate", getDate(this));
-    }));
+    (to = $('input[name="date-range-to"]')
+      .datepicker({
+        defaultDate: "+1w",
+        changeMonth: true,
+        numberOfMonths: 2,
+      })
+      .on("change", function () {
+        from.datepicker("option", "maxDate", getDate(this));
+      }));
 
   function getDate(element) {
     var date;
@@ -302,28 +322,28 @@
     prevArrow: false,
     nextArrow: false,
     responsive: [{
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
-          infinite: true,
-          dots: true
-        }
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2
-        }
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1
-        }
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 3,
+        slidesToScroll: 3,
+        infinite: true,
+        dots: true
       }
+    },
+    {
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 2
+      }
+    },
+    {
+      breakpoint: 480,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1
+      }
+    }
     ]
   }
   var testimonialSlider1 = {
@@ -341,36 +361,36 @@
     prevArrow: '<div class="slider-arrow slider-prev las la-arrow-left"></div>',
     nextArrow: '<div class="slider-arrow slider-next las la-arrow-right"></div>',
     responsive: [{
-        breakpoint: 1499,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-          infinite: true,
-          centerMode: false,
-          dots: true
-        }
-      },
-      {
-        breakpoint: 767,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1
-        }
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1
-        }
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1
-        }
+      breakpoint: 1499,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 1,
+        infinite: true,
+        centerMode: false,
+        dots: true
       }
+    },
+    {
+      breakpoint: 767,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1
+      }
+    },
+    {
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1
+      }
+    },
+    {
+      breakpoint: 480,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1
+      }
+    }
     ]
 
   }
@@ -384,36 +404,36 @@
     prevArrow: '<div class="slider-arrow slider-prev las la-arrow-left"></div>',
     nextArrow: '<div class="slider-arrow slider-next las la-arrow-right"></div>',
     responsive: [{
-        breakpoint: 1499,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-          infinite: true,
-          centerMode: false,
-          dots: true
-        }
-      },
-      {
-        breakpoint: 767,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1
-        }
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1
-        }
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1
-        }
+      breakpoint: 1499,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 1,
+        infinite: true,
+        centerMode: false,
+        dots: true
       }
+    },
+    {
+      breakpoint: 767,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1
+      }
+    },
+    {
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1
+      }
+    },
+    {
+      breakpoint: 480,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1
+      }
+    }
     ]
   }
   var testimonialSliderFor = {
@@ -442,20 +462,20 @@
     touchMove: true,
     arrows: false,
     responsive: [{
-        breakpoint: 1899,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 1,
-          centerMode: true,
-        }
-      },
-      {
-        breakpoint: 1600,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 1
-        }
-      },
+      breakpoint: 1899,
+      settings: {
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        centerMode: true,
+      }
+    },
+    {
+      breakpoint: 1600,
+      settings: {
+        slidesToShow: 3,
+        slidesToScroll: 1
+      }
+    },
     ]
   }
   var testimonialSlider4 = {
@@ -1209,8 +1229,8 @@
   $(document).on("click", ".qty-minus", function () {
     if ($(this).next().val() > 0)
       $(this)
-      .next()
-      .val(+$(this).next().val() - 1);
+        .next()
+        .val(+$(this).next().val() - 1);
   });
 
   $(".fc-listMonth-button").on("click", function () {
@@ -1497,7 +1517,7 @@
         startDate = endDate;
         endDate = temp;
       }
-    } catch (ex) {}
+    } catch (ex) { }
     return {
       start: startDate,
       end: endDate

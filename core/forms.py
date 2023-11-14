@@ -1,38 +1,49 @@
-from django.forms import ModelForm, TextInput, Textarea, NumberInput, FileInput, DateInput, DateTimeInput, TimeInput, CheckboxInput, Select
-from .models import Project
+from django.forms import ModelForm, TextInput, Textarea, NumberInput, FileInput, DateInput, DateTimeInput, TimeInput, CheckboxInput, Select, SelectDateWidget, ModelChoiceField
+from .models import Project, Release, Task, QaDocumentation, ReportedBugs, ChecklistDocumentation, ImplementationRelease, TestEjecution, CaseTest, QaDocumentationCaseTestImp, _priorityChoices
+from django.contrib.auth.models import User
+from decouple import config
+
+devGroup = config('DEVGROUP')
+pownerGroup = config('POWNERGROUP')
+
 
 class ProjectForm(ModelForm):
+
     class Meta:
         model = Project
-        fields = ["title", "description", "startDate", "reporter", "status", "priority", "productOwner", "developer", "qa", "stakeHolder", "assignedTo", "version", "businessUnit", "typeOfTests"]
+        fields = ["title", "description", "startDate", "reporter", "status", "priority", "productOwner",
+                  "developer", "qa", "stakeHolder", "assignedTo", "version", "businessUnit", "typeOfTests"]
         widgets = {
-            'title': TextInput(attrs={'class': 'form-control', 'placeholder': "Nombre del Proyecto"}),
+            'title': TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre del Proyecto'}),
             'description': Textarea(attrs={'class': 'form-control', 'placeholder': 'Descripcion', 'cols': 80, 'rows': 20}),
-            'startDate': DateInput(attrs={'class': 'form-control', 'placeholder': "Fecha de Inicio"}),
-            'reporter': TextInput(attrs={'class': 'form-control', 'placeholder': "Reportado por"}),
-            'status': TextInput(attrs={'class': 'form-control', 'placeholder': "Estado"}),
-            'priority': TextInput(attrs={'class': 'form-control', 'placeholder': "Prioridad"}),
-            'productOwner': TextInput(attrs={'class': 'form-control', 'placeholder': "Dueño del Producto"}),
-            'developer': TextInput(attrs={'class': 'form-control', 'placeholder': "Desarrollador"}),
-            'qa': TextInput(attrs={'class': 'form-control', 'placeholder': "Tester de Calidad"}),
-            'stakeHolder': TextInput(attrs={'class': 'form-control', 'placeholder': "StakeHolder"}),
-            'assignedTo': TextInput(attrs={'class': 'form-control', 'placeholder': "Asignado a"}),
-            'version': TextInput(attrs={'class': 'form-control', 'placeholder': "Version"}),
-            'businessUnit': TextInput(attrs={'class': 'form-control', 'placeholder': "Unidad de negocio"}),
-            'typeOfTests': TextInput(attrs={'class': 'form-control', 'placeholder': "Tipo de Pruebas"}),
+            'startDate': DateInput(attrs={'class': 'form-control', 'placeholder': "Fecha de Inicio", "type": "date"}),
+            # 'reporter': ModelChoiceField(queryset=User.objects.filter(groups__name=pownerGroup), widget=Select, empty_label="(Nothing)"),
+            'status': Select(attrs={'class': 'form-control', 'placeholder': "Estado"}),
+            'priority': Select(choices=_priorityChoices, attrs={'class': 'form-control', 'placeholder': "Prioridad"}),
+
+            'productOwner': Select(choices=[(choice.pk, choice) for choice in User.objects.filter(groups__name=pownerGroup)], attrs={'class': 'form-control', 'placeholder': "Dueño del Producto"}),
+            'developer': Select(attrs={'class': 'form-control', 'placeholder': "Desarrollador"}),
+            'qa': Select(attrs={'class': 'form-control', 'placeholder': "Tester de Calidad"}),
+            'stakeHolder': Select(attrs={'class': 'form-control', 'placeholder': "StakeHolder"}),
+            'assignedTo': Select(attrs={'class': 'form-control', 'placeholder': 'Asignado a'}),
+            'version': NumberInput(attrs={'class': 'form-control', 'placeholder': "Version"}),
+            'businessUnit': Select(attrs={'class': 'form-control', 'placeholder': "Unidad de negocio"}),
+            'typeOfTests': Select(attrs={'class': 'form-control', 'placeholder': 'Tipo de Pruebas'}),
         }
+
 
 class ReleaseForm(ModelForm):
     class Meta:
         model = Release
-        fields = ["title", "description", "project", "status", "reporter", "assignedTo", "priority", "version", "typeOfTests", "qaDeploymentPlanningDate", "testPlanCreationDate", "testStartDate", "testEndDate", "plannedImplementationDate", "finalImplementationDate", "productOwner", "developer", "qa"]
+        fields = ["title", "description", "project", "status", "reporter", "assignedTo", "priority", "version", "typeOfTests", "qaDeploymentPlanningDate",
+                  "testPlanCreationDate", "testStartDate", "testEndDate", "plannedImplementationDate", "finalImplementationDate", "productOwner", "developer", "qa"]
         widgets = {
             'title': TextInput(attrs={'class': 'form-control', 'placeholder': "Nombre del Proyecto"}),
             'description': Textarea(attrs={'class': 'form-control', 'placeholder': 'Descripcion', 'cols': 80, 'rows': 20}),
             'project': TextInput(attrs={'class': 'form-control', 'placeholder': "Proyecto"}),
             'status': TextInput(attrs={'class': 'form-control', 'placeholder': "Estado"}),
             'reporter': TextInput(attrs={'class': 'form-control', 'placeholder': "Reportado por"}),
-            'assignedTo': TextInput(attrs={'class': 'form-control', 'placeholder': "Asignado a"}),
+            'assignedTo': TextInput(attrs={'class': 'form-control', 'placeholder': 'Asignado a'}),
             'priority': TextInput(attrs={'class': 'form-control', 'placeholder': "Prioridad"}),
             'version': TextInput(attrs={'class': 'form-control', 'placeholder': "Version"}),
             'typeOfTests': TextInput(attrs={'class': 'form-control', 'placeholder': "Tipo de Pruebas"}),
@@ -47,47 +58,55 @@ class ReleaseForm(ModelForm):
             'qa': TextInput(attrs={'class': 'form-control', 'placeholder': "Tester de Calidad"}),
         }
 
+
 class TaskForm(ModelForm):
     class Meta:
         model = Task
-        fields = ["title", "typeTask", "associatedRealease", "status", "assignedTo", "description", "comments"]
+        fields = ["title", "typeTask", "associatedRealease",
+                  "status", "assignedTo", "description", "comments"]
         widgets = {
             'title': TextInput(attrs={'class': 'form-control', 'placeholder': "Nombre del Proyecto"}),
             'typeOfTask': TextInput(attrs={'class': 'form-control', 'placeholder': "Tipo de Tarea"}),
-            'associatedRealease': TextInput(attrs={'class': 'form-control', 'placeholder': "Entrega relacionada"}),
+            'associatedRealease': TextInput(attrs={'class': 'form-control', 'placeholder': 'Entrega relacionada'}),
             'status': TextInput(attrs={'class': 'form-control', 'placeholder': "Estado"}),
             'assignedTo': TextInput(attrs={'class': 'form-control', 'placeholder': "Asignado a"}),
             'description': Textarea(attrs={'class': 'form-control', 'placeholder': 'Descripcion', 'cols': 80, 'rows': 20}),
             'comments': TextInput(attrs={'class': 'form-control', 'placeholder': "Comentarios"}),
-            
+
         }
+
 
 class QaDocumentationForm(ModelForm):
     class Meta:
         model = QaDocumentation
-        fields = ["TestPlans", "productOwnerApproval", "status", "developerApproval", "evidenceOfTheTestPlans",]
+        fields = ["TestPlans", "productOwnerApproval", "status",
+                  "developerApproval", "evidenceOfTheTestPlans",]
         widgets = {
             'TestPlans': TextInput(attrs={'class': 'form-control', 'placeholder': "Nombre del Plan de Pruebas"}),
             'productOwnerApproval': TextInput(attrs={'class': 'form-control', 'placeholder': "Aprobación del Dueño del producto"}),
-            'status': TextInput(attrs={'class': 'form-control', 'placeholder': "Estado"}),
-            'developerApproval': TextInput(attrs={'class': 'form-control', 'placeholder': "Aprobación del Desarrollador"}),
-            'evidenceOfTheTestPlans': Textarea(attrs={'class': 'form-control', 'placeholder': 'Evidencias del plan de pruebas'}),
+            # 'status': TextInput(attrs={'class': 'form-control', 'placeholder': "Estado"}),
+            # 'developerApproval': TextInput(attrs={'class': 'form-control', 'placeholder': "Aprobación del Desarrollador"}),
+            # 'evidenceOfTheTestPlans': Textarea(attrs={'class': 'form-control', 'placeholder': 'Evidencias del plan de pruebas'}),
         }
+
 
 class ChecklistDocumentationForm(ModelForm):
     class Meta:
         model = ChecklistDocumentation
-        fields = ["typeOfTests", "releasePlatformAffected", "status", "developerApproval", "evidenceOfTheTestPlans",]
+        fields = ["typeOfTests", "releasePlatformAffected",
+                  # "status", "developerApproval", "evidenceOfTheTestPlans",
+                  ]
         widgets = {
             'typeOfTests': TextInput(attrs={'class': 'form-control', 'placeholder': "Tipo de Pruebas"}),
-            'releasePlatformAffected': TextInput(attrs={'class': 'form-control', 'placeholder': "Entrega relacionada"}),
+            'releasePlatformAffected': TextInput(attrs={'class': 'form-control', 'placeholder': 'Entrega relacionada'}),
             'qaDocumentation': TextInput(attrs={'class': 'form-control', 'placeholder': "Documentación QA"}),
         }
+
 
 class ReportedBugsForm(ModelForm):
     class Meta:
         model = ReportedBugs
-        fields = ["title", "typeInput", "reporter", "assignedTo", "statusBugs_choices","category_choices", "priority_choices", "severity_choices", "frenquency_choices"]
+        fields = ["title", "typeInput", "reporter", "assignedTo", "",]
         widgets = {
             'title': TextInput(attrs={'class': 'form-control', 'placeholder': "Título del error"}),
             'typeInput': TextInput(attrs={'class': 'form-control', 'placeholder': "Descripción del Error"}),
@@ -128,20 +147,25 @@ class ReportedBugsForm(ModelForm):
                           ('Unknown', 'Desconocido'))
         }
 
+
 class ImplementationReleaseForm(ModelForm):
     class Meta:
         model = ImplementationRelease
-        fields = ["description", "idRelease", "ImplementationDate", "Documentation", "developerInCharge","qaInCharge","results","descriptionResult","testEvidence"]
+        fields = ["description", "idRelease", "ImplementationDate", "Documentation",
+                  "developerInCharge", "qaInCharge",
+                  # "results", "descriptionResult",
+                  "testEvidence"]
         widgets = {
             'description': TextInput(attrs={'class': 'form-control', 'placeholder': "Descripción"}),
             'idRelease': TextInput(attrs={'class': 'form-control', 'placeholder': "Entrega relacionada"}),
             'Documentation': DateInput(attrs={'class': 'form-control', 'placeholder': "Documentación"}),
             'developerInCharge': TextInput(attrs={'class': 'form-control', 'placeholder': "Desarrollador a cargo"}),
             'qaInCharge': TextInput(attrs={'class': 'form-control', 'placeholder': "Tester a cargo"}),
-            'results': TextChoices(attrs={'class': 'form-control', 'placeholder': ("Exitoso", "Fallido")}),
+            # 'results': TextChoices(attrs={'class': 'form-control', 'placeholder': ("Exitoso", 'Fallido')}),
             'descriptionResult': TextInput(attrs={'class': 'form-control', 'placeholder': "Descripción de resultados"}),
             'testEvidence': TextInput(attrs={'class': 'form-control', 'placeholder': "Evidencias de las pruebas"}),
         }
+
 
 class TestEjecutionForm(ModelForm):
     class Meta:
@@ -158,7 +182,8 @@ class TestEjecutionForm(ModelForm):
 class CaseTestForm(ModelForm):
     class Meta:
         model = CaseTest
-        fields = ["id", "title","caseTestDescription", "caseTestPreconditions", "caseOrder", "caseSteps", "caseExpectedOutcome", "testEjecution"]
+        fields = ["id", "title", "caseTestDescription", "caseTestPreconditions",
+                  "caseOrder", "caseSteps", "caseExpectedOutcome", "testEjecution"]
         widgets = {
             'id': TextInput(attrs={'class': 'form-control', 'placeholder': "Identificador"}),
             'title': TextInput(attrs={'class': 'form-control', 'placeholder': "Título"}),
@@ -170,10 +195,11 @@ class CaseTestForm(ModelForm):
             'testEjecution': TextInput(attrs={'class': 'form-control', 'placeholder': "Plan de pruebas relacionado"}),
         }
 
+
 class QaDocumentationCaseTestImpForm(ModelForm):
     class Meta:
         model = QaDocumentationCaseTestImp
-        fields = ["id", "caseTest","qaDocumentation", "impTC"]
+        fields = ["id", "caseTest","qaDocumentation"]
         widgets = {
             'id': TextInput(attrs={'class': 'form-control', 'placeholder': "Identificador"}),
             'caseTest': TextInput(attrs={'class': 'form-control', 'placeholder': "Caso de prueba"}),
@@ -184,12 +210,3 @@ class QaDocumentationCaseTestImpForm(ModelForm):
              ('ALTA', 'Alta')
              )}),
         }
-
-
-
-
-
-
-
-
-
