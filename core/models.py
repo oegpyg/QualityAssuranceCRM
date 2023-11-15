@@ -339,7 +339,7 @@ class QaDocumentation(models.Model):
     no_admin = True
 
     def __str__(self):
-        return f'{self.title}'
+        return f'{self.TestPlans}'
 
     class Meta:
         verbose_name_plural = "Documentaciones QA"
@@ -357,7 +357,7 @@ class ChecklistDocumentation (models.Model):
     no_admin = True
 
     def __str__(self):
-        return f'{self.id} - {self.title}'
+        return f'{self.typeOfTests} - {self.releasePlatformAffected}'
 
     class Meta:
         verbose_name_plural = "Lista de Verificación de Documentaciones"
