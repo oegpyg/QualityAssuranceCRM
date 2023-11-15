@@ -166,12 +166,12 @@ class ImplementationReleaseForm(ModelForm):
 class TestEjecutionForm(ModelForm):
     class Meta:
         model = TestEjecution
-        fields = ["id", "title", "generalDescription", "implementationRelease"]
+        fields = ["id", "title", "generalDescription", "release"]
         widgets = {
             'id': TextInput(attrs={'class': 'form-control', 'placeholder': "Identificador"}),
             'title': TextInput(attrs={'class': 'form-control', 'placeholder': "Título"}),
             'generalDescription': TextInput(attrs={'class': 'form-control', 'placeholder': "Descripción general"}),
-            'implementationRelease': TextInput(attrs={'class': 'form-control', 'placeholder': "Entrega relacionada"}),
+            'release': TextInput(attrs={'class': 'form-control', 'placeholder': "Entrega relacionada"}),
         }
 
 

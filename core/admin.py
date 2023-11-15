@@ -20,83 +20,101 @@ for modelo in modelos:
         else:
             admin.site.register(modelo)
 
+
 class ReleaseCommercialApprovalAdminTabular(admin.TabularInline):
     model = ReleaseCommercialApproval
     extra = 1
+
 
 class ReleasePlatformAffectedAdminTabular(admin.TabularInline):
     model = ReleasePlatformAffected
     extra = 1
 
+
 class ReleaseAdmin(admin.ModelAdmin):
-     list_filter = ['project']
-     list_display = ['id', 'title', 'description', 'plannedImplementationDate', 'finalImplementationDate']
-     inlines = [ReleaseCommercialApprovalAdminTabular, ReleasePlatformAffectedAdminTabular]
+    list_filter = ['project']
+    list_display = ['id', 'title', 'description',
+                    'plannedImplementationDate', 'finalImplementationDate']
+    inlines = [ReleaseCommercialApprovalAdminTabular,
+               ReleasePlatformAffectedAdminTabular]
+
 
 admin.site.register(Release, ReleaseAdmin)
 
+
 class ChecklistDocumentationAdminTabular(admin.TabularInline):
-     model = ChecklistDocumentation
-     extra = 1
+    model = ChecklistDocumentation
+    extra = 1
+
 
 class QaDocumentationCaseTestImpAdminTabular(admin.TabularInline):
-     model = QaDocumentationCaseTestImp
-     extra = 1 
+    model = QaDocumentationCaseTestImp
+    extra = 1
+
 
 class QaDocumentationForm(forms.ModelForm):
-     class Meta:
-          model = QaDocumentation
-          fields = ['id', 'TestPlans', 'productOwnerApproval', 'developerApproval', 'status']
-     
-     def __init__(self, *args, **kwargs):
-          super().__init__(*args, **kwargs)    
-          user = self.request.user
-          if user and not user.groups.filter(name=pownerGroup).exists():
-               self.fields['productOwnerApproval'].widget.attrs['disabled'] = 'disabled'
-          if user and not user.groups.filter(name=devGroup).exists():
-               self.fields['developerApproval'].widget.attrs['disabled'] = 'disabled'
+    class Meta:
+        model = QaDocumentation
+        fields = ['id', 'TestPlans', 'productOwnerApproval',
+                  'developerApproval', 'status']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        user = self.request.user
+        if user and not user.groups.filter(name=pownerGroup).exists():
+            self.fields['productOwnerApproval'].widget.attrs['disabled'] = 'disabled'
+        if user and not user.groups.filter(name=devGroup).exists():
+            self.fields['developerApproval'].widget.attrs['disabled'] = 'disabled'
+
 
 class QaDocumentationAdmin(admin.ModelAdmin):
-     def get_form(self, request, obj=None, **kwargs):
-          form = super().get_form(request, obj, **kwargs)
-          form.request = request
-          return form
-     form = QaDocumentationForm
-     inlines = [ChecklistDocumentationAdminTabular, QaDocumentationCaseTestImpAdminTabular]
+    def get_form(self, request, obj=None, **kwargs):
+        form = super().get_form(request, obj, **kwargs)
+        form.request = request
+        return form
+    form = QaDocumentationForm
+    inlines = [ChecklistDocumentationAdminTabular,
+               QaDocumentationCaseTestImpAdminTabular]
+
 
 admin.site.register(QaDocumentation, QaDocumentationAdmin)
 
+
 class CaseTestAdminTabular(admin.TabularInline):
-     model = CaseTest
-     extra = 1
+    model = CaseTest
+    extra = 1
+
 
 class TestEjecutionAdmin(admin.ModelAdmin):
-     list_display = ['id', 'title', 'implementationRelease', 'generalDescription']
-     inlines = [CaseTestAdminTabular, ]
+    list_display = ['id', 'title', 'release', 'generalDescription']
+    inlines = [CaseTestAdminTabular, ]
+
 
 admin.site.register(TestEjecution, TestEjecutionAdmin)
 
 
-
 class GroupFilter(admin.SimpleListFilter):
-     title = 'Grupo'  # El título que se mostrará en la interfaz de administración
-     parameter_name = 'group'  # El nombre del parámetro en la URL
+    title = 'Grupo'  # El título que se mostrará en la interfaz de administración
+    parameter_name = 'group'  # El nombre del parámetro en la URL
 
-     def lookups(self, request, model_admin):
-         # Devuelve una lista de opciones de filtro (id, nombre)
-         groups = User.objects.values_list('groups__id', 'groups__name').distinct()
-         return groups
+    def lookups(self, request, model_admin):
+        # Devuelve una lista de opciones de filtro (id, nombre)
+        groups = User.objects.values_list(
+            'groups__id', 'groups__name').distinct()
+        return groups
 
-     def queryset(self, request, queryset):
-         # Aplica el filtro a la consulta
-         if self.value():
-             return queryset.filter(groups__id=self.value())
+    def queryset(self, request, queryset):
+        # Aplica el filtro a la consulta
+        if self.value():
+            return queryset.filter(groups__id=self.value())
+
 
 class UserAdmin(admin.ModelAdmin):
-     list_filter = (GroupFilter,)
-     list_display = ['username', 'first_name', 'last_name', 'access_group']
-     #filter_horizontal = ("permissions",)
-     def access_group(self, obj):
+    list_filter = (GroupFilter,)
+    list_display = ['username', 'first_name', 'last_name', 'access_group']
+    # filter_horizontal = ("permissions",)
+
+    def access_group(self, obj):
         """
         get group, separate by comma, and display empty string if user has no group
         """
@@ -105,4 +123,3 @@ class UserAdmin(admin.ModelAdmin):
 
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
-

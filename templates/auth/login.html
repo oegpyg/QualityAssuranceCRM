@@ -1,11 +1,12 @@
 <!doctype html>
 {% load static %}
+{% load custom_filters %}
 <html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>HexaDash - Login</title>
+    <title>{{1|site_name }} - Login</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/plugin.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
@@ -26,7 +27,7 @@
                             <div class="card border-0">
                                 <div class="card-header">
                                     <div class="edit-profile__title">
-                                        <h6>Sign in HexaDash</h6>
+                                        <h6>Sign in {{1|site_name }}</h6>
                                     </div>
                                 </div>
                                 <div class="card-body">

@@ -1,4 +1,5 @@
 from django import template
+from decouple import config
 
 register = template.Library()
 
@@ -40,3 +41,8 @@ def status_color(value):
     colors = ["", 'bg-secondary', 'bg-primary',
               'bg-warning', 'bg-info', 'bg-success']
     return colors[value]
+
+
+@register.filter
+def site_name(value):
+    return config('SITE_NAME')

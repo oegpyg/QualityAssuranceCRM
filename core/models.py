@@ -444,8 +444,10 @@ class ImplementationRelease(models.Model):
         verbose_name="Fecha de Implementación")
     Documentation = models.ForeignKey(
         QaDocumentation, on_delete=models.PROTECT, verbose_name="Documentación")
-    developerInCharge = models.TextField(verbose_name="Desarrollador a cargo")
-    qaInCharge = models.TextField(verbose_name="Tester a cargo")
+    developerInCharge = models.ForeignKey(
+        User, verbose_name="Desarrollador a cargo", on_delete=models.PROTECT, related_name='dev_impl_rel')
+    qaInCharge = models.ForeignKey(
+        User, verbose_name="Tester a cargo", on_delete=models.PROTECT, related_name='qa_impl_rel')
     results = models.TextChoices("Exitoso", "Fallido")
     descriptionResults = models.TextField(
         verbose_name="Descripción de resultados")
@@ -459,14 +461,14 @@ class ImplementationRelease(models.Model):
 
     class Admin(admin.ModelAdmin):
         list_display = ['id', 'description', 'idRelease',
-                        'ImplementationDate', 'view_testexe_link']
+                        'ImplementationDate']  # , 'view_testexe_link']
 
-        def view_testexe_link(self, obj):
+        """ def view_testexe_link(self, obj):
             count = obj.textejecution_set.count()
             url = (reverse("admin:core_testejecution_changelist")
                    + "?"
                    + urlencode({"implementationrelease__id": f"{obj.id}"})
-                   )
+                   ) """
 
     def __str__(self) -> str:
         return f"{self.id} | {self.description}"
@@ -477,8 +479,8 @@ class TestEjecution(models.Model):
     title = models.CharField(max_length=100, verbose_name="Título")
     generalDescription = models.TextField(verbose_name="Descripción general")
     # CaseTest = models.ForeignKey(CaseTest, on_delete=models.PROTECT)
-    implementationRelease = models.ForeignKey(
-        ImplementationRelease, on_delete=models.PROTECT, verbose_name="Entrega relacionada")
+    release = models.ForeignKey(
+        Release, on_delete=models.PROTECT, verbose_name="Entrega relacionada")
 
     no_admin = True
 
