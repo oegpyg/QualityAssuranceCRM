@@ -46,3 +46,8 @@ def status_color(value):
 @register.filter
 def site_name(value):
     return config('SITE_NAME')
+
+
+@register.filter
+def query_filter_status(qs, filter_val):
+    return qs.filter(status=filter_val)

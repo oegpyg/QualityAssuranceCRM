@@ -1,13 +1,14 @@
+{% load custom_filters %}
 <div class="footer-wrapper__inside">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-6">
                 <div class="footer-copyright">
-                    <p>@ 2023<a href="#">Sovware</a>
+                    <p>@ 2023<a href="#">{{1|site_name}}</a>
                     </p>
                 </div>
             </div>
-            <div class="col-md-6">
+           {% comment %}  <div class="col-md-6">
                 <div class="footer-menu text-end">
                     <ul>
                         <li>
@@ -21,7 +22,7 @@
                         </li>
                     </ul>
                 </div>
-            </div>
+            </div> {% endcomment %}
         </div>
     </div>
 </div>

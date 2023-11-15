@@ -119,7 +119,8 @@ def releaseList(request):
 
 @login_required
 def releaseDetails(request, pk):
-    ctx = {'release': core_models.Release.objects.get(pk=pk)}
+    ctx = {'release': core_models.Release.objects.get(
+        pk=pk), 'statuss': core_models.Status.objects.all()}
     return render(request, 'pages/application/release/details.html', context=ctx)
 
 
@@ -135,6 +136,12 @@ def taskList(request):
 def taskDetails(request, pk):
     ctx = {'task': core_models.Task.objects.get(pk=pk)}
     return render(request, 'pages/application/task/details.html', context=ctx)
+
+
+@login_required
+def testejecutionDetails(request, pk):
+    ctx = {'testexe': core_models.TestEjecution.objects.get(pk=pk)}
+    return render(request, 'pages/application/testejecution/details.html', context=ctx)
 
 # calendar page
 

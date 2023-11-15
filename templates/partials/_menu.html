@@ -3,89 +3,157 @@
 {% with request.resolver_match.url_name as path_name %}
 <div class="sidebar__menu-group">
     <ul class="sidebar_nav">
+        
+
+
         <li class="has-child {% if '/dashboard/' in request.path %}open{% endif %}">
             <a href="#" class="{% if '/dashboard/' in request.path %}active{% endif %}">
                 <span class="nav-icon uil uil-create-dashboard"></span>
-                <span class="menu-text">{% translate "dashboard-menu-title" %}</span>
+                <span class="menu-text">Menu</span>
+                <span class="toggle-icon"></span>
+            </a>
+            <ul>
+                <li class="{% if path_name == 'demo_one' %}active{% endif %}">
+                    <a href="{% url 'dashboard:demo_one' %}">{% translate "dashboard-demo-one" %}</a>
+                </li>
+                <li class="{% if path_name == 'demo_two' %}active{% endif %}">
+                    <a href="{% url 'dashboard:demo_two' %}">{% translate "dashboard-demo-two" %}</a>
+                </li>
+                <li class="{% if path_name == 'demo_three' %}active{% endif %}">
+                    <a href="{% url 'dashboard:demo_three' %}">{% translate "dashboard-demo-three" %}</a>
+                </li>
+                <li class="{% if path_name == 'demo_four' %}active{% endif %}">
+                    <a href="{% url 'dashboard:demo_four' %}">{% translate "dashboard-demo-four" %}</a>
+                </li>
+                <li class="{% if path_name == 'demo_five' %}active{% endif %}">
+                    <a href="{% url 'dashboard:demo_five' %}">{% translate "dashboard-demo-five" %}</a>
+                </li>
+                <li class="{% if path_name == 'demo_six' %}active{% endif %}">
+                    <a href="{% url 'dashboard:demo_six' %}">{% translate "Demo 6" %}</a>
+                </li>
+                <li class="{% if path_name == 'demo_seven' %}active{% endif %}">
+                    <a href="{% url 'dashboard:demo_seven' %}">{% translate "Demo 7" %}</a>
+                </li>
+                <li class="{% if path_name == 'demo_eight' %}active{% endif %}">
+                    <a href="{% url 'dashboard:demo_eight' %}">{% translate "Demo 8" %}</a>
+                </li>
+                <li class="{% if path_name == 'demo_nine' %}active{% endif %}">
+                    <a href="{% url 'dashboard:demo_nine' %}">{% translate "Demo 9" %}</a>
+                </li>
+                <li class="{% if path_name == 'demo_ten' %}active{% endif %}">
+                    <a href="{% url 'dashboard:demo_ten' %}">{% translate "Demo 10vb" %}</a>
+                </li>
+            </ul>
+        </li>
+        
+        
+        <li class="menu-title mt-30">
+            <span>Applications</span>
+        </li>
+        
+        <li class="has-child {% if '/application/project/' in request.path %}open{% endif %}">
+            <a href="#" class="{% if '/application/project/' in request.path %}active{% endif %}">
+                <span class="nav-icon uil uil-bag"></span>
+                <span class="menu-text">Gestion de Proyectos</span>
                 <span class="toggle-icon"></span>
             </a>
             <ul>
                 <li>
                     <a href="{% url 'application:project_list' %}" class="{% if path_name == 'project_list' %}active{% endif %}">{% translate "project-title" %}</a>
                 </li>
-                <li class="{% if path_name == 'demo_one' %}active{% endif %}">
-                    <a href="{% url 'dashboard:demo_one' %}">{% translate "dashboard-demo-one" %}</a>
-                </li>
-                <li class="{% if path_name == 'demo_two' %}active{% endif %}">
-                    <a href="{% url 'dashboard:demo_two' %}">{% translate "dashboard-demo-two" %}</a>
-                </li>
-                <li class="{% if path_name == 'demo_three' %}active{% endif %}">
-                    <a href="{% url 'dashboard:demo_three' %}">{% translate "dashboard-demo-three" %}</a>
-                </li>
-                <li class="{% if path_name == 'demo_four' %}active{% endif %}">
-                    <a href="{% url 'dashboard:demo_four' %}">{% translate "dashboard-demo-four" %}</a>
-                </li>
-                <li class="{% if path_name == 'demo_five' %}active{% endif %}">
-                    <a href="{% url 'dashboard:demo_five' %}">{% translate "dashboard-demo-five" %}</a>
-                </li>
-                <li class="{% if path_name == 'demo_six' %}active{% endif %}">
-                    <a href="{% url 'dashboard:demo_six' %}">{% translate "Demo 6" %}</a>
-                </li>
-                <li class="{% if path_name == 'demo_seven' %}active{% endif %}">
-                    <a href="{% url 'dashboard:demo_seven' %}">{% translate "Demo 7" %}</a>
-                </li>
-                <li class="{% if path_name == 'demo_eight' %}active{% endif %}">
-                    <a href="{% url 'dashboard:demo_eight' %}">{% translate "Demo 8" %}</a>
-                </li>
-                <li class="{% if path_name == 'demo_nine' %}active{% endif %}">
-                    <a href="{% url 'dashboard:demo_nine' %}">{% translate "Demo 9" %}</a>
-                </li>
-                <li class="{% if path_name == 'demo_ten' %}active{% endif %}">
-                    <a href="{% url 'dashboard:demo_ten' %}">{% translate "Demo 10vb" %}</a>
-                </li>
+                
+
+                {% comment %} <li>
+                    <a href="{% url 'application:project_details' %}" class="{% if path_name == 'project_details' %}active{% endif %}">{% translate "project-detail" %}</a>
+                </li> {% endcomment %}
             </ul>
         </li>
-
-
-        <li class="has-child {% if '/dashboard/' in request.path %}open{% endif %}">
-            <a href="#" class="{% if '/dashboard/' in request.path %}active{% endif %}">
-                <span class="nav-icon uil uil-create-dashboard"></span>
-                <span class="menu-text">{% translate "dashboard-menu-title" %}</span>
+        <li class="has-child {% if '/application/release/' in request.path %}open{% endif %}">
+            <a href="#" class="{% if '/application/release/' in request.path %}active{% endif %}">
+                <span class="nav-icon uil uil-folder"></span>
+                <span class="menu-text">Gestion de Entregas</span>
                 <span class="toggle-icon"></span>
             </a>
             <ul>
-                <li class="{% if path_name == 'demo_one' %}active{% endif %}">
-                    <a href="{% url 'dashboard:demo_one' %}">{% translate "dashboard-demo-one" %}</a>
-                </li>
-                <li class="{% if path_name == 'demo_two' %}active{% endif %}">
-                    <a href="{% url 'dashboard:demo_two' %}">{% translate "dashboard-demo-two" %}</a>
-                </li>
-                <li class="{% if path_name == 'demo_three' %}active{% endif %}">
-                    <a href="{% url 'dashboard:demo_three' %}">{% translate "dashboard-demo-three" %}</a>
-                </li>
-                <li class="{% if path_name == 'demo_four' %}active{% endif %}">
-                    <a href="{% url 'dashboard:demo_four' %}">{% translate "dashboard-demo-four" %}</a>
-                </li>
-                <li class="{% if path_name == 'demo_five' %}active{% endif %}">
-                    <a href="{% url 'dashboard:demo_five' %}">{% translate "dashboard-demo-five" %}</a>
-                </li>
-                <li class="{% if path_name == 'demo_six' %}active{% endif %}">
-                    <a href="{% url 'dashboard:demo_six' %}">{% translate "Demo 6" %}</a>
-                </li>
-                <li class="{% if path_name == 'demo_seven' %}active{% endif %}">
-                    <a href="{% url 'dashboard:demo_seven' %}">{% translate "Demo 7" %}</a>
-                </li>
-                <li class="{% if path_name == 'demo_eight' %}active{% endif %}">
-                    <a href="{% url 'dashboard:demo_eight' %}">{% translate "Demo 8" %}</a>
-                </li>
-                <li class="{% if path_name == 'demo_nine' %}active{% endif %}">
-                    <a href="{% url 'dashboard:demo_nine' %}">{% translate "Demo 9" %}</a>
-                </li>
-                <li class="{% if path_name == 'demo_ten' %}active{% endif %}">
-                    <a href="{% url 'dashboard:demo_ten' %}">{% translate "Demo 10vb" %}</a>
+                <li>
+                    <a href="{% url 'application:release_list' %}" class="{% if path_name == 'release_list' %}active{% endif %}">Entregas</a>
                 </li>
             </ul>
         </li>
+        <li class="has-child {% if '/application/releases/' in request.path %}open{% endif %}">
+            <a href="#" class="{% if '/application/releases/' in request.path %}active{% endif %}">
+                <span class="nav-icon uil uil-check-square"></span>
+                <span class="menu-text">Gestion de Tareas</span>
+                <span class="toggle-icon"></span>
+            </a>
+            <ul>
+                <li>
+                    <a href="{% url 'application:task_list' %}" class="{% if path_name == 'task_list' %}active{% endif %}">Tareas</a>
+                </li>
+            </ul>
+        </li>
+
+        <li class="has-child {% if '/application/projects/' in request.path %}open{% endif %}">
+            <a href="#" class="{% if '/application/projects/' in request.path %}active{% endif %}">
+                <span class="nav-icon uil uil-edit"></span>
+                <span class="menu-text">Gestion de Pruebas</span>
+                <span class="toggle-icon"></span>
+            </a>
+            <ul>
+                {% comment %} <li>
+                    <a href="{% url 'application:task_list' %}" class="{% if path_name == 'task_list' %}active{% endif %}">Tareas</a>
+                </li> {% endcomment %}
+            </ul>
+        </li>
+
+        <li class="has-child {% if '/application/projects/' in request.path %}open{% endif %}">
+            <a href="#" class="{% if '/application/projects/' in request.path %}active{% endif %}">
+                <span class="nav-icon uil uil-books"></span>
+                <span class="menu-text">Gestion de Documentos</span>
+                <span class="toggle-icon"></span>
+            </a>
+            <ul>
+                {% comment %} <li>
+                    <a href="{% url 'application:task_list' %}" class="{% if path_name == 'task_list' %}active{% endif %}">Tareas</a>
+                </li> {% endcomment %}
+            </ul>
+        </li>
+
+        <li class="has-child {% if '/application/projects/' in request.path %}open{% endif %}">
+            <a href="#" class="{% if '/application/projects/' in request.path %}active{% endif %}">
+                <span class="nav-icon uil uil-exclamation-triangle"></span>
+                <span class="menu-text">Gestion de Errores</span>
+                <span class="toggle-icon"></span>
+            </a>
+            <ul>
+                {% comment %} <li>
+                    <a href="{% url 'application:task_list' %}" class="{% if path_name == 'task_list' %}active{% endif %}">Tareas</a>
+                </li> {% endcomment %}
+            </ul>
+        </li>
+
+        <li class="has-child {% if '/application/projects/' in request.path %}open{% endif %}">
+            <a href="#" class="{% if '/application/projects/' in request.path %}active{% endif %}">
+                <span class="nav-icon uil uil-arrow-growth"></span>
+                <span class="menu-text">Gestion de Implementacion</span>
+                <span class="toggle-icon"></span>
+            </a>
+            <ul>
+                {% comment %} <li>
+                    <a href="{% url 'application:task_list' %}" class="{% if path_name == 'task_list' %}active{% endif %}">Tareas</a>
+                </li> {% endcomment %}
+            </ul>
+        </li>
+
+
+
+
+        {% comment %} 
+
+        <li class="menu-title mt-30">
+            <span>Template</span>
+        </li>
+
         <li class="has-child">
             <a href="#" class="">
                 <span class="nav-icon uil uil-window-section"></span>
@@ -111,9 +179,6 @@
                 <span class="menu-text">{% translate "changelog-menu-title" %}</span>
                 <span class="badge badge-info-10 menuItem rounded-pill">1.0.0</span>
             </a>
-        </li>
-        <li class="menu-title mt-30">
-            <span>Applications</span>
         </li>
         <li class="has-child {% if '/application/email/' in request.path %}open{% endif %}">
             <a href="#" class="{% if '/application/email/' in request.path %}active{% endif %}">
@@ -165,28 +230,6 @@
                 <li>
                     <a href="{% url 'application:invoices' %}" class="{% if path_name == 'invoices' %}active{% endif %}">{% translate "ecommerce-invoices" %}</a>
                 </li>
-            </ul>
-        </li>
-        <li class="has-child {% if '/application/project/' in request.path or '/application/release/' in request.path %}open{% endif %}">
-            <a href="#" class="{% if '/application/project/' in request.path or '/application/release/' in request.path %}active{% endif %}">
-                <span class="nav-icon uil uil-folder"></span>
-                <span class="menu-text">{% translate "project-menu-title" %}</span>
-                <span class="toggle-icon"></span>
-            </a>
-            <ul>
-                <li>
-                    <a href="{% url 'application:project_list' %}" class="{% if path_name == 'project_list' %}active{% endif %}">{% translate "project-title" %}</a>
-                </li>
-                <li>
-                    <a href="{% url 'application:release_list' %}" class="{% if path_name == 'release_list' %}active{% endif %}">Entregas</a>
-                </li>
-                <li>
-                    <a href="{% url 'application:task_list' %}" class="{% if path_name == 'task_list' %}active{% endif %}">Tareas</a>
-                </li>
-
-                {% comment %} <li>
-                    <a href="{% url 'application:project_details' %}" class="{% if path_name == 'project_details' %}active{% endif %}">{% translate "project-detail" %}</a>
-                </li> {% endcomment %}
             </ul>
         </li>
         <li>
@@ -815,7 +858,7 @@
                     Go Premium
                 </button>
             </div>
-        {% endif %}
+        {% endif %} {% endcomment %}
     </ul>
 </div>
 {% endwith %}
