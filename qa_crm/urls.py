@@ -2,6 +2,8 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.i18n import i18n_patterns
 from decouple import config
+from django.conf import settings
+from django.conf.urls.static import static
 
 admin.site.site_header = config('SITE_NAME')
 
@@ -17,4 +19,4 @@ urlpatterns += i18n_patterns(
     path('pages/', include('pages.urls', namespace='pages')),
     path('customer/', include('customer.urls', namespace='customer')),
     path('tinymce/', include('tinymce.urls')),
-)
+) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

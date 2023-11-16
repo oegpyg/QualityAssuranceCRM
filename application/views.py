@@ -167,6 +167,12 @@ def casetestDetails(request, pk):
 
 
 @login_required
+def casetestdocDetails(request, pk):
+    ctx = {'att': core_models.CaseTestDocumentation.objects.get(pk=pk)}
+    return render(request, 'pages/application/casetest/image_details.html', context=ctx)
+
+
+@login_required
 def typeoftestsList(request):
     typetests = core_models.TypeOfTests.objects.all()
     form = TestEjecutionForm()

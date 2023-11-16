@@ -51,3 +51,8 @@ def site_name(value):
 @register.filter
 def query_filter_status(qs, filter_val):
     return qs.filter(status=filter_val)
+
+
+@register.filter
+def split_last(value, key):
+    return value.split(key)[-1]

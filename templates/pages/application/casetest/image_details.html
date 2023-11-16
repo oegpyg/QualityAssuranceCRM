@@ -1,0 +1,43 @@
+{% extends 'layout/app.html' %}
+
+{% block title %} Release Details {% endblock %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% load custom_filters %}
+
+{% block content %}
+<div class="container-fluid">
+    
+    <div class="projects-tab-content mb-30">
+        <div class="row">
+         
+            <div class="col-xxl-12 col-lg-12">
+                <div class="row">
+                    <div class="col-xxl-12 col-lg-12 mb-25">
+                        <div class="card border-0 pb-md-50 pb-15">
+                            <div class="card-header py-sm-20 py-3  px-sm-25 px-3 ">
+                                <h6 class="color-primary">Documentacion del Caso</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="about-projects">
+                                    <div class="about-projects__details">
+                                        <div class="mail-content__bottom">
+                                            
+                                            <img src="{{ att.image.url }}" alt="{{ att.image.name }}">
+                                            
+                                        </div> 
+                                    </div>                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div> 
+
+                    
+        </div>
+    </div>
+</div>
+{% endblock %}

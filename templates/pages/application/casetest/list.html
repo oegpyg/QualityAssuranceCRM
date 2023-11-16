@@ -138,7 +138,9 @@
                                     <th>
                                         <span class="projectDatatable-title">Nro. Orden</span>
                                     </th>
-                                    
+                                    <th>
+                                        <span class="projectDatatable-title">Documentos</span>
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -164,6 +166,12 @@
                                             <span class="media-badge color-white bg-primary">{{casetest.caseOrder}}</span>
                                         </div>
                                     </td>
+                                    <td>
+                                        <div class="d-inline-block">
+                                            <span class="media-badge color-white bg-info">{{casetest.casetestdocumentation_set.count}}</span>
+                                        </div>
+                                    </td>
+                                    
                                     
                                 </tr>
                                 {%endfor%}
