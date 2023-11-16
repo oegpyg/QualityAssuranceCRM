@@ -509,10 +509,25 @@ class CaseTest(models.Model):
     def __str__(self):
         return f'{self.id} - {self.title}'
 
-    # no_admin = True
+    no_admin = True
 
     class Meta:
         verbose_name_plural = "Caso de Prueba"
+
+
+class CaseTestDocumentation(models.Model):
+    id = models.AutoField(primary_key=True, verbose_name="Identificador")
+    caseTest = models.ForeignKey(
+        CaseTest, on_delete=models.PROTECT, verbose_name="Caso de prueba relacionado")
+    image = models.ImageField(upload_to='uploads/')
+
+    no_admin = True
+
+    class Meta:
+        verbose_name_plural = "Documentacion de Caso de Prueba"
+
+    def __str__(self):
+        return f'{self.id}'
 
 
 class QaDocumentationCaseTestImp(models.Model):

@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.apps import apps
-from .models import ReleaseCommercialApproval, Release, QaDocumentation, ChecklistDocumentation, TestEjecution, CaseTest, QaDocumentationCaseTestImp, ReleasePlatformAffected
+from .models import ReleaseCommercialApproval, Release, QaDocumentation, ChecklistDocumentation, TestEjecution, CaseTest, QaDocumentationCaseTestImp, ReleasePlatformAffected, CaseTestDocumentation
 from django.contrib.auth.models import User
 from django import forms
 from django.contrib.admin.widgets import FilteredSelectMultiple
@@ -78,6 +78,19 @@ class QaDocumentationAdmin(admin.ModelAdmin):
 
 
 admin.site.register(QaDocumentation, QaDocumentationAdmin)
+
+
+class CaseTestDocumentationAdminTabular(admin.TabularInline):
+    model = CaseTestDocumentation
+    extra = 1
+
+
+class CaseTestAdmin(admin.ModelAdmin):
+    list_display = ['id', 'title', 'caseOrder', 'testEjecution']
+    inlines = [CaseTestDocumentationAdminTabular]
+
+
+admin.site.register(CaseTest, CaseTestAdmin)
 
 
 class CaseTestAdminTabular(admin.TabularInline):
