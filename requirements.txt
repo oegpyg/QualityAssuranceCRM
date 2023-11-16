@@ -1,8 +1,9 @@
-django
+django==4.0.0
 pygraphviz
 django-extensions
 python-decouple
 psycopg2
 uml-django
 Pillow
-
+django-yuml
+django-tinymce
