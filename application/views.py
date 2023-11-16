@@ -128,8 +128,8 @@ def releaseDetails(request, pk):
 def taskList(request):
     tasks = core_models.Task.objects.all()
     form = TaskForm()
-    ctx = {'releases': tasks, 'frm': form}
-    return render(request, 'pages/application/release/list.html', context=ctx)
+    ctx = {'tasks': tasks, 'frm': form}
+    return render(request, 'pages/application/task/list.html', context=ctx)
 
 
 @login_required
