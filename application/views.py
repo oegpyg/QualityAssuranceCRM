@@ -139,6 +139,14 @@ def taskDetails(request, pk):
 
 
 @login_required
+def testejecutionList(request):
+    testsexe = core_models.TestEjecution.objects.all()
+    form = TaskForm()
+    ctx = {'testsexe': testsexe, 'frm': form}
+    return render(request, 'pages/application/testejecution/list.html', context=ctx)
+
+
+@login_required
 def testejecutionDetails(request, pk):
     ctx = {'testexe': core_models.TestEjecution.objects.get(pk=pk)}
     return render(request, 'pages/application/testejecution/details.html', context=ctx)

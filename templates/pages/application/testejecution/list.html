@@ -1,6 +1,6 @@
 {% extends 'layout/app.html' %}
 
-{% block title %} Projects {% endblock %}
+{% block title %} Ejecucion de Pruebas {% endblock %}
 
 {% load i18n %}
 
@@ -16,13 +16,13 @@
                 <div class="breadcrumb-main user-member justify-content-sm-between ">
                     <div class=" d-flex flex-wrap justify-content-center breadcrumb-main__wrapper">
                         <div class="d-flex align-items-center user-member__title justify-content-center me-sm-25">
-                            <h4 class="text-capitalize fw-500 breadcrumb-title">{% translate "project-menu-title" %}</h4>
-                            <span class="sub-title ms-sm-25 ps-sm-25">{{releases|length}} release activos</span>
+                            <h4 class="text-capitalize fw-500 breadcrumb-title">Ejecucion de Pruebas</h4>
+                            <span class="sub-title ms-sm-25 ps-sm-25">{{testsexe|length}} activos</span>
                         </div>
                     </div>
                     <div class="action-btn">
                         <a href="#" class="btn px-15 btn-primary" data-bs-toggle="modal" data-bs-target="#new-member">
-                            <i class="las la-plus fs-16"></i>crear release</a>
+                            <i class="las la-plus fs-16"></i>crear ejecucion de prueba</a>
                         <div class="modal fade new-member" id="new-member" role="dialog" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content  radius-xl">
@@ -119,63 +119,7 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="project-top-wrapper project-top-progress d-flex justify-content-between flex-wrap">
-                <div class="project-top-left d-flex flex-wrap justify-content-lg-between justify-content-center mt-n10">
-                    <div class="project-tap global-shadow order-lg-1 order-2 my-10">
-                        <ul class="nav px-1" id="ap-tab" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="ap-overview-tab" data-bs-toggle="pill" href="#ap-overview" role="tab" aria-controls="ap-overview" aria-selected="true">todos</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="timeline-tab" data-bs-toggle="pill" href="#timeline" role="tab" aria-controls="timeline" aria-selected="false">en curso</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="activity-tab" data-bs-toggle="pill" href="#activity" role="tab" aria-controls="activity" aria-selected="false">completado</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="late-tab" data-bs-toggle="pill" href="#late" role="tab" aria-controls="late" aria-selected="false">retrasado</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="early-tab" data-bs-toggle="pill" href="#early" role="tab" aria-controls="early" aria-selected="false">adelantado</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="project-search project-search--height global-shadow ms-md-20 my-10 order-md-2 order-1">
-                        <form action="/" class="d-flex align-items-center user-member__form">
-                            <img src="{% static 'img/svg/search.svg' %}" alt="search" class="svg">
-                            <input class="form-control me-sm-2 border-0 box-shadow-none" type="search" placeholder="Search by Name" aria-label="Search">
-                        </form>
-                    </div>
-                </div>
-                <div class="project-top-right d-flex flex-wrap">
-                    <div class="project-category">
-                        <div class="d-flex align-items-center">
-                            <p class="mb-0 me-10 fs-14 color-light">ordenar por:</p>
-                            <div class="project-category__select">
-                                <select class="js-example-basic-single js-states form-control" id="event-category">
-                                    <option value="all" selected>categoria</option>
-                                    <option value="JAN">event</option>
-                                    <option value="FBR">Venues</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project-icon-selected">
-                        <div class="listing-social-link pb-lg-0 pb-xs-2">
-                            <div class="icon-list-social d-flex">
-                                <a class="icon-list-social__link rounded-circle icon-list-social__style justify-content-center ms-xl-20 me-20  active" href="#">
-                                    <img class="svg" src="{% static 'img/svg/grid.svg' %}" alt="grid"></a>
-                                <a class="icon-list-social__link rounded-circle icon-list-social__style justify-content-center " href="#">
-                                    <img class="svg" src="{% static 'img/svg/list.svg' %}" alt="list"></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    
     <!-- release start-->
     <div class="col-lg-12 mb-30">
         <div class="card">
@@ -185,101 +129,42 @@
             <div class="card-body">
                 <div class="userDatatable projectDatatable project-table w-100 border-0">
                     <div class="table-responsive">
-                        <table class="table mb-0">
+                        <table id="releaseListTbl" class="table mb-0">
                             <thead>
                                 <tr class="userDatatable-header">
                                     <th>
-                                        <span class="projectDatatable-title">release</span>
+                                        <span class="projectDatatable-title">Ejecucion de Prueba</span>
                                     </th>
                                     <th>
-                                        <span class="projectDatatable-title">Fecha Inicio</span>
+                                        <span class="projectDatatable-title">Casos</span>
                                     </th>
-                                    <th>
-                                        <span class="projectDatatable-title">deadline</span>
-                                    </th>
-                                    {% comment %} <th>
-                                        <span class="projectDatatable-title">Assigned To</span>
-                                    </th> {% endcomment %}
-                                    <th>
-                                        <span class="projectDatatable-title">Estado</span>
-                                    </th>
-                                    <th>
-                                        <span class="projectDatatable-title">Anance</span>
-                                    </th>
-                                    <th>
-                                    </th>
+                                    
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for release in releases%}
+                                {% for testexe in testsexe%}
                                 <tr>
                                     <td>
                                         <div class="d-flex">
                                             <div class="userDatatable-inline-title">
-                                                <a href="{% url 'application:release_details' release.id %}" class="text-dark fw-500">
-                                                    <h6>{{release.title}}</h6>
+                                                <a href="{% url 'application:testejecution_details' testexe.id %}" class="text-dark fw-500">
+                                                    <h6>{{testexe.title}}</h6>
                                                 </a>
                                                 <p class="pt-1 d-block mb-0">
-                                                    {{release.project.title}}
+                                                    <a href="{% url 'application:release_details' testexe.release.id %}" class="text-dark">
+                                                    R{{testexe.release.id}}: {{testexe.release.title}}
+                                                    </a>
                                                 </p>
                                             </div>
                                         </div>
                                     </td>
-                                    <td>
-                                        <div class="userDatatable-content">
-                                            {{release.qaDeploymentPlanningDate|date:"M d, Y"}}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="userDatatable-content">
-                                            {{release.finalImplementationDate|date:"M d, Y"}}
-                                        </div>
-                                    </td>
-                                    {% comment %} <td>
-                                        <ul class="d-flex user-group-people__parent align-content-center">
-                                            <li>
-                                                <a href="#"><img class="rounded-circle wh-34" src="{% static 'img/tm1.png' %}" alt="author"></a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><img class="rounded-circle wh-34" src="{% static 'img/tm2.png' %}" alt="author"></a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><img class="rounded-circle wh-34" src="{% static 'img/tm3.png' %}" alt="author"></a>
-                                            </li>
-                                        </ul>
-                                    </td> {% endcomment %}
+                                    
                                     <td>
                                         <div class="d-inline-block">
-                                            <span class="media-badge color-white {{release.status.id|status_color}}">{{release.status}}</span>
+                                            <span class="media-badge color-white bg-primary">{{testexe.casetest_set.count}}</span>
                                         </div>
                                     </td>
-                                    <td>
-                                        <div class="project-progress d-flex align-items-center">
-                                            <div class="user-group-progress-bar">
-                                                <div class="progress-wrap d-flex align-items-center mb-0">
-                                                    <div class="progress">
-                                                        <div class="progress-bar {{release.task_set.all|color_by_status_perc:4}}" role="progressbar" style="width: {{release.task_set.all|count_by_status_perc:4|stringformat:'d'}}%;" aria-valuenow="{{release.task_set.all|count_by_status_perc:4|stringformat:'d'}}" aria-valuemin="0" aria-valuemax="100"></div>
-                                                    </div>
-                                                    <span class="progress-percentage">{{release.task_set.all|count_by_status_perc:4|stringformat:'d'}}%</span>
-                                                </div>
-                                                <p class="color-light fs-12 mt-1 mb-0">{{release.task_set.all|count_by_status:4}} / {{release.task_set.count}} tareas completadas</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="project-progress text-end">
-                                            <div class="dropdown  dropdown-click ">
-                                                <button class="btn-link border-0 bg-transparent p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    <img src="{% static 'img/svg/more-horizontal.svg' %}" alt="more-horizontal" class="svg">
-                                                </button>
-                                                <div class="dropdown-default dropdown-bottomLeft dropdown-menu-right dropdown-menu">
-                                                    <a class="dropdown-item" href="#">Item One</a>
-                                                    <a class="dropdown-item" href="#">Item Two</a>
-                                                    <a class="dropdown-item" href="#">Item Three</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
+                                    
                                 </tr>
                                 {%endfor%}
                                 
@@ -293,5 +178,21 @@
     <!-- release end -->
     
 </div>
-
 {% endblock %}
+{%block js%}
+<script>
+    $(document).ready(function(){
+        $('#releaseListTbl').dataTable({
+            language: {
+                info: 'Pagina _PAGE_ de _PAGES_',
+                infoEmpty: 'No hay registros',
+                infoFiltered: '(de _MAX_ total de registros)',
+                lengthMenu: 'Mostrar _MENU_ registros por pagina',
+                zeroRecords: '----------------------------------'
+            },
+            
+        })
+    });
+</script>
+
+{%endblock%}

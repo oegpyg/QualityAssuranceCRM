@@ -80,8 +80,8 @@
                 </li>
             </ul>
         </li>
-        <li class="has-child {% if '/application/releases/' in request.path %}open{% endif %}">
-            <a href="#" class="{% if '/application/releases/' in request.path %}active{% endif %}">
+        <li class="has-child {% if '/application/task/' in request.path %}open{% endif %}">
+            <a href="#" class="{% if '/application/task/' in request.path %}active{% endif %}">
                 <span class="nav-icon uil uil-check-square"></span>
                 <span class="menu-text">Gestion de Tareas</span>
                 <span class="toggle-icon"></span>
@@ -93,16 +93,16 @@
             </ul>
         </li>
 
-        <li class="has-child {% if '/application/projects/' in request.path %}open{% endif %}">
-            <a href="#" class="{% if '/application/projects/' in request.path %}active{% endif %}">
+        <li class="has-child {% if '/application/testejecution/' in request.path %}open{% endif %}">
+            <a href="#" class="{% if '/application/testejecution/' in request.path %}active{% endif %}">
                 <span class="nav-icon uil uil-edit"></span>
                 <span class="menu-text">Gestion de Pruebas</span>
                 <span class="toggle-icon"></span>
             </a>
             <ul>
-                {% comment %} <li>
-                    <a href="{% url 'application:task_list' %}" class="{% if path_name == 'task_list' %}active{% endif %}">Tareas</a>
-                </li> {% endcomment %}
+                <li>
+                    <a href="{% url 'application:testejecution_list' %}" class="{% if path_name == 'testejecution_list' %}active{% endif %}">Ejecución de Pruebas</a>
+                </li>
             </ul>
         </li>
 

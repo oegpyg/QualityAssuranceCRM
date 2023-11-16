@@ -27,6 +27,7 @@ urlpatterns = [
     path('task/details/<int:pk>/',
          views.taskDetails, name='task_details'),
 
+    path('testejecution/list', views.testejecutionList, name='testejecution_list'),
     path('testejecution/details/<int:pk>/',
          views.testejecutionDetails, name='testejecution_details'),
 
