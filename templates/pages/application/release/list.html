@@ -16,7 +16,7 @@
                 <div class="breadcrumb-main user-member justify-content-sm-between ">
                     <div class=" d-flex flex-wrap justify-content-center breadcrumb-main__wrapper">
                         <div class="d-flex align-items-center user-member__title justify-content-center me-sm-25">
-                            <h4 class="text-capitalize fw-500 breadcrumb-title">{% translate "project-menu-title" %}</h4>
+                            <h4 class="text-capitalize fw-500 breadcrumb-title">Release</h4>
                             <span class="sub-title ms-sm-25 ps-sm-25">{{releases|length}} release activos</span>
                         </div>
                     </div>
@@ -122,7 +122,7 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="project-top-wrapper project-top-progress d-flex justify-content-between flex-wrap">
-                <div class="project-top-left d-flex flex-wrap justify-content-lg-between justify-content-center mt-n10">
+                {% comment %} <div class="project-top-left d-flex flex-wrap justify-content-lg-between justify-content-center mt-n10">
                     <div class="project-tap global-shadow order-lg-1 order-2 my-10">
                         <ul class="nav px-1" id="ap-tab" role="tablist">
                             <li class="nav-item">
@@ -148,8 +148,8 @@
                             <input class="form-control me-sm-2 border-0 box-shadow-none" type="search" placeholder="Search by Name" aria-label="Search">
                         </form>
                     </div>
-                </div>
-                <div class="project-top-right d-flex flex-wrap">
+                </div> {% endcomment %}
+                {% comment %} <div class="project-top-right d-flex flex-wrap">
                     <div class="project-category">
                         <div class="d-flex align-items-center">
                             <p class="mb-0 me-10 fs-14 color-light">ordenar por:</p>
@@ -172,7 +172,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> {% endcomment %}
             </div>
         </div>
     </div>
@@ -185,7 +185,7 @@
             <div class="card-body">
                 <div class="userDatatable projectDatatable project-table w-100 border-0">
                     <div class="table-responsive">
-                        <table class="table mb-0">
+                        <table id="releaseListTbl" class="table mb-0">
                             <thead>
                                 <tr class="userDatatable-header">
                                     <th>
@@ -204,7 +204,7 @@
                                         <span class="projectDatatable-title">Estado</span>
                                     </th>
                                     <th>
-                                        <span class="projectDatatable-title">Anance</span>
+                                        <span class="projectDatatable-title">Progreso</span>
                                     </th>
                                     <th>
                                     </th>
@@ -293,5 +293,21 @@
     <!-- release end -->
     
 </div>
-
 {% endblock %}
+{%block js%}
+<script>
+    $(document).ready(function(){
+        $('#releaseListTbl').dataTable({
+            language: {
+                info: 'Pagina _PAGE_ de _PAGES_',
+                infoEmpty: 'No hay registros',
+                infoFiltered: '(de _MAX_ total de registros)',
+                lengthMenu: 'Mostrar _MENU_ registros por pagina',
+                zeroRecords: 'No hay datos - perdon'
+            },
+            
+        })
+    });
+</script>
+
+{%endblock%}

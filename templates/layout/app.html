@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{1|site_name }} - {% block title %} {% endblock %}</title>
     <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&display=swap" rel="stylesheet">
-
+    <link  rel="stylesheet" href="{% static 'datatables/datatables.min.css' %}">
     {% if request.session.dir and request.session.dir == 'rtl' %}
         <link  rel="stylesheet" href="{% static 'css/plugin.min.rtl.css' %}">
         <link  rel="stylesheet" href="{% static 'css/style.rtl.css' %}">
@@ -62,5 +62,6 @@
     <script src="{% static 'js/env.js' %}"></script>
 
     {% include 'partials/_scripts.html' %}
+    {%block js%}{%endblock%}
 </body>
 </html>
