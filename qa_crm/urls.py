@@ -16,4 +16,5 @@ urlpatterns += i18n_patterns(
     path('feature/', include('feature.urls', namespace='feature')),
     path('pages/', include('pages.urls', namespace='pages')),
     path('customer/', include('customer.urls', namespace='customer')),
+    path('tinymce/', include('tinymce.urls')),
 )

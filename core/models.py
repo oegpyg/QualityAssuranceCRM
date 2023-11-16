@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django import forms
 from decouple import config
+from tinymce.models import HTMLField
 _title_max_length = 100
 _priorityChoices = (('BAJ', 'BAJA'),
                     ('MED', 'MEDIA'),
@@ -499,7 +500,8 @@ class CaseTest(models.Model):
     caseTestPreconditions = models.TextField(verbose_name="Precondiciones")
     caseOrder = models.PositiveIntegerField(
         verbose_name="Orden del caso de prueba")
-    caseSteps = models.TextField(verbose_name="Pasos a seguir")
+    # models.TextField(verbose_name="Pasos a seguir")
+    caseSteps = HTMLField(verbose_name="Pasos a seguir")
     caseExpectedOutcome = models.TextField(verbose_name="Resultado Esperado")
     testEjecution = models.ForeignKey(
         TestEjecution, on_delete=models.PROTECT, verbose_name="Plan de pruebas relacionado")

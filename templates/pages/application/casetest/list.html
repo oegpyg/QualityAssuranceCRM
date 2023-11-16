@@ -1,0 +1,198 @@
+{% extends 'layout/app.html' %}
+
+{% block title %} Ejecucion de Pruebas {% endblock %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% load custom_filters %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="project-progree-breadcrumb">
+                <div class="breadcrumb-main user-member justify-content-sm-between ">
+                    <div class=" d-flex flex-wrap justify-content-center breadcrumb-main__wrapper">
+                        <div class="d-flex align-items-center user-member__title justify-content-center me-sm-25">
+                            <h4 class="text-capitalize fw-500 breadcrumb-title">Ejecucion de Pruebas</h4>
+                            <span class="sub-title ms-sm-25 ps-sm-25">{{testsexe|length}} activos</span>
+                        </div>
+                    </div>
+                    <div class="action-btn">
+                        <a href="#" class="btn px-15 btn-primary" data-bs-toggle="modal" data-bs-target="#new-member">
+                            <i class="las la-plus fs-16"></i>crear ejecucion de prueba</a>
+                        <div class="modal fade new-member" id="new-member" role="dialog" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content  radius-xl">
+                                    <div class="modal-header">
+                                        <h6 class="modal-title fw-500" id="staticBackdropLabel">Crear proyecto</h6>
+                                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                            <img src="{% static 'img/svg/x.svg' %}" alt="x" class="svg">
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="new-member-modal">
+                                            <form method='POST' action='{% url 'application:project_add' %}'>
+                                                {% csrf_token %}
+                                                <div class="form-group mb-20">
+                                                    {% comment %} <input type="text" class="form-control" placeholder="Duran Clayton"> {% endcomment %}
+                                                    {{frm.title}}
+                                                </div>
+                                                <div class="form-group mb-20">
+                                                    {% comment %} <input type="text" class="form-control" placeholder="Duran Clayton"> {% endcomment %}
+                                                    {{frm.description}}
+                                                </div>
+                                                
+                                                <div class="d-flex new-member-calendar">
+                                                    <div class="form-group w-70 me-sm-15 form-group-calender">
+                                                        <label for="{{frm.startDate.name}}">{{frm.startDate.label}}</label>
+                                                        {{frm.startDate}}
+                                                    </div>
+                                                    <div class="form-group mb-20 w-30 me-30 pe-10">
+                                                        {% comment %} <input type="text" class="form-control" placeholder="Duran Clayton"> {% endcomment %}
+                                                        <label for="id_{{frm.priority.name}}">{{frm.priority.label}}</label>
+                                                        {{frm.priority}}
+                                                    </div>
+                                                    <div class="form-group mb-20 w-30 w-30">
+                                                        {% comment %} <input type="text" class="form-control" placeholder="Duran Clayton"> {% endcomment %}
+                                                        <label for="id_{{frm.status.name}}">{{frm.status.label}}</label>
+                                                        {{frm.status}}
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="d-flex">
+                                                    <div class="form-group mb-20 w-50 me-50 pe-10">
+                                                        <label for="id_{{frm.productOwner.name}}">{{frm.productOwner.label}}</label>
+                                                        {{frm.productOwner}}
+                                                    </div>
+                                                    <div class="form-group mb-20 w-50 me-50 pe-10">
+                                                        <label for="id_{{frm.developer.name}}">{{frm.developer.label}}</label>
+                                                        {{frm.developer}}
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex">
+                                                    <div class="form-group mb-20 w-50 me-50 pe-10">
+                                                        <label for="id_{{frm.qa.name}}">{{frm.qa.label}}</label>
+                                                        {{frm.qa}}
+                                                    </div>
+                                                    <div class="form-group mb-20 w-50 me-50 pe-10">
+                                                        <label for="id_{{frm.stakeHolder.name}}">{{frm.stakeHolder.label}}</label>
+                                                        {{frm.stakeHolder}}
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex">
+                                                    <div class="form-group mb-20 w-50 me-50 pe-10">
+                                                        <label for="id_{{frm.businessUnit.name}}">{{frm.businessUnit.label}}</label>
+                                                        {{frm.businessUnit}}
+                                                    </div>
+                                                    <div class="form-group mb-20 w-50 me-50 pe-10">
+                                                        <label for="id_{{frm.typeOfTests.name}}">{{frm.typeOfTests.label}}</label>
+                                                        {{frm.typeOfTests}}
+                                                    </div>
+
+                                                    
+                                                </div>
+                                                <div class="form-group mb-20 w-50 me-50 pe-10">
+                                                    <label for="id_{{frm.version.name}}">{{frm.version.label}}</label>
+                                                    {{frm.version}}
+                                                </div>
+                                               <div class="form-group mb-20 w-50 me-50 pe-10">
+                                                    <label for="id_{{frm.assignedTo.name}}">{{frm.assignedTo.label}}</label>
+                                                    {{frm.assignedTo}}
+                                                </div>
+                                                
+                                                <div class="button-group d-flex pt-25">
+                                                    <button class="btn btn-primary btn-default btn-squared text-capitalize">add new project
+                                                    </button>
+                                                    <button type="button" class="btn btn-light btn-default btn-squared fw-400 text-capitalize b-light color-light" data-bs-dismiss="modal">cancel</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- release start-->
+    <div class="col-lg-12 mb-30">
+        <div class="card">
+            {% comment %} <div class="card-header color-dark fw-500">
+                Rel List
+            </div> {% endcomment %}
+            <div class="card-body">
+                <div class="userDatatable projectDatatable project-table w-100 border-0">
+                    <div class="table-responsive">
+                        <table id="releaseListTbl" class="table mb-0">
+                            <thead>
+                                <tr class="userDatatable-header">
+                                    <th>
+                                        <span class="projectDatatable-title">Ejecucion de Prueba</span>
+                                    </th>
+                                    <th>
+                                        <span class="projectDatatable-title">Casos</span>
+                                    </th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for testexe in testsexe%}
+                                <tr>
+                                    <td>
+                                        <div class="d-flex">
+                                            <div class="userDatatable-inline-title">
+                                                <a href="{% url 'application:testejecution_details' testexe.id %}" class="text-dark fw-500">
+                                                    <h6>{{testexe.title}}</h6>
+                                                </a>
+                                                <p class="pt-1 d-block mb-0">
+                                                    <a href="{% url 'application:release_details' testexe.release.id %}" class="text-dark">
+                                                    R{{testexe.release.id}}: {{testexe.release.title}}
+                                                    </a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    
+                                    <td>
+                                        <div class="d-inline-block">
+                                            <span class="media-badge color-white bg-primary">{{testexe.casetest_set.count}}</span>
+                                        </div>
+                                    </td>
+                                    
+                                </tr>
+                                {%endfor%}
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- release end -->
+    
+</div>
+{% endblock %}
+{%block js%}
+<script>
+    $(document).ready(function(){
+        $('#releaseListTbl').dataTable({
+            language: {
+                info: 'Pagina _PAGE_ de _PAGES_',
+                infoEmpty: 'No hay registros',
+                infoFiltered: '(de _MAX_ total de registros)',
+                lengthMenu: 'Mostrar _MENU_ registros por pagina',
+                zeroRecords: '----------------------------------'
+            },
+            
+        })
+    });
+</script>
+
+{%endblock%}

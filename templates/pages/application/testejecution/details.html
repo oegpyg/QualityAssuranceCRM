@@ -100,7 +100,7 @@
                                             {% for case in testexe.casetest_set.all%}
                                             <tr class="project-task-list ptl--hover draggable " draggable="true">
                                                 <td>
-                                                    <a href="{% url 'application:task_details' 1 %}" class="">
+                                                    <a href="{% url 'application:casetest_details' case.id %}" class="">
                                                         <span class="fs-14 text-light ">{{case.title}}</span>
                                                     </a>
                                                 </td>

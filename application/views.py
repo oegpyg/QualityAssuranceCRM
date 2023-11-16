@@ -151,6 +151,12 @@ def testejecutionDetails(request, pk):
     ctx = {'testexe': core_models.TestEjecution.objects.get(pk=pk)}
     return render(request, 'pages/application/testejecution/details.html', context=ctx)
 
+
+@login_required
+def casetestDetails(request, pk):
+    ctx = {'casetest': core_models.CaseTest.objects.get(pk=pk)}
+    return render(request, 'pages/application/casetest/details.html', context=ctx)
+
 # calendar page
 
 
