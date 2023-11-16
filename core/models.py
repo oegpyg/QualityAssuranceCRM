@@ -520,6 +520,7 @@ class CaseTestDocumentation(models.Model):
     caseTest = models.ForeignKey(
         CaseTest, on_delete=models.PROTECT, verbose_name="Caso de prueba relacionado")
     image = models.ImageField(upload_to='uploads/')
+    transdate = models.DateTimeField(auto_now=True, auto_now_add=False)
 
     no_admin = True
 
