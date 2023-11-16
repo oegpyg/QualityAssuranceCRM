@@ -93,8 +93,8 @@
             </ul>
         </li>
 
-        <li class="has-child {% if '/application/testejecution/' in request.path %}open{% endif %}">
-            <a href="#" class="{% if '/application/testejecution/' in request.path %}active{% endif %}">
+        <li class="has-child {% if '/application/testejecution/' in request.path or '/application/casetest/' in request.path or '/application/typeoftests/' in request.path %}open{% endif %}">
+            <a href="#" class="{% if '/application/testejecution/' in request.path or '/application/casetest/' in request.path or '/application/typeoftests/' in request.path %}active{% endif %}">
                 <span class="nav-icon uil uil-edit"></span>
                 <span class="menu-text">Gestion de Pruebas</span>
                 <span class="toggle-icon"></span>
@@ -103,6 +103,13 @@
                 <li>
                     <a href="{% url 'application:testejecution_list' %}" class="{% if path_name == 'testejecution_list' %}active{% endif %}">Ejecución de Pruebas</a>
                 </li>
+                <li>
+                    <a href="{% url 'application:casetest_list' %}" class="{% if path_name == 'casetest_list' %}active{% endif %}">Casos de Prueba</a>
+                </li>
+                <li>
+                    <a href="{% url 'application:typeoftests_list' %}" class="{% if path_name == 'typeoftests_list' %}active{% endif %}">Tipos de Prueba</a>
+                </li>
+                
             </ul>
         </li>
 

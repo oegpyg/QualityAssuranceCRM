@@ -16,13 +16,13 @@
                 <div class="breadcrumb-main user-member justify-content-sm-between ">
                     <div class=" d-flex flex-wrap justify-content-center breadcrumb-main__wrapper">
                         <div class="d-flex align-items-center user-member__title justify-content-center me-sm-25">
-                            <h4 class="text-capitalize fw-500 breadcrumb-title">Casos de Prueba</h4>
-                            <span class="sub-title ms-sm-25 ps-sm-25">{{casetests|length}} activos</span>
+                            <h4 class="text-capitalize fw-500 breadcrumb-title">Tipos de Prueba</h4>
+                            <span class="sub-title ms-sm-25 ps-sm-25">{{typetests|length}} activos</span>
                         </div>
                     </div>
                     <div class="action-btn">
                         <a href="#" class="btn px-15 btn-primary" data-bs-toggle="modal" data-bs-target="#new-member">
-                            <i class="las la-plus fs-16"></i>crear caso de prueba</a>
+                            <i class="las la-plus fs-16"></i>crear tipo de prueba</a>
                         <div class="modal fade new-member" id="new-member" role="dialog" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content  radius-xl">
@@ -135,36 +135,21 @@
                                     <th>
                                         <span class="projectDatatable-title">Caso de Prueba</span>
                                     </th>
-                                    <th>
-                                        <span class="projectDatatable-title">Nro. Orden</span>
-                                    </th>
-                                    
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for casetest in casetests%}
+                                {% for typetest in typetests%}
                                 <tr>
                                     <td>
                                         <div class="d-flex">
                                             <div class="userDatatable-inline-title">
-                                                <a href="{% url 'application:casetest_details' casetest.id %}" class="text-dark fw-500">
-                                                    <h6>{{casetest.title}}</h6>
+                                                <a href="{% url 'application:typeoftests_details' typetest.id %}" class="text-dark fw-500">
+                                                    <h6>{{typetest.title}}</h6>
                                                 </a>
-                                                <p class="pt-1 d-block mb-0">
-                                                    <a href="{% url 'application:testejecution_details' casetest.testEjecution.id %}" class="text-dark">
-                                                    TE{{casetest.testEjecution.id}}: {{casetest.testEjecution.title}}
-                                                    </a>
-                                                </p>
+                                                
                                             </div>
                                         </div>
                                     </td>
-                                    
-                                    <td>
-                                        <div class="d-inline-block">
-                                            <span class="media-badge color-white bg-primary">{{casetest.caseOrder}}</span>
-                                        </div>
-                                    </td>
-                                    
                                 </tr>
                                 {%endfor%}
                                 

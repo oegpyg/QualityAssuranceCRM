@@ -31,8 +31,12 @@ urlpatterns = [
     path('testejecution/details/<int:pk>/',
          views.testejecutionDetails, name='testejecution_details'),
 
+    path('casetest/list', views.casetestList, name='casetest_list'),
     path('casetest/details/<int:pk>/',
          views.casetestDetails, name='casetest_details'),
+    path('typeoftests/list', views.typeoftestsList, name='typeoftests_list'),
+    path('typeoftests/details/<int:pk>/',
+         views.typeoftestsDetails, name='typeoftests_details'),
 
 
     path('calendar', views.calendar, name='calendar'),

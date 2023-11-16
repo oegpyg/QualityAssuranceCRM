@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from core import models as core_models
-from core.forms import ProjectForm, ReleaseForm, TaskForm
+from core.forms import ProjectForm, ReleaseForm, TaskForm, TestEjecutionForm
 from django.contrib.auth.models import User
 # email inbox page
 
@@ -141,7 +141,7 @@ def taskDetails(request, pk):
 @login_required
 def testejecutionList(request):
     testsexe = core_models.TestEjecution.objects.all()
-    form = TaskForm()
+    form = TestEjecutionForm()
     ctx = {'testsexe': testsexe, 'frm': form}
     return render(request, 'pages/application/testejecution/list.html', context=ctx)
 
@@ -153,9 +153,31 @@ def testejecutionDetails(request, pk):
 
 
 @login_required
+def casetestList(request):
+    casetests = core_models.CaseTest.objects.all()
+    form = TestEjecutionForm()
+    ctx = {'casetests': casetests, 'frm': form}
+    return render(request, 'pages/application/casetest/list.html', context=ctx)
+
+
+@login_required
 def casetestDetails(request, pk):
     ctx = {'casetest': core_models.CaseTest.objects.get(pk=pk)}
     return render(request, 'pages/application/casetest/details.html', context=ctx)
+
+
+@login_required
+def typeoftestsList(request):
+    typetests = core_models.TypeOfTests.objects.all()
+    form = TestEjecutionForm()
+    ctx = {'typetests': typetests, 'frm': form}
+    return render(request, 'pages/application/typeoftest/list.html', context=ctx)
+
+
+@login_required
+def typeoftestsDetails(request, pk):
+    ctx = {'typetest': core_models.TypeOfTests.objects.get(pk=pk)}
+    return render(request, 'pages/application/typeoftest/details.html', context=ctx)
 
 # calendar page
 
