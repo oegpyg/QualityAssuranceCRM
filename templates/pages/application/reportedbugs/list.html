@@ -169,7 +169,7 @@
                                     </td>
                                     <td>
                                         <div class="userDatatable-content">
-                                            {{bug.priority}}
+                                            {{bug.get_priority_display}}
                                         </div>
                                     </td>
                                     <td>
@@ -192,7 +192,7 @@
                                     </td> {% endcomment %}
                                     <td>
                                         <div class="d-inline-block">
-                                            <span class="media-badge color-primary ">{{bug.status}}</span>
+                                            <span class="media-badge color-primary ">{{bug.get_status_display}}</span>
                                         </div>
                                     </td>
                                     

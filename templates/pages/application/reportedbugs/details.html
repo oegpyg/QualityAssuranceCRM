@@ -89,20 +89,20 @@
                                 </div> {% endcomment %}
                                 <div class="application-task d-flex align-items-center mb-25">
                                     <div class="application-task-content">
-                                        <h4>{{bug.status}}</h4>
+                                        <h4>{{bug.get_status_display}}</h4>
                                         <span class="text-light fs-14 mt-1 text-capitalize">Status</span>
                                         
                                     </div>
                                 </div>
                                 <div class="application-task d-flex align-items-center mb-25">
                                     <div class="application-task-content">
-                                        <h4>{{bug.priority}}</h4>
+                                        <h4>{{bug.get_priority_display}}</h4>
                                         <span class="text-light fs-14 mt-1 text-capitalize">Prioridad</span>
                                     </div>
                                 </div>
                                 <div class="application-task d-flex align-items-center mb-25">
                                     <div class="application-task-content">
-                                        <h4>{{bug.severity}}</h4>
+                                        <h4>{{bug.get_severity_display}}</h4>
                                         <span class="text-light fs-14 mt-1 text-capitalize">Severidad</span>
                                     </div>
                                 </div>
@@ -150,7 +150,7 @@
                                     <ul class="d-flex text-capitalize">
                                         <li>
                                             <span class="color-light fs-13">Frecuencia</span>
-                                            <p class="color-dark fs-14 mt-1 mb-0 fw-500">{{bug.frenquency}}</p>
+                                            <p class="color-dark fs-14 mt-1 mb-0 fw-500">{{bug.get_frenquency_display}}</p>
                                         </li>
                                         
                                     </ul>
