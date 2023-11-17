@@ -54,6 +54,12 @@ urlpatterns = [
     path('reportedbugs/details/<int:pk>/',
          views.reportedbugsDetails, name='reportedbugs_details'),
 
+    path('implementationrelease/list', views.implementationreleaseList,
+         name='implementationrelease_list'),
+    path('implementationrelease/details/<int:pk>/',
+         views.implementationreleaseDetails, name='implementationrelease_details'),
+
+
     path('calendar', views.calendar, name='calendar'),
     path('user/team', views.team, name='team'),
     path('user/card', views.card, name='card'),

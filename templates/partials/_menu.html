@@ -143,16 +143,16 @@
             </ul>
         </li>
 
-        <li class="has-child {% if '/application/projects/' in request.path %}open{% endif %}">
-            <a href="#" class="{% if '/application/projects/' in request.path %}active{% endif %}">
+        <li class="has-child {% if '/application/implementationrelease/' in request.path %}open{% endif %}">
+            <a href="#" class="{% if '/application/implementationrelease/' in request.path %}active{% endif %}">
                 <span class="nav-icon uil uil-arrow-growth"></span>
                 <span class="menu-text">Gestion de Implementacion</span>
                 <span class="toggle-icon"></span>
             </a>
             <ul>
-                {% comment %} <li>
-                    <a href="{% url 'application:task_list' %}" class="{% if path_name == 'task_list' %}active{% endif %}">Tareas</a>
-                </li> {% endcomment %}
+                <li>
+                    <a href="{% url 'application:implementationrelease_list' %}" class="{% if path_name == 'implementationrelease_list' %}active{% endif %}">Implementaciones</a>
+                </li>
             </ul>
         </li>
 

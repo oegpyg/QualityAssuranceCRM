@@ -220,6 +220,20 @@ def reportedbugsList(request):
 def reportedbugsDetails(request, pk):
     ctx = {'bug': core_models.ReportedBugs.objects.get(pk=pk)}
     return render(request, 'pages/application/reportedbugs/details.html', context=ctx)
+
+
+@login_required
+def implementationreleaseList(request):
+    imprels = core_models.ImplementationRelease.objects.all()
+    form = TestEjecutionForm()
+    ctx = {'imprels': imprels, 'frm': form}
+    return render(request, 'pages/application/implementationrelease/list.html', context=ctx)
+
+
+@login_required
+def implementationreleaseDetails(request, pk):
+    ctx = {'imprel': core_models.ImplementationRelease.objects.get(pk=pk)}
+    return render(request, 'pages/application/implementationrelease/details.html', context=ctx)
 # calendar page
 
 
