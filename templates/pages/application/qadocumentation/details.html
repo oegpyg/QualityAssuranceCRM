@@ -1,0 +1,449 @@
+{% extends 'layout/app.html' %}
+
+{% block title %} Qa Documentation Details {% endblock %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% load custom_filters %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="breadcrumb-main application-ui mb-30">
+                <div class="breadcrumb-action d-flex">
+                    <div class="d-flex align-items-center user-member__title me-sm-25 me-0">
+                        <h4 class="text-capitalize fw-500 breadcrumb-title">{{qadoc.TestPlans}}</h4>
+                    </div>
+                    <div class="action-btn me-10 my-sm-0">
+                        <a href="#" class="btn btn-primary bg-primary fs-12 fw-500"><img src="{% static 'img/svg/plus.svg' %}" alt="plus" class="svg"> Add
+                            Documentacion QA</a>
+                    </div>
+                    <div class="btn-group-toggle" data-bs-toggle="buttons">
+                        <input type="checkbox" class="btn-check" id="btn-check-2-outlined" autocomplete="off">
+                        <label class="btn btn-outline-secondary" for="btn-check-2-outlined"> <img src="{% static 'img/svg/check.svg' %}" alt="check" class="svg"> Mark as Complete</label>
+                    </div>
+                </div>
+                <div class="d-flex text-capitalize">
+                    <button type="button" class="breadcrumb-edit btn btn-white border-0 color-primary content-center fs-12 fw-500 radius-md">
+                        <img src="{% static 'img/svg/edit-3.svg' %}" alt="edit-3" class="svg">edit</button>
+                    <button type="button" class="breadcrumb-remove border-0 color-danger content-center bg-white fs-12 fw-500 ms-10 radius-md">
+                        <img class="svg" src="{% static 'img/svg/trash-2.svg' %}" alt="trash-2">remove</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="projects-tab-content mb-30">
+        <div class="row">
+            
+            <div class="col-xxl-12 col-lg-12">
+                <div class="row">
+                    <div class="col-xxl-9 col-lg-9 mb-25">
+                        <div class="card border-0 pb-md-50 pb-15">
+                            <div class="card-header py-sm-20 py-3  px-sm-25 px-3 ">
+                                <h6>Acerca de la Documentacion</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="about-projects">
+                                    <div class="about-projects__details">
+                                        <p class="fs-15 mb-25">{{qadoc.TestPlans}}</p>
+                                        <p class="fs-15"> </p>
+                                    </div>
+                                    <ul class="d-flex text-capitalize">
+                                        <li>
+                                            <span class="color-light fs-13">Ejecucion de Pruebas</span>
+                                            <a href="{% url 'application:testejecution_details' qadoc.testEjecution.id %}"><p class="color-dark fs-14 mt-1 mb-0 fw-500">{{qadoc.testEjecution.title}}</p></a>
+                                        </li>
+                                        
+                                    </ul>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="col-xxl-3 col-lg-3 mb-25">
+                        {% comment %} <div class="progress-box px-25 pt-25 pb-10 bg-success radius-xl">
+                            <div class="d-flex justify-content-between mb-3">
+                                <h6 class="text-white fw-500 fs-16 text-capitalize">progreso</h6>
+                                <span class="progress-percentage text-white fw-500 fs-16 text-capitalize">{{release.task_set.all|count_by_status_perc:4|stringformat:'d'}}%</span>
+                            </div>
+                            <div class="progress-wrap d-flex align-items-center mb-15">
+                                <div class="progress progress-height">
+                                    <div class="progress-bar bg-white" role="progressbar" style="width: {{release.task_set.all|count_by_status_perc:4|stringformat:'d'}}%;" aria-valuenow="{{release.task_set.all|count_by_status_perc:4|stringformat:'d'}}" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div> {% endcomment %}
+
+
+                        <div class="card mt-25">
+                            <div class="card-body">
+                                
+                                {% comment %} <div class="application-task d-flex align-items-center mb-25">
+                                    <div class="application-task-content">
+                                        <h4>{{release.task_set.all|count_by_status:4}}/{{release.task_set.count}}</h4>
+                                        <span class="text-light fs-14 mt-1 text-capitalize">tareas completadas</span>
+                                    </div>
+                                </div> {% endcomment %}
+                                <div class="application-task d-flex align-items-center mb-25">
+                                    <div class="application-task-content">
+                                        <h4>{% if qadoc.productOwnerApproval %}
+                                            <span class="nav-icon uil uil-check"></span>
+                                            {%else%}
+                                            <span class="nav-icon uil uil-exclamation-circle" style='color:red'></span>
+                                            {%endif%}
+                                            Product Owner
+                                        </h4>
+                                        
+                                    </div>
+                                </div>
+                                <div class="application-task d-flex align-items-center mb-25">
+                                    <div class="application-task-content">
+                                        <h4>{% if qadoc.developerApproval %}
+                                            <span class="nav-icon uil uil-check"></span>
+                                            {%else%}
+                                            <span class="nav-icon uil uil-exclamation-circle" style='color:red'></span>
+                                            {%endif%}
+                                            Developer
+                                        </h4>
+                                    </div>
+                                </div>
+                                <div class="application-task d-flex align-items-center mb-25">
+                                    <div class="application-task-content">
+                                        <h4>{{qadoc.status}}</h4>
+                                        <span class="text-light fs-14 mt-1 text-capitalize">Status</span>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>  
+                    </div>
+
+                        
+                    </div>
+                    
+            </div>
+                    
+                    
+                </div>
+            </div>
+
+            <div class="col-xxl-12 col-lg-12 col-12 mb-25">
+                <div class="card pb-10 border-0">
+                    <div class="card-header p-0">
+                        <ul class="nav px-25 ap-tab-main app-ui-tab" id="project-ap-tab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="project-overview-tab" data-bs-toggle="pill" href="#project-overview" role="tab" aria-controls="project-overview" aria-selected="true">Importancia de los casos de prueba en las Documentaciones QA</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-content w-100" id="projectContent">
+                        <div class="tab-pane fade show active" id="project-overview" role="tabpanel" aria-labelledby="project-overview-tab">
+                            <div class="card-body px-0 pt-15 pb-10">
+                                <div class="project-task table-responsive">
+                                    <table class="table table-borderless">
+                                        <tbody>
+                                            {% for qacasetestimp in qadoc.qadocumentationcasetestimp_set.all%}
+                                            <tr class="project-task-list ptl--hover draggable " draggable="true">
+                                                <td>
+                                                    <a href="{% url 'application:casetest_details' qacasetestimp.caseTest.id %}" class="">
+                                                        <span class="fs-14 text-light">{{qacasetestimp.caseTest.title}} {% if qacasetestimp.caseTest.casetestdocumentation_set.count %} <i class="las la-paperclip color-primary"></i>{%endif%} </span>
+                                                    </a>
+                                                </td>
+                                                
+                                                <td>
+                                                    <div class="project-task-list__right">
+                                                        <ul class="d-flex align-content-center">
+                                                            {% comment %} <li>
+                                                                <span class="fs-12 text-light time-completed">{{release.priority}}</span>
+                                                            </li> {% endcomment %}
+                                                            <li>
+                                                                {% comment %} <a href="#" class="cross">
+                                                                    <i class="uil uil-times"></i>
+                                                                </a> {% endcomment %}
+                                                                <span class="fs-12 text-light">
+                                                                {{qacasetestimp.importanceOfTestCases}}
+                                                                </span>
+                                                            </li>
+                                                            {% comment %} <li>
+                                                                <a href="#" class="plus">
+                                                                    <img src="{% static 'img/svg/move.svg' %}" alt="move" class="svg">
+                                                                </a>
+                                                            </li> {% endcomment %}
+                                                            
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            {%endfor%}
+                                            
+                                        </tbody>
+                                    </table>
+                                    {% comment %} <div class="task-list-btn px-25 my-10">
+                                        <button class="text-primary">
+                                            <img class="svg" src="img/svg/plus.svg" alt="">Agregar Nueva
+                                            Tarea</button>
+                                    </div> {% endcomment %}
+                                </div>
+                            </div>
+                        </div>
+                        <!-- test exe -->
+                        <div class="tab-pane fade" id="project-test" role="tabpanel" aria-labelledby="project-test-tab">
+                            
+                            <div class="card-body px-0 pt-15 pb-10">
+                                <div class="project-task table-responsive">
+                                    <table class="table table-borderless">
+                                        <tbody>
+                                            {% for testexe in release.testejecution_set.all%}
+                                            <tr class="project-task-list ptl--hover draggable " draggable="true">
+                                                <td>
+                                                    <a href="{% url 'application:testejecution_details' testexe.id %}" class="">
+                                                        <span class="fs-14 text-light {% if task.status.id == 4%}strikethrough{%endif%}">{{testexe.title}} {{task.status.pk}}</span>
+                                                    </a>
+                                                </td>
+                                                
+                                                <td>
+                                                    <div class="project-task-list__right">
+                                                        <ul class="d-flex align-content-center">
+                                                            {% comment %} <li>
+                                                                <span class="fs-12 text-light time-completed">{{release.priority}}</span>
+                                                            </li> {% endcomment %}
+                                                            <li>
+                                                                {% comment %} <a href="#" class="cross">
+                                                                    <i class="uil uil-times"></i>
+                                                                </a> {% endcomment %}
+                                                                <span class="fs-12 text-light">
+                                                                {{task.status}}
+                                                                </span>
+                                                            </li>
+                                                            {% comment %} <li>
+                                                                <a href="#" class="plus">
+                                                                    <img src="{% static 'img/svg/move.svg' %}" alt="move" class="svg">
+                                                                </a>
+                                                            </li> {% endcomment %}
+                                                            <li>
+                                                                <div class="dropdown dropleft">
+                                                                    <button class="btn-link border-0 bg-transparent p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                        <img src="{% static 'img/svg/more-horizontal.svg' %}" alt="more-horizontal" class="svg">
+                                                                    </button>
+                                                                    <div class="dropdown-menu">
+                                                                        <a class="dropdown-item" href="{% url 'application:release_details' release.id %}">view</a>
+                                                                        <a class="dropdown-item" href="#">edit</a>
+                                                                        <a class="dropdown-item" href="#">leave</a>
+                                                                        <a class="dropdown-item" href="#">delete</a>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            {%endfor%}
+                                            
+                                        </tbody>
+                                    </table>
+                                    <div class="task-list-btn px-25 my-10">
+                                        <button class="text-primary">
+                                            <img class="svg" src="img/svg/plus.svg" alt="">Agregar Ejecucion de Prueba</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <!-- end test exe-->
+
+                        <!--start aprob comercial-->
+                        <div class="tab-pane fade" id="project-timeline" role="tabpanel" aria-labelledby="project-timeline-tab">
+                            {%for com_aprob in release.releasecommercialapproval_set.all%}
+                            <div class="card-body px-0 mx-25 border-bottom">
+                                <div class="task-activities d-flex align-items-center">
+                                    <div class="task-activities__left d-flex">
+                                        <div class="content-center border bg-normal radius-xl me-sm-20 me-0 task-activities__month">
+                                            <div class=" px-20 text-center">
+                                                <h5>22</h5>
+                                                <span class="fs-13 color-gray">Octubre</span>
+                                            </div>
+                                        </div>
+                                        <div class="task-activities__right">
+                                            <ul>
+                                                <li class="">
+                                                    <div class="ffp d-flex justify-content-between align-items-center w-100">
+                                                        <div class="d-flex">
+                                                            <div class="me-3 ffp__imgWrapper d-flex align-items-center ">
+                                                                <span class=" wh-24 me-15 rounded-circle content-center color-danger bg-opacity-danger">
+                                                                    <img src="{% static 'img/svg/plus.svg' %}" alt="plus" class="svg"></span>
+                                                                <span class="profile-image rounded-circle d-block wh-34 m-0 " style="background-image:url('img/tm5.png'); background-size: cover;"></span>
+                                                            </div>
+                                                            <div>
+                                                                <a href="#">
+                                                                    <p class="fw-500 fs-14 text-dark mb-0">{{com_aprob.businessAreaAffected}}
+                                                                        {% comment %} <span class="color-light mx-1 fw-400">added new
+                                                                            task</span> {% endcomment %}
+                                                                    </p>
+                                                                </a>
+                                                                <span class="pt-1 d-block color-extra-light fs-12">
+                                                                    {% comment %} 3:30 PM {% endcomment %}
+                                                                    <div class="checkbox-group d-flex">
+                                                                        <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
+                                                                            <input class="checkbox" type="checkbox" id="check-grp-1" {% if com_aprob.approved%}checked{%endif%} disabled readonly>
+                                                                            <label for="check-grp-1" class="fs-14 color-light">
+                                                                                
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                {% comment %} <li class="">
+                                                    <div class="ffp d-flex justify-content-between align-items-center w-100">
+                                                        <div class="d-flex">
+                                                            <div class="me-3 ffp__imgWrapper d-flex align-items-center ">
+                                                                <span class=" wh-24 me-15 rounded-circle content-center color-primary bg-opacity-primary">
+                                                                    <img src="{% static 'img/svg/code.svg' %}" alt="code" class="svg"></span>
+                                                                <span class="profile-image rounded-circle d-block wh-34 m-0 " style="background-image:url('img/tm6.png'); background-size: cover;"></span>
+                                                            </div>
+                                                            <div>
+                                                                <a href="#">
+                                                                    <p class="fw-500 fs-14 text-dark mb-0">Mike Greene
+                                                                        <span class="color-light mx-1 fw-400">pushed commit</span>#652364
+                                                                    </p>
+                                                                </a>
+                                                                <span class="pt-1 d-block color-extra-light fs-12">
+                                                                    9:30 PM
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="">
+                                                    <div class="ffp d-flex justify-content-between align-items-center w-100">
+                                                        <div class="d-flex">
+                                                            <div class="me-3 ffp__imgWrapper d-flex align-items-center ">
+                                                                <span class=" wh-24 me-15 rounded-circle content-center color-success bg-opacity-success">
+                                                                    <img src="{% static 'img/svg/check.svg' %}" alt="check" class="svg"></span>
+                                                                <span class="profile-image rounded-circle d-block wh-34 m-0 " style="background-image:url('img/tm2.png'); background-size: cover;"></span>
+                                                            </div>
+                                                            <div>
+                                                                <a href="#">
+                                                                    <p class="fw-500 fs-14 text-dark mb-0">Tomlinson
+                                                                        <span class="color-light mx-1 fw-400">completed task</span>Invoice template
+                                                                    </p>
+                                                                </a>
+                                                                <span class="pt-1 d-block color-extra-light fs-12">
+                                                                    10:30 PM
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li> {% endcomment %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {%endfor%}
+                            
+                        </div>
+                        <!--end aprob comercial-->
+
+                        <!--start plat afe-->
+                        <div class="tab-pane fade" id="project-platform" role="tabpanel" aria-labelledby="project-platform-tab">
+                            {%for rel_plat_afe in release.releaseplatformaffected_set.all%}
+                            <div class="card-body px-0 mx-25 border-bottom">
+                                <div class="task-activities d-flex align-items-center">
+                                    <div class="task-activities__left d-flex">
+                                        {% comment %} <div class="content-center border bg-normal radius-xl me-sm-20 me-0 task-activities__month">
+                                            <div class=" px-20 text-center">
+                                                <h5>22</h5>
+                                                <span class="fs-13 color-gray">Octubre</span>
+                                            </div>
+                                        </div> {% endcomment %}
+                                        <div class="task-activities__right">
+                                            <ul>
+                                                <li class="">
+                                                    <div class="ffp d-flex justify-content-between align-items-center w-100">
+                                                        <div class="d-flex">
+                                                            <div class="me-3 ffp__imgWrapper d-flex align-items-center ">
+                                                                <span class=" wh-24 me-15 rounded-circle content-center color-primary bg-opacity-primary">
+                                                                    <img src="{% static 'img/svg/code.svg' %}" alt="code" class="svg"></span>
+                                                                <span class="profile-image rounded-circle d-block wh-34 m-0 " style="background-image:url('img/tm6.png'); background-size: cover;"></span>
+                                                            </div>
+                                                            <div>
+                                                                <a href="#">
+                                                                    <p class="fw-500 fs-14 text-dark mb-0">{{rel_plat_afe.platform}}
+                                                                        {% comment %} <span class="color-light mx-1 fw-400">added new
+                                                                            task</span> {% endcomment %}
+                                                                    </p>
+                                                                </a>
+                                                                <span class="pt-1 d-block color-extra-light fs-12">
+                                                                    {% comment %} 3:30 PM {% endcomment %}
+                                                                    
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                {% comment %} <li class="">
+                                                    <div class="ffp d-flex justify-content-between align-items-center w-100">
+                                                        <div class="d-flex">
+                                                            <div class="me-3 ffp__imgWrapper d-flex align-items-center ">
+                                                                <span class=" wh-24 me-15 rounded-circle content-center color-primary bg-opacity-primary">
+                                                                    <img src="{% static 'img/svg/code.svg' %}" alt="code" class="svg"></span>
+                                                                <span class="profile-image rounded-circle d-block wh-34 m-0 " style="background-image:url('img/tm6.png'); background-size: cover;"></span>
+                                                            </div>
+                                                            <div>
+                                                                <a href="#">
+                                                                    <p class="fw-500 fs-14 text-dark mb-0">Mike Greene
+                                                                        <span class="color-light mx-1 fw-400">pushed commit</span>#652364
+                                                                    </p>
+                                                                </a>
+                                                                <span class="pt-1 d-block color-extra-light fs-12">
+                                                                    9:30 PM
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="">
+                                                    <div class="ffp d-flex justify-content-between align-items-center w-100">
+                                                        <div class="d-flex">
+                                                            <div class="me-3 ffp__imgWrapper d-flex align-items-center ">
+                                                                <span class=" wh-24 me-15 rounded-circle content-center color-success bg-opacity-success">
+                                                                    <img src="{% static 'img/svg/check.svg' %}" alt="check" class="svg"></span>
+                                                                <span class="profile-image rounded-circle d-block wh-34 m-0 " style="background-image:url('img/tm2.png'); background-size: cover;"></span>
+                                                            </div>
+                                                            <div>
+                                                                <a href="#">
+                                                                    <p class="fw-500 fs-14 text-dark mb-0">Tomlinson
+                                                                        <span class="color-light mx-1 fw-400">completed task</span>Invoice template
+                                                                    </p>
+                                                                </a>
+                                                                <span class="pt-1 d-block color-extra-light fs-12">
+                                                                    10:30 PM
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li> {% endcomment %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {%endfor%}
+                            
+                        </div>
+                        <!--end plat afe-->
+                        
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -14,9 +14,9 @@
             </a>
             <ul>
                 <li class="{% if path_name == 'demo_one' %}active{% endif %}">
-                    <a href="{% url 'dashboard:demo_one' %}">{% translate "dashboard-demo-one" %}</a>
+                    <a href="{% url 'dashboard:demo_one' %}">Inicio</a>
                 </li>
-                <li class="{% if path_name == 'demo_two' %}active{% endif %}">
+                {% comment %} <li class="{% if path_name == 'demo_two' %}active{% endif %}">
                     <a href="{% url 'dashboard:demo_two' %}">{% translate "dashboard-demo-two" %}</a>
                 </li>
                 <li class="{% if path_name == 'demo_three' %}active{% endif %}">
@@ -42,7 +42,7 @@
                 </li>
                 <li class="{% if path_name == 'demo_ten' %}active{% endif %}">
                     <a href="{% url 'dashboard:demo_ten' %}">{% translate "Demo 10vb" %}</a>
-                </li>
+                </li> {% endcomment %}
             </ul>
         </li>
         
@@ -107,35 +107,39 @@
                     <a href="{% url 'application:casetest_list' %}" class="{% if path_name == 'casetest_list' %}active{% endif %}">Casos de Prueba</a>
                 </li>
                 <li>
+                    <a href="{% url 'application:casetestdoc_list' %}" class="{% if path_name == 'casetestdoc_list' %}active{% endif %}">Documentos de Caso de Pruebas</a>
+                </li>
+                <li>
                     <a href="{% url 'application:typeoftests_list' %}" class="{% if path_name == 'typeoftests_list' %}active{% endif %}">Tipos de Prueba</a>
                 </li>
                 
             </ul>
         </li>
 
-        <li class="has-child {% if '/application/projects/' in request.path %}open{% endif %}">
-            <a href="#" class="{% if '/application/projects/' in request.path %}active{% endif %}">
+        <li class="has-child {% if '/application/qadocumentation/' in request.path %}open{% endif %}">
+            <a href="#" class="{% if '/application/qadocumentation/' in request.path %}active{% endif %}">
                 <span class="nav-icon uil uil-books"></span>
                 <span class="menu-text">Gestion de Documentos</span>
                 <span class="toggle-icon"></span>
             </a>
             <ul>
-                {% comment %} <li>
-                    <a href="{% url 'application:task_list' %}" class="{% if path_name == 'task_list' %}active{% endif %}">Tareas</a>
-                </li> {% endcomment %}
+                
+                <li>
+                    <a href="{% url 'application:qadocumentation_list' %}" class="{% if path_name == 'qadocumentation_list' %}active{% endif %}">Documentacion QA</a>
+                </li>
             </ul>
         </li>
 
-        <li class="has-child {% if '/application/projects/' in request.path %}open{% endif %}">
-            <a href="#" class="{% if '/application/projects/' in request.path %}active{% endif %}">
+        <li class="has-child {% if '/application/reportedbugs/' in request.path %}open{% endif %}">
+            <a href="#" class="{% if '/application/reportedbugs/' in request.path %}active{% endif %}">
                 <span class="nav-icon uil uil-exclamation-triangle"></span>
                 <span class="menu-text">Gestion de Errores</span>
                 <span class="toggle-icon"></span>
             </a>
             <ul>
-                {% comment %} <li>
-                    <a href="{% url 'application:task_list' %}" class="{% if path_name == 'task_list' %}active{% endif %}">Tareas</a>
-                </li> {% endcomment %}
+                <li>
+                    <a href="{% url 'application:reportedbugs_list' %}" class="{% if path_name == 'reportedbugs_list' %}active{% endif %}">Errores Reportados</a>
+                </li>
             </ul>
         </li>
 

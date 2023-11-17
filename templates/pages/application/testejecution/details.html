@@ -77,9 +77,12 @@
                             <li class="nav-item">
                                 <a class="nav-link active" id="project-overview-tab" data-bs-toggle="pill" href="#project-overview" role="tab" aria-controls="project-overview" aria-selected="true">Casos de Prueba</a>
                             </li>
-                            {% comment %} <li class="nav-item">
-                                <a class="nav-link" id="project-test-tab" data-bs-toggle="pill" href="#project-test" role="tab" aria-controls="project-test" aria-selected="false">Ejecucion de Pruebas</a>
+                            <li class="nav-item">
+                                <a class="nav-link" id="project-bugs-tab" data-bs-toggle="pill" href="#project-bugs" role="tab" aria-controls="project-bugs" aria-selected="false">Reporte de Errores 
+                                    {%if testexe.reportedbugs_set.count%}<span class="badge badge-danger ">{{testexe.reportedbugs_set.count}}</span>{%endif%}
+                                </a>
                             </li>
+                            {% comment %} 
                             <li class="nav-item">
                                 <a class="nav-link" id="project-timeline-tab" data-bs-toggle="pill" href="#project-timeline" role="tab" aria-controls="project-timeline" aria-selected="false">Aprobación comercial</a>
                             </li>
@@ -154,6 +157,70 @@
                             
                         </div>
                         <!-- end test exe-->
+                        <!-- bugs -->
+                        <div class="tab-pane fade show active" id="project-bugs" role="tabpanel" aria-labelledby="project-bugs-tab">
+                            
+                            <div class="card-body px-0 pt-15 pb-10">
+                                <div class="project-task table-responsive">
+                                    <table class="table table-borderless">
+                                        <tbody>
+                                            {% for bug in testexe.reportedbugs_set.all%}
+                                            <tr class="project-task-list ptl--hover draggable " draggable="true">
+                                                <td>
+                                                    <a href="{% url 'application:casetest_details' bug.id %}" class="">
+                                                        <span class="fs-14 text-light ">{{bug.title}}</span>
+                                                    </a>
+                                                </td>
+                                                
+                                                <td>
+                                                    <div class="project-task-list__right">
+                                                        <ul class="d-flex align-content-center">
+                                                            {% comment %} <li>
+                                                                <span class="fs-12 text-light time-completed">{{release.priority}}</span>
+                                                            </li> {% endcomment %}
+                                                            <li>
+                                                                {% comment %} <a href="#" class="cross">
+                                                                    <i class="uil uil-times"></i>
+                                                                </a> {% endcomment %}
+                                                                <span class="fs-12 text-light">
+                                                                {{bug.status}}
+                                                                </span>
+                                                            </li>
+                                                            {% comment %} <li>
+                                                                <a href="#" class="plus">
+                                                                    <img src="{% static 'img/svg/move.svg' %}" alt="move" class="svg">
+                                                                </a>
+                                                            </li> {% endcomment %}
+                                                            <li>
+                                                                <div class="dropdown dropleft">
+                                                                    <button class="btn-link border-0 bg-transparent p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                        <img src="{% static 'img/svg/more-horizontal.svg' %}" alt="more-horizontal" class="svg">
+                                                                    </button>
+                                                                    <div class="dropdown-menu">
+                                                                        <a class="dropdown-item" href="{% url 'application:release_details' 1 %}">view</a>
+                                                                        <a class="dropdown-item" href="#">edit</a>
+                                                                        <a class="dropdown-item" href="#">leave</a>
+                                                                        <a class="dropdown-item" href="#">delete</a>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            {%endfor%}
+                                            
+                                        </tbody>
+                                    </table>
+                                    {% comment %} <div class="task-list-btn px-25 my-10">
+                                        <button class="text-primary">
+                                            <img class="svg" src="img/svg/plus.svg" alt="">Agregar Caso de Prueba</button>
+                                    </div> {% endcomment %}
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <!-- end bugs-->
 
                         
                         

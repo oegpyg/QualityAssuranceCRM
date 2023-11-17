@@ -34,6 +34,8 @@ urlpatterns = [
     path('casetest/list', views.casetestList, name='casetest_list'),
     path('casetest/details/<int:pk>/',
          views.casetestDetails, name='casetest_details'),
+
+    path('casetestdoc/list', views.casetestdocList, name='casetestdoc_list'),
     path('casetestdoc/details/<int:pk>/',
          views.casetestdocDetails, name='casetestdoc_details'),
 
@@ -41,8 +43,16 @@ urlpatterns = [
     path('typeoftests/details/<int:pk>/',
          views.typeoftestsDetails, name='typeoftests_details'),
 
+    path('qadocumentation/list', views.qadocumentationList,
+         name='qadocumentation_list'),
+    path('qadocumentation/details/<int:pk>/',
+         views.qadocumentationDetails, name='qadocumentation_details'),
 
 
+    path('reportedbugs/list', views.reportedbugsList,
+         name='reportedbugs_list'),
+    path('reportedbugs/details/<int:pk>/',
+         views.reportedbugsDetails, name='reportedbugs_details'),
 
     path('calendar', views.calendar, name='calendar'),
     path('user/team', views.team, name='team'),

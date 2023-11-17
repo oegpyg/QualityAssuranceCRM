@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.apps import apps
-from .models import ReleaseCommercialApproval, Release, QaDocumentation, ChecklistDocumentation, TestEjecution, CaseTest, QaDocumentationCaseTestImp, ReleasePlatformAffected, CaseTestDocumentation
+from .models import ReleaseCommercialApproval, Release, QaDocumentation, ChecklistDocumentation, TestEjecution, CaseTest, QaDocumentationCaseTestImp, ReleasePlatformAffected, CaseTestDocumentation, ReportedBugs, ReportedBugsDocumentation
 from django.contrib.auth.models import User
 from django import forms
 from django.contrib.admin.widgets import FilteredSelectMultiple
@@ -56,7 +56,7 @@ class QaDocumentationForm(forms.ModelForm):
     class Meta:
         model = QaDocumentation
         fields = ['id', 'TestPlans', 'productOwnerApproval',
-                  'developerApproval', 'status']
+                  'developerApproval', 'status', 'testEjecution']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -73,8 +73,8 @@ class QaDocumentationAdmin(admin.ModelAdmin):
         form.request = request
         return form
     form = QaDocumentationForm
-    inlines = [ChecklistDocumentationAdminTabular,
-               QaDocumentationCaseTestImpAdminTabular]
+    inlines = [
+        QaDocumentationCaseTestImpAdminTabular]
 
 
 admin.site.register(QaDocumentation, QaDocumentationAdmin)
@@ -104,6 +104,30 @@ class TestEjecutionAdmin(admin.ModelAdmin):
 
 
 admin.site.register(TestEjecution, TestEjecutionAdmin)
+
+
+class ReportedBugsDocumentationAdminTabular(admin.TabularInline):
+    model = ReportedBugsDocumentation
+    extra = 1
+
+
+class ReportedBugsAdmin(admin.ModelAdmin):
+    list_display = ['id', 'title', 'typeInput', 'reporter', 'assignedTo']
+    inlines = [ReportedBugsDocumentationAdminTabular]
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super().get_form(request, obj, **kwargs)
+        # Si se está editando un registro existente y 'usuario_asignado' ya está establecido, no lo cambies
+        if obj:
+            form.base_fields['reporter'].widget.attrs['readonly'] = True
+            form.base_fields['reporter'].disabled = True
+        else:
+            # Si se está creando un nuevo registro, asigna el usuario actual automáticamente
+            form.base_fields['reporter'].initial = request.user
+        return form
+
+
+admin.site.register(ReportedBugs, ReportedBugsAdmin)
 
 
 class GroupFilter(admin.SimpleListFilter):

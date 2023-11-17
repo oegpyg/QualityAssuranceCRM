@@ -167,6 +167,14 @@ def casetestDetails(request, pk):
 
 
 @login_required
+def casetestdocList(request):
+    casetestds = core_models.CaseTestDocumentation.objects.all()
+    form = TestEjecutionForm()
+    ctx = {'casetestds': casetestds, 'frm': form}
+    return render(request, 'pages/application/casetest/doc_list.html', context=ctx)
+
+
+@login_required
 def casetestdocDetails(request, pk):
     ctx = {'att': core_models.CaseTestDocumentation.objects.get(pk=pk)}
     return render(request, 'pages/application/casetest/image_details.html', context=ctx)
@@ -185,6 +193,33 @@ def typeoftestsDetails(request, pk):
     ctx = {'typetest': core_models.TypeOfTests.objects.get(pk=pk)}
     return render(request, 'pages/application/typeoftest/details.html', context=ctx)
 
+
+@login_required
+def qadocumentationList(request):
+    qadocs = core_models.QaDocumentation.objects.all()
+    form = TestEjecutionForm()
+    ctx = {'qadocs': qadocs, 'frm': form}
+    return render(request, 'pages/application/qadocumentation/list.html', context=ctx)
+
+
+@login_required
+def qadocumentationDetails(request, pk):
+    ctx = {'qadoc': core_models.QaDocumentation.objects.get(pk=pk)}
+    return render(request, 'pages/application/qadocumentation/details.html', context=ctx)
+
+
+@login_required
+def reportedbugsList(request):
+    bugs = core_models.ReportedBugs.objects.all()
+    form = TestEjecutionForm()
+    ctx = {'bugs': bugs, 'frm': form}
+    return render(request, 'pages/application/reportedbugs/list.html', context=ctx)
+
+
+@login_required
+def reportedbugsDetails(request, pk):
+    ctx = {'bug': core_models.ReportedBugs.objects.get(pk=pk)}
+    return render(request, 'pages/application/reportedbugs/details.html', context=ctx)
 # calendar page
 
 
