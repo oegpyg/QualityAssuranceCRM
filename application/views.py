@@ -138,7 +138,7 @@ def releaseAdd(request):
 
 @login_required
 def taskList(request):
-    tasks = core_models.Task.objects.filter(pk=1000)  # all()
+    tasks = core_models.Task.objects.all()
     form = TaskForm()
     ctx = {'tasks': tasks, 'frm': form}
     return render(request, 'pages/application/task/list.html', context=ctx)
