@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from core import models as core_models
-from core.forms import ProjectForm, ReleaseForm, TaskForm, TestEjecutionForm
+from core.forms import ProjectForm, ReleaseForm, TaskForm, TestEjecutionForm, CaseTestForm
 from django.contrib.auth.models import User
 # email inbox page
 
@@ -191,7 +191,7 @@ def testejecutionAdd(request):
 @login_required
 def casetestList(request):
     casetests = core_models.CaseTest.objects.all()
-    form = TestEjecutionForm()
+    form = CaseTestForm()
     ctx = {'casetests': casetests, 'frm': form}
     return render(request, 'pages/application/casetest/list.html', context=ctx)
 
@@ -200,6 +200,18 @@ def casetestList(request):
 def casetestDetails(request, pk):
     ctx = {'casetest': core_models.CaseTest.objects.get(pk=pk)}
     return render(request, 'pages/application/casetest/details.html', context=ctx)
+
+
+@login_required
+def casetestAdd(request):
+    if request.method == 'POST':
+        data = OrderedDict()
+        data.update(request.POST)
+        # data['reporter'] = request.user
+        form = CaseTestForm(data)
+        if form.is_valid():
+            stmt = form.save()
+    return redirect(reverse('application:casetest_list'))
 
 
 @login_required

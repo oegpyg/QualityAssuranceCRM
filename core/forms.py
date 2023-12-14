@@ -3,6 +3,8 @@ from .models import Project, Release, Task, QaDocumentation, ReportedBugs, Check
 from django.contrib.auth.models import User
 from decouple import config
 
+from tinymce.widgets import TinyMCE
+
 devGroup = config('DEVGROUP')
 pownerGroup = config('POWNERGROUP')
 
@@ -177,6 +179,11 @@ class TestEjecutionForm(ModelForm):
         }
 
 
+class TinyMCEWidget(TinyMCE):
+    def use_required_attribute(self, *args):
+        return False
+
+
 class CaseTestForm(ModelForm):
     class Meta:
         model = CaseTest
@@ -187,10 +194,10 @@ class CaseTestForm(ModelForm):
             'title': TextInput(attrs={'class': 'form-control', 'placeholder': "Título"}),
             'caseTestDescription': TextInput(attrs={'class': 'form-control', 'placeholder': "Descripción"}),
             'caseTestPreconditions': TextInput(attrs={'class': 'form-control', 'placeholder': "Precondiciones"}),
-            'caseOrder': TextInput(attrs={'class': 'form-control', 'placeholder': "Orden del caso de prueba"}),
-            'caseSteps': TextInput(attrs={'class': 'form-control', 'placeholder': "Pasos a Seguir"}),
-            'caseExpectedOutcome': TextInput(attrs={'class': 'form-control', 'placeholder': "Resultado Esperado"}),
-            'testEjecution': TextInput(attrs={'class': 'form-control', 'placeholder': "Plan de pruebas relacionado"}),
+            'caseOrder': NumberInput(attrs={'class': 'form-control', 'placeholder': "Orden del caso de prueba"}),
+            'caseSteps': Textarea(attrs={'class': 'form-control tinymce', 'placeholder': "Resultado Esperado"}),
+            'caseExpectedOutcome': Textarea(attrs={'class': 'form-control', 'placeholder': "Resultado Esperado"}),
+            'testEjecution': Select(attrs={'class': 'form-control', 'placeholder': "Plan de pruebas relacionado"}),
         }
 
 

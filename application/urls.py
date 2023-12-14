@@ -38,6 +38,8 @@ urlpatterns = [
     path('casetest/list', views.casetestList, name='casetest_list'),
     path('casetest/details/<int:pk>/',
          views.casetestDetails, name='casetest_details'),
+    path('casetest/add', views.casetestAdd, name='casetest_add'),
+
 
     path('casetestdoc/list', views.casetestdocList, name='casetestdoc_list'),
     path('casetestdoc/details/<int:pk>/',
