@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from core import models as core_models
-from core.forms import ProjectForm, ReleaseForm, TaskForm, TestEjecutionForm, CaseTestForm
+from core.forms import ProjectForm, ReleaseForm, TaskForm, TestEjecutionForm, CaseTestForm, TypeOfTestsForm, QaDocumentationForm
 from django.contrib.auth.models import User
 # email inbox page
 
@@ -249,7 +249,7 @@ def typeoftestsAdd(request):
         data = OrderedDict()
         data.update(request.POST)
         # data['reporter'] = request.user
-        form = TypeTestForm(data)
+        form = TypeOfTestsForm(data)
         if form.is_valid():
             stmt = form.save()
         print(form.errors)
@@ -259,7 +259,7 @@ def typeoftestsAdd(request):
 @login_required
 def qadocumentationList(request):
     qadocs = core_models.QaDocumentation.objects.all()
-    form = TestEjecutionForm()
+    form = QaDocumentationForm()
     ctx = {'qadocs': qadocs, 'frm': form}
     return render(request, 'pages/application/qadocumentation/list.html', context=ctx)
 
@@ -268,6 +268,19 @@ def qadocumentationList(request):
 def qadocumentationDetails(request, pk):
     ctx = {'qadoc': core_models.QaDocumentation.objects.get(pk=pk)}
     return render(request, 'pages/application/qadocumentation/details.html', context=ctx)
+
+
+@login_required
+def qadocumentationAdd(request):
+    if request.method == 'POST':
+        data = OrderedDict()
+        data.update(request.POST)
+        # data['reporter'] = request.user
+        form = QaDocumentationForm(data)
+        if form.is_valid():
+            stmt = form.save()
+        print(form.errors)
+    return redirect(reverse('application:qadocumentation_list'))
 
 
 @login_required

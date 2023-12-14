@@ -48,14 +48,14 @@ urlpatterns = [
     path('typeoftests/list', views.typeoftestsList, name='typeoftests_list'),
     path('typeoftests/details/<int:pk>/',
          views.typeoftestsDetails, name='typeoftests_details'),
-
     path('typeoftests/add', views.typeoftestsAdd, name='typeoftests_add'),
 
     path('qadocumentation/list', views.qadocumentationList,
          name='qadocumentation_list'),
     path('qadocumentation/details/<int:pk>/',
          views.qadocumentationDetails, name='qadocumentation_details'),
-
+    path('qadocumentation/add', views.qadocumentationAdd,
+         name='qadocumentation_add'),
 
     path('reportedbugs/list', views.reportedbugsList,
          name='reportedbugs_list'),

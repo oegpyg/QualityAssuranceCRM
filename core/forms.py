@@ -82,12 +82,13 @@ class QaDocumentationForm(ModelForm):
     class Meta:
         model = QaDocumentation
         fields = ["TestPlans", "productOwnerApproval", "status",
-                  "developerApproval", "evidenceOfTheTestPlans",]
+                  "developerApproval", "evidenceOfTheTestPlans", "testEjecution"]
         widgets = {
             'TestPlans': TextInput(attrs={'class': 'form-control', 'placeholder': "Nombre del Plan de Pruebas"}),
-            'productOwnerApproval': TextInput(attrs={'class': 'form-control', 'placeholder': "Aprobación del Dueño del producto"}),
-            # 'status': TextInput(attrs={'class': 'form-control', 'placeholder': "Estado"}),
-            # 'developerApproval': TextInput(attrs={'class': 'form-control', 'placeholder': "Aprobación del Desarrollador"}),
+            'productOwnerApproval': CheckboxInput(attrs={'class': '', 'placeholder': "Aprobación del Dueño del producto"}),
+            'status': Select(attrs={'class': 'form-control', 'placeholder': "Estado"}),
+            'developerApproval': CheckboxInput(attrs={'class': '', 'placeholder': "Aprobación del Desarrollador"}),
+            'testEjecution': Select(attrs={'class': 'form-control', 'placeholder': "Plan de pruebas relacionado"}),
             # 'evidenceOfTheTestPlans': Textarea(attrs={'class': 'form-control', 'placeholder': 'Evidencias del plan de pruebas'}),
         }
 
@@ -216,10 +217,11 @@ class QaDocumentationCaseTestImpForm(ModelForm):
         }
 
 
-class TypeTestForm(ModelForm):
+class TypeOfTestsForm(ModelForm):
     class Meta:
         model = TypeOfTests
-        fields = ["title"]
+        fields = ['id', "title"]
         widgets = {
+            'id': NumberInput(attrs={'class': 'form-control', 'placeholder': "Identificador"}),
             'title': TextInput(attrs={'class': 'form-control', 'placeholder': 'Tipo de Caso de Prueba'}),
         }
