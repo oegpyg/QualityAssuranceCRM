@@ -65,13 +65,13 @@ class TaskForm(ModelForm):
         fields = ["title", "typeTask", "associatedRealease",
                   "status", "assignedTo", "description", "comments"]
         widgets = {
-            'title': TextInput(attrs={'class': 'form-control', 'placeholder': "Nombre del Proyecto"}),
-            'typeOfTask': TextInput(attrs={'class': 'form-control', 'placeholder': "Tipo de Tarea"}),
-            'associatedRealease': TextInput(attrs={'class': 'form-control', 'placeholder': 'Entrega relacionada'}),
-            'status': TextInput(attrs={'class': 'form-control', 'placeholder': "Estado"}),
-            'assignedTo': TextInput(attrs={'class': 'form-control', 'placeholder': "Asignado a"}),
+            'title': TextInput(attrs={'class': 'form-control', 'placeholder': "Nombre de la Tarea"}),
+            'typeTask': Select(attrs={'class': 'form-control', 'placeholder': "Tipo de Tarea"}),
+            'associatedRealease': Select(attrs={'class': 'form-control', 'placeholder': 'Entrega relacionada'}),
+            'status': Select(attrs={'class': 'form-control', 'placeholder': "Estado"}),
+            'assignedTo': Select(attrs={'class': 'form-control', 'placeholder': "Asignado a"}),
             'description': Textarea(attrs={'class': 'form-control', 'placeholder': 'Descripcion', 'cols': 80, 'rows': 20}),
-            'comments': TextInput(attrs={'class': 'form-control', 'placeholder': "Comentarios"}),
+            'comments': Textarea(attrs={'class': 'form-control', 'placeholder': "Comentarios"}),
 
         }
 

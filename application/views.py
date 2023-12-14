@@ -111,7 +111,7 @@ def projectDetails(request, pk):
 
 @login_required
 def releaseList(request):
-    releases = core_models.Release.objects.filter(pk=1000)
+    releases = core_models.Release.objects.all()
     form = ReleaseForm()
     ctx = {'releases': releases, 'frm': form}
     return render(request, 'pages/application/release/list.html', context=ctx)
@@ -138,7 +138,7 @@ def releaseAdd(request):
 
 @login_required
 def taskList(request):
-    tasks = core_models.Task.objects.all()
+    tasks = core_models.Task.objects.filter(pk=1000)  # all()
     form = TaskForm()
     ctx = {'tasks': tasks, 'frm': form}
     return render(request, 'pages/application/task/list.html', context=ctx)
@@ -148,6 +148,18 @@ def taskList(request):
 def taskDetails(request, pk):
     ctx = {'task': core_models.Task.objects.get(pk=pk)}
     return render(request, 'pages/application/task/details.html', context=ctx)
+
+
+@login_required
+def taskAdd(request):
+    if request.method == 'POST':
+        data = OrderedDict()
+        data.update(request.POST)
+        # data['reporter'] = request.user
+        form = TaskForm(data)
+        if form.is_valid():
+            stmt = form.save()
+    return redirect(reverse('application:task_list'))
 
 
 @login_required

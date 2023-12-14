@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{1|site_name }} - {% block title %} {% endblock %}</title>
-    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&display=swap" rel="stylesheet">
+    {% comment %} <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&display=swap" rel="stylesheet"> {% endcomment %}
     <link  rel="stylesheet" href="{% static 'datatables/datatables.min.css' %}">
     {% if request.session.dir and request.session.dir == 'rtl' %}
         <link  rel="stylesheet" href="{% static 'css/plugin.min.rtl.css' %}">
@@ -58,7 +58,7 @@
     </div>
     <div class="overlay-dark-sidebar"></div>
 
-    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDduF2tLXicDEPDMAtC6-NLOekX0A5vlnY"></script>
+    {% comment %} <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDduF2tLXicDEPDMAtC6-NLOekX0A5vlnY"></script> {% endcomment %}
     <script src="{% static 'js/env.js' %}"></script>
 
     {% include 'partials/_scripts.html' %}
