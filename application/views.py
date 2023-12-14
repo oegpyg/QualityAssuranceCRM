@@ -177,6 +177,18 @@ def testejecutionDetails(request, pk):
 
 
 @login_required
+def testejecutionAdd(request):
+    if request.method == 'POST':
+        data = OrderedDict()
+        data.update(request.POST)
+        # data['reporter'] = request.user
+        form = TestEjecutionForm(data)
+        if form.is_valid():
+            stmt = form.save()
+    return redirect(reverse('application:testejecution_list'))
+
+
+@login_required
 def casetestList(request):
     casetests = core_models.CaseTest.objects.all()
     form = TestEjecutionForm()

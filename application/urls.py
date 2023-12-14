@@ -33,6 +33,7 @@ urlpatterns = [
     path('testejecution/list', views.testejecutionList, name='testejecution_list'),
     path('testejecution/details/<int:pk>/',
          views.testejecutionDetails, name='testejecution_details'),
+    path('testejecution/add', views.testejecutionAdd, name='testejecution_add'),
 
     path('casetest/list', views.casetestList, name='casetest_list'),
     path('casetest/details/<int:pk>/',

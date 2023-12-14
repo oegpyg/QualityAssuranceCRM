@@ -166,12 +166,14 @@ class ImplementationReleaseForm(ModelForm):
 class TestEjecutionForm(ModelForm):
     class Meta:
         model = TestEjecution
-        fields = ["id", "title", "generalDescription", "release"]
+        fields = ["id", "title", "generalDescription",
+                  "release", 'typeOfTests']
         widgets = {
             'id': TextInput(attrs={'class': 'form-control', 'placeholder': "Identificador"}),
             'title': TextInput(attrs={'class': 'form-control', 'placeholder': "Título"}),
-            'generalDescription': TextInput(attrs={'class': 'form-control', 'placeholder': "Descripción general"}),
-            'release': TextInput(attrs={'class': 'form-control', 'placeholder': "Entrega relacionada"}),
+            'generalDescription': Textarea(attrs={'class': 'form-control', 'placeholder': "Descripción general"}),
+            'release': Select(attrs={'class': 'form-control', 'placeholder': "Entrega relacionada"}),
+            'typeOfTests': Select(attrs={'class': 'form-control', 'placeholder': "Tipo de Prueba"}),
         }
 
 
