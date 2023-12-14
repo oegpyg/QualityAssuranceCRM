@@ -195,7 +195,7 @@ class CaseTestForm(ModelForm):
             'caseTestDescription': TextInput(attrs={'class': 'form-control', 'placeholder': "Descripción"}),
             'caseTestPreconditions': TextInput(attrs={'class': 'form-control', 'placeholder': "Precondiciones"}),
             'caseOrder': NumberInput(attrs={'class': 'form-control', 'placeholder': "Orden del caso de prueba"}),
-            'caseSteps': Textarea(attrs={'class': 'form-control tinymce', 'placeholder': "Resultado Esperado"}),
+            'caseSteps': Textarea(attrs={'class': 'form-control tinymce', 'placeholder': "Paso a paso"}),
             'caseExpectedOutcome': Textarea(attrs={'class': 'form-control', 'placeholder': "Resultado Esperado"}),
             'testEjecution': Select(attrs={'class': 'form-control', 'placeholder': "Plan de pruebas relacionado"}),
         }

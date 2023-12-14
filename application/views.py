@@ -211,6 +211,7 @@ def casetestAdd(request):
         form = CaseTestForm(data)
         if form.is_valid():
             stmt = form.save()
+        print(form.errors)
     return redirect(reverse('application:casetest_list'))
 
 
