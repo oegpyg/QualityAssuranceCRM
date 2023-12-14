@@ -1,5 +1,5 @@
 from django.forms import ModelForm, TextInput, Textarea, NumberInput, FileInput, DateInput, DateTimeInput, TimeInput, CheckboxInput, Select, SelectDateWidget, ModelChoiceField
-from .models import Project, Release, Task, QaDocumentation, ReportedBugs, ChecklistDocumentation, ImplementationRelease, TestEjecution, CaseTest, QaDocumentationCaseTestImp, _priorityChoices
+from .models import Project, Release, Task, QaDocumentation, ReportedBugs, ChecklistDocumentation, ImplementationRelease, TestEjecution, CaseTest, QaDocumentationCaseTestImp, _priorityChoices, TypeOfTests
 from django.contrib.auth.models import User
 from decouple import config
 
@@ -213,4 +213,13 @@ class QaDocumentationCaseTestImpForm(ModelForm):
                                                                                                                     ('MED', 'Media'),
                                                                                                                     ('ALTA', 'Alta')
                                                                                                                     )),
+        }
+
+
+class TypeTestForm(ModelForm):
+    class Meta:
+        model = TypeOfTests
+        fields = ["title"]
+        widgets = {
+            'title': TextInput(attrs={'class': 'form-control', 'placeholder': 'Tipo de Caso de Prueba'}),
         }

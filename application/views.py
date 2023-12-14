@@ -244,6 +244,19 @@ def typeoftestsDetails(request, pk):
 
 
 @login_required
+def typeoftestsAdd(request):
+    if request.method == 'POST':
+        data = OrderedDict()
+        data.update(request.POST)
+        # data['reporter'] = request.user
+        form = TypeTestForm(data)
+        if form.is_valid():
+            stmt = form.save()
+        print(form.errors)
+    return redirect(reverse('application:typeoftests_list'))
+
+
+@login_required
 def qadocumentationList(request):
     qadocs = core_models.QaDocumentation.objects.all()
     form = TestEjecutionForm()

@@ -49,6 +49,8 @@ urlpatterns = [
     path('typeoftests/details/<int:pk>/',
          views.typeoftestsDetails, name='typeoftests_details'),
 
+    path('typeoftests/add', views.typeoftestsAdd, name='typeoftests_add'),
+
     path('qadocumentation/list', views.qadocumentationList,
          name='qadocumentation_list'),
     path('qadocumentation/details/<int:pk>/',

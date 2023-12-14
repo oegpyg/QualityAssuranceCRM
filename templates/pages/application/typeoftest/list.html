@@ -27,84 +27,23 @@
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content  radius-xl">
                                     <div class="modal-header">
-                                        <h6 class="modal-title fw-500" id="staticBackdropLabel">Crear proyecto</h6>
+                                        <h6 class="modal-title fw-500" id="staticBackdropLabel">Crear tipo de prueba</h6>
                                         <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                             <img src="{% static 'img/svg/x.svg' %}" alt="x" class="svg">
                                         </button>
                                     </div>
                                     <div class="modal-body">
                                         <div class="new-member-modal">
-                                            <form method='POST' action='{% url 'application:project_add' %}'>
+                                            <form method='POST' action='{% url 'application:typeoftests_add' %}'>
                                                 {% csrf_token %}
                                                 <div class="form-group mb-20">
                                                     {% comment %} <input type="text" class="form-control" placeholder="Duran Clayton"> {% endcomment %}
                                                     {{frm.title}}
                                                 </div>
-                                                <div class="form-group mb-20">
-                                                    {% comment %} <input type="text" class="form-control" placeholder="Duran Clayton"> {% endcomment %}
-                                                    {{frm.description}}
-                                                </div>
                                                 
-                                                <div class="d-flex new-member-calendar">
-                                                    <div class="form-group w-70 me-sm-15 form-group-calender">
-                                                        <label for="{{frm.startDate.name}}">{{frm.startDate.label}}</label>
-                                                        {{frm.startDate}}
-                                                    </div>
-                                                    <div class="form-group mb-20 w-30 me-30 pe-10">
-                                                        {% comment %} <input type="text" class="form-control" placeholder="Duran Clayton"> {% endcomment %}
-                                                        <label for="id_{{frm.priority.name}}">{{frm.priority.label}}</label>
-                                                        {{frm.priority}}
-                                                    </div>
-                                                    <div class="form-group mb-20 w-30 w-30">
-                                                        {% comment %} <input type="text" class="form-control" placeholder="Duran Clayton"> {% endcomment %}
-                                                        <label for="id_{{frm.status.name}}">{{frm.status.label}}</label>
-                                                        {{frm.status}}
-                                                    </div>
-                                                </div>
-                                                
-                                                <div class="d-flex">
-                                                    <div class="form-group mb-20 w-50 me-50 pe-10">
-                                                        <label for="id_{{frm.productOwner.name}}">{{frm.productOwner.label}}</label>
-                                                        {{frm.productOwner}}
-                                                    </div>
-                                                    <div class="form-group mb-20 w-50 me-50 pe-10">
-                                                        <label for="id_{{frm.developer.name}}">{{frm.developer.label}}</label>
-                                                        {{frm.developer}}
-                                                    </div>
-                                                </div>
-                                                <div class="d-flex">
-                                                    <div class="form-group mb-20 w-50 me-50 pe-10">
-                                                        <label for="id_{{frm.qa.name}}">{{frm.qa.label}}</label>
-                                                        {{frm.qa}}
-                                                    </div>
-                                                    <div class="form-group mb-20 w-50 me-50 pe-10">
-                                                        <label for="id_{{frm.stakeHolder.name}}">{{frm.stakeHolder.label}}</label>
-                                                        {{frm.stakeHolder}}
-                                                    </div>
-                                                </div>
-                                                <div class="d-flex">
-                                                    <div class="form-group mb-20 w-50 me-50 pe-10">
-                                                        <label for="id_{{frm.businessUnit.name}}">{{frm.businessUnit.label}}</label>
-                                                        {{frm.businessUnit}}
-                                                    </div>
-                                                    <div class="form-group mb-20 w-50 me-50 pe-10">
-                                                        <label for="id_{{frm.typeOfTests.name}}">{{frm.typeOfTests.label}}</label>
-                                                        {{frm.typeOfTests}}
-                                                    </div>
-
-                                                    
-                                                </div>
-                                                <div class="form-group mb-20 w-50 me-50 pe-10">
-                                                    <label for="id_{{frm.version.name}}">{{frm.version.label}}</label>
-                                                    {{frm.version}}
-                                                </div>
-                                               <div class="form-group mb-20 w-50 me-50 pe-10">
-                                                    <label for="id_{{frm.assignedTo.name}}">{{frm.assignedTo.label}}</label>
-                                                    {{frm.assignedTo}}
-                                                </div>
                                                 
                                                 <div class="button-group d-flex pt-25">
-                                                    <button class="btn btn-primary btn-default btn-squared text-capitalize">add new project
+                                                    <button class="btn btn-primary btn-default btn-squared text-capitalize">agregar tipo de prueba
                                                     </button>
                                                     <button type="button" class="btn btn-light btn-default btn-squared fw-400 text-capitalize b-light color-light" data-bs-dismiss="modal">cancel</button>
                                                 </div>
