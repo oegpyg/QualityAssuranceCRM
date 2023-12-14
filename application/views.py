@@ -111,7 +111,7 @@ def projectDetails(request, pk):
 
 @login_required
 def releaseList(request):
-    releases = core_models.Release.objects.all()
+    releases = core_models.Release.objects.filter(pk=1000)
     form = ReleaseForm()
     ctx = {'releases': releases, 'frm': form}
     return render(request, 'pages/application/release/list.html', context=ctx)
@@ -122,6 +122,18 @@ def releaseDetails(request, pk):
     ctx = {'release': core_models.Release.objects.get(
         pk=pk), 'statuss': core_models.Status.objects.all()}
     return render(request, 'pages/application/release/details.html', context=ctx)
+
+
+@login_required
+def releaseAdd(request):
+    if request.method == 'POST':
+        data = OrderedDict()
+        data.update(request.POST)
+        data['reporter'] = request.user
+        form = ReleaseForm(data)
+        if form.is_valid():
+            stmt = form.save()
+    return redirect(reverse('application:release_list'))
 
 
 @login_required

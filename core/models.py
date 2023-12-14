@@ -185,7 +185,7 @@ class Release(models.Model):
     qaDeploymentPlanningDate = models.DateField(
         auto_now=False, auto_now_add=False, blank=True, verbose_name="Fecha planificada despliegue QA")
     testPlanCreationDate = models.DateField(
-        auto_now=False, auto_now_add=False, blank=True, verbose_name="Fecha de creación del plan de pruebas")
+        auto_now=False, auto_now_add=False, blank=True, verbose_name="Fecha creación plan de pruebas")
     testStartDate = models.DateField(
         auto_now=False, auto_now_add=False, blank=True, verbose_name="Fecha de inicio de pruebas")
     testEndDate = models.DateField(auto_now=False, auto_now_add=False,
